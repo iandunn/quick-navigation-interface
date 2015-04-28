@@ -1,0 +1,26 @@
+### Design
+
+* Mock up the screen
+* Break into Backbone templates when start implementing behavior
+
+
+### Behavior
+
+* Listen for alt-w, add active class to dialog when heard
+* Create Backbone models, collections and views for the interface
+	* One collection for all links (to search against)
+	* Another collection for matches (to display)
+* Watch search input and filter the active collection based on it
+	* Find a good JS implementation of levenstein
+	* Search by title alone, or title + url?
+* For WP menus, add in siblings with a higher distance than query matches
+* Capture up and down keys and move active class to corresponding list items
+
+
+### Misc
+
+* Setup Grunt to generate concatenated/minified css/js
+* When committing 0.1 to wporg repo, save screenshots to assets dir instead of plugin dir
+* make sure alt-w doesn't conflict w/ any browser shortcuts
+* Listen for new links added by JS?
+* Include content in results?
