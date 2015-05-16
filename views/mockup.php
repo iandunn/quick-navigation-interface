@@ -16,6 +16,6 @@
 			<li class="idi-active"><a href="#">Customize</a></li>
 			<li><a href="#">Widgets</a></li>
 			<li><a href="#">Menus</a></li>
-		<ul>
+		</ul>
 	</div> <!-- #idi-dialog-->
 </div>
