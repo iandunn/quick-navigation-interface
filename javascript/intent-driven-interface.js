@@ -26,10 +26,10 @@ var IntentDrivenInterface = ( function( $ ) {
 	function toggleInterface( event ) {
 		var mainWindow = $( '#idi-container' );
 
-		if ( event.key == options.shortcuts.open ) {
+		if ( event.key === options.shortcuts.open ) {
 			mainWindow.addClass( 'idi-active' );
 			$( '#idi-search' ).focus();
-		} else if ( event.key == options.shortcuts.close ) {
+		} else if ( event.key === options.shortcuts.close ) {
 			mainWindow.removeClass( 'idi-active' );
 		}
 	}
@@ -39,7 +39,7 @@ var IntentDrivenInterface = ( function( $ ) {
 	 *
 	 * @param {object} event
 	 */
-	function showRelevantLinks ( event ) {
+	function showRelevantLinks() {
 		$( '#idi-instructions' ).addClass( 'idi-active' );
 		$( '#idi-menu' ).addClass( 'idi-active' );
 	}
@@ -54,7 +54,7 @@ var IntentDrivenInterface = ( function( $ ) {
 			return;
 		}
 
-		if ( 'string' == typeof error ) {
+		if ( 'string' === typeof error ) {
 			console.log( 'Intent-Driven Interface: ' + error );
 		} else {
 			console.log( 'Intent-Driven Interface: ', error );
