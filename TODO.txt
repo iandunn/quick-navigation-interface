@@ -1,17 +1,17 @@
 ### Design
 
-* Mock up the screen
 * Break into Backbone templates when start implementing behavior
+* Add X to close
 
 
 ### Behavior
 
-* Listen for alt-w, add active class to dialog when heard
 * Create Backbone models, collections and views for the interface
 	* One collection for all links (to search against)
 	* Another collection for matches (to display)
 * Watch search input and filter the active collection based on it
-	* Find a good JS implementation of levenstein
+	* Find a good JS implementation of Levenshtein
+		* https://stackoverflow.com/questions/11919065/sort-an-array-by-the-levenshtein-distance-with-best-performance-in-javascript
 	* Search by title alone, or title + url?
 * For WP menus, add in siblings with a higher distance than query matches
 * Capture up and down keys and move active class to corresponding list items
@@ -19,8 +19,22 @@
 
 ### Misc
 
+* Make sure ` doesn't conflict w/ any browser shortcuts.
 * Setup Grunt to generate concatenated/minified css/js
-* When committing 0.1 to wporg repo, save screenshots to assets dir instead of plugin dir
-* make sure alt-w doesn't conflict w/ any browser shortcuts
-* Listen for new links added by JS?
-* Include content in results?
+
+
+### 0.1 launch
+* When committing to wporg repo, save screenshots to assets dir instead of plugin dir
+
+
+
+### v2
+* Include content in results
+	* Use Jetpack Omnisearch under the hood
+	* Maybe fallback to a basic post/comment search if Omnisearch not available
+	* Build an index mapping urls to keywords and titles
+		* store in transient, then enqueue as .json file, separate from normal js file, so it can be cached client side rather than sent with every page
+		* use an efficient structure like a b-tree.
+		* omnisearch indexs with elasticsearch on wpcom? check if cache results locally. maybe just copy that index and add on-page links to it, then send to client.
+		* search that file for content, on-page links, everything. that way don't have to submit ajax request for every search
+	* Listen for new links added by JS?

@@ -35,7 +35,10 @@ class Intent_Driven_Interface {
 			'intent-driven-interface',
 			'idiOptions',
 			apply_filters( 'idi_options', array(
-				'shortcut' => array( 'alt', 'w' ),  // todo how to format this?
+				'shortcuts' => array(
+					'open'  => '`',
+					'close' => 'Escape',
+				),  // todo make them arrays in case want to use ctrl+key combinations?
 				'distance' => 3                     // todo what's a good default?
 			) )
 		);

@@ -16,7 +16,7 @@ Intent-Driven Interface provides a new way to navigate through the Administratio
 
 Just press alt-w to bring up the interface, and then start typing what you want to do. As you type, you'll be shown a list of matching links. Use the up and down keys to move between them, and press enter to open one.
 
-This was inspired by the Ubuntu's [Dash](todo) and [HUD](https://www.youtube.com/watch?v=hfmSTWyYbms).
+This was inspired by the Ubuntu's [Dash](todo) and [HUD](https://www.youtube.com/watch?v=hfmSTWyYbms), and is also similar to the Spotlight feature in OS X.
 
 
 == Installation ==
