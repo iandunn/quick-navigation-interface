@@ -1,4 +1,5 @@
 var IntentDrivenInterface = ( function( $ ) {
+	'use strict';
 	var options;
 
 	/**
