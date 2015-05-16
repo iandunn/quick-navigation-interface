@@ -18,7 +18,7 @@ class Intent_Driven_Interface {
 		wp_enqueue_style(
 			'intent-driven-interface',
 			plugins_url( "css/intent-driven-interface$suffix.css", dirname( __FILE__ ) ),
-			array(),
+			array( 'media-views' ),
 			IDI_VERSION,
 			'all'
 		);

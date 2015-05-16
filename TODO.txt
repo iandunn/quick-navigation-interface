@@ -1,7 +1,6 @@
 ### Design
 
 * Break into Backbone templates when start implementing behavior
-* Add X to close
 
 
 ### Behavior

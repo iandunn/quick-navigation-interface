@@ -8,13 +8,14 @@ var IntentDrivenInterface = ( function( $ ) {
 	 * @param {object} initOptions
 	 */
 	function construct( initOptions ) {
-		options     = initOptions;
-		initOptions = null;
+		options         = initOptions;
+		initOptions     = null;
 		mainContainer   = $( '#idi-container' );
 		searchContainer = $( '#idi-search' );
 
 		try {
 			$( window ).keyup( toggleInterface );
+			$( mainContainer ).click( toggleInterface );
 			searchContainer.keyup( showRelevantLinks );
 		} catch ( exception ) {
 			log( exception );
@@ -27,11 +28,17 @@ var IntentDrivenInterface = ( function( $ ) {
 	 * @param {object} event
 	 */
 	function toggleInterface( event ) {
-		if ( event.key === options.shortcuts.open ) {
-			mainContainer.addClass( 'idi-active' );
-			searchContainer.focus();
-		} else if ( event.key === options.shortcuts.close ) {
-			mainContainer.removeClass( 'idi-active' );
+		if ( 'keyup' === event.type ) {
+			if ( event.key === options.shortcuts.open ) {
+				mainContainer.addClass( 'idi-active' );
+				searchContainer.focus();
+			} else if ( event.key === options.shortcuts.close ) {
+				mainContainer.removeClass( 'idi-active' );
+			}
+		} else if ( 'click' === event.type ) {
+			if ( 'notification-dialog-background' === event.target.className || 'media-modal-icon' === event.target.className ) {
+				mainContainer.removeClass( 'idi-active' );
+			}
 		}
 	}
 

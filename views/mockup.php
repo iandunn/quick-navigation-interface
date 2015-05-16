@@ -5,6 +5,12 @@
 	<div class="notification-dialog-background"></div>
 
 	<div id="idi-dialog" class="notification-dialog">
+		<a class="media-modal-close" href="#">
+			<span class="media-modal-icon">
+				<span class="screen-reader-text">Close media panel</span>
+			</span>
+		</a>
+
 		<h3 id="idi-introduction">Start typing to open any links on the current page</h3>
 
 		<input id="idi-search" name="" type="text" placeholder="e.g., Posts, Settings, Plugins, Comments, etc" />
