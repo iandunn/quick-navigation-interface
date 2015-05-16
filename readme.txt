@@ -14,7 +14,7 @@ Allows you to quickly access any link within wp-admin just by typing the first f
 
 Intent-Driven Interface provides a new way to navigate through the Administration Panels, combining the speed of keyboard shortcuts with the ease of a graphical user interface.
 
-Just press alt-w to bring up the interface, and then start typing what you want to do. As you type, you'll be shown a list of matching links. Use the up and down keys to move between them, and press enter to open one.
+Just press ` (above the tab key) to bring up the interface, and then start typing what you want to do. As you type, you'll be shown a list of matching links. Use the up and down keys to move between them, and press enter to open one.
 
 This was inspired by the Ubuntu's [Dash](todo) and [HUD](https://www.youtube.com/watch?v=hfmSTWyYbms), and is also similar to the Spotlight feature in OS X.
 
@@ -37,7 +37,7 @@ I've done my best to ensure that it is, but just in case I missed anything [I al
 
 == Screenshots ==
 
-1. Pressing alt-w brings up the interface
+1. Pressing ` (above the tab key) brings up the interface
 2. Matches are displayed and filtered as you type
 
 

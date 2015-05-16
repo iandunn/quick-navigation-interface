@@ -13,6 +13,35 @@ module.exports = function ( grunt ) {
 			}
 		},
 
+		jshint: {
+			files: js_files,
+
+			options: {
+				"boss": true,
+				"curly": true,
+				"eqeqeq": true,
+				"eqnull": true,
+				"es3": true,
+				"expr": true,
+				"immed": true,
+				"noarg": true,
+				"onevar": true,
+				"quotmark": "single",
+				"trailing": true,
+				"undef": true,
+				"unused": true,
+				"browser": true,
+
+				"globals": {
+					"_": false,
+					"Backbone": false,
+					"console": false,
+					"jQuery": false,
+					"idiOptions": true
+				}
+			}
+		},
+
 		cssmin: {
 			combine: {
 				files: {
@@ -24,7 +53,7 @@ module.exports = function ( grunt ) {
 		watch: {
 			js: {
 				files: js_files,
-				tasks: [ 'uglify' ]
+				tasks: [ 'uglify', 'jshint' ]
 			},
 
 			css: {
@@ -40,6 +69,7 @@ module.exports = function ( grunt ) {
 
 	grunt.loadNpmTasks( 'grunt-contrib-uglify' );
 	grunt.loadNpmTasks( 'grunt-contrib-cssmin' );
+	grunt.loadNpmTasks( 'grunt-contrib-jshint' );
 	grunt.loadNpmTasks( 'grunt-contrib-watch' );
-	grunt.registerTask( 'default', [ 'uglify', 'cssmin' ] );
+	grunt.registerTask( 'default', [ 'uglify', 'cssmin', 'jshint' ] );
 };
