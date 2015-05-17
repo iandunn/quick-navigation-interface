@@ -11,12 +11,13 @@ var IntentDrivenInterface = ( function( $ ) {
 		options         = initOptions;
 		initOptions     = null;
 		mainContainer   = $( '#idi-container' );
-		searchField = $( '#idi-search' );
+		searchField     = $( '#idi-search' );
 
 		try {
 			$( window ).keyup( toggleInterface );
-			$( mainContainer ).click( toggleInterface );
+			mainContainer.click( toggleInterface );
 			searchField.keyup( showRelevantLinks );
+			// todo maybe make this a controller that calls toggleinteface, showrelevantlinks, etc. better than having two listeners for same event?
 		} catch ( exception ) {
 			log( exception );
 		}
@@ -73,7 +74,8 @@ var IntentDrivenInterface = ( function( $ ) {
 	 * Reveal public methods
 	 */
 	return {
-		construct : construct
+		construct : construct,
+		log       : log
 	};
 } )( jQuery );
 
