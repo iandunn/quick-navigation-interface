@@ -2,7 +2,7 @@
 /*
 Plugin Name: Intent Driven Interface
 Plugin URI:  http://wordpress.org/plugins/intent-driven-interface
-Description: Allows you to quickly access any link within wp-admin just by typing the first few letters.
+Description: Allows you to quickly access any navigation link within wp-admin just by typing the first few letters.
 Version:     0.1
 Author:      Ian Dunn
 Author URI:  http://iandunn.name

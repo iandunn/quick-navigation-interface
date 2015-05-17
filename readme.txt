@@ -7,7 +7,7 @@ Tested up to:      4.2
 Stable tag:        0.1
 License:           GPLv2
 
-Allows you to quickly access any link within wp-admin just by typing the first few letters.
+Allows you to quickly access any navigation link within wp-admin just by typing the first few letters.
 
 
 == Description ==

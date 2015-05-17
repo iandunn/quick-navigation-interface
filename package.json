@@ -1,7 +1,7 @@
 {
   "name": "intent-driven-interface",
   "version": "0.1.0",
-  "description": "Allows you to quickly access any link within wp-admin just by typing the first few letters.",
+  "description": "Allows you to quickly access any navigation link within wp-admin just by typing the first few letters.",
   "author": "Ian Dunn",
   "license": "GPLv2",
 
