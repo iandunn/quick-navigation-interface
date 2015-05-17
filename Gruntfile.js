@@ -1,5 +1,10 @@
 module.exports = function ( grunt ) {
-	var js_files  = [ 'javascript/**/*.js', '!javascript/*.min.js' ],
+	var js_files  = [
+			'javascript/**/*.js',
+			'!javascript/intent-driven-interface.js',   // ignore this until it's dependencies are concatenated, and then add it at the end
+			'!javascript/*.min.js',
+			'javascript/intent-driven-interface.js'
+		],
 		css_files = [ 'css/*.css', '!css/*.min.css' ];
 
 	grunt.initConfig( {
