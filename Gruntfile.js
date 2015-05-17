@@ -10,78 +10,78 @@ module.exports = function ( grunt ) {
 		css_files = [ 'css/*.css', '!css/*.min.css' ];
 
 	grunt.initConfig( {
-		pkg: grunt.file.readJSON( 'package.json' ),
+		pkg : grunt.file.readJSON( 'package.json' ),
 
-		concat: {
-			dist: {
-				src: js_files,
-				dest: 'javascript/intent-driven-interface.js'
+		concat : {
+			dist : {
+				src  : js_files,
+				dest : 'javascript/intent-driven-interface.js'
 			}
 		},
 
-		uglify: {
-			dist: {
-				files: {
-					'javascript/intent-driven-interface.min.js': [ 'javascript/intent-driven-interface.js' ]
+		uglify : {
+			dist : {
+				files : {
+					'javascript/intent-driven-interface.min.js' : [ 'javascript/intent-driven-interface.js' ]
 				}
 			}
 		},
 
-		jshint: {
-			files: js_files,
+		jshint : {
+			files : js_files,
 
-			options: {
-				"boss": true,
-				"browser": true,
-				"curly": true,
-				"eqeqeq": true,
-				"eqnull": true,
-				"es3": true,
-				"expr": true,
-				"force": true,
-				"immed": true,
-				"noarg": true,
-				"onevar": true,
-				"quotmark": "single",
-				"trailing": true,
-				"undef": true,
-				"unused": true,
+			options : {
+				boss     : true,
+				browser  : true,
+				curly    : true,
+				eqeqeq   : true,
+				eqnull   : true,
+				es3      : true,
+				expr     : true,
+				force    : true,
+				immed    : true,
+				noarg    : true,
+				onevar   : true,
+				quotmark : 'single',
+				trailing : true,
+				undef    : true,
+				unused   : true,
 
-				"globals": {
-					"_": false,
-					"alert": false,
-					"app": false,
-					"Backbone": false,
-					"console": false,
-					"jQuery": false,
-					"idiOptions": true,
-					"IntentDrivenInterface": true,
-					"wp": false
+				globals : {
+					_                     : false,
+					alert                 : false,
+					app                   : false,
+					Backbone              : false,
+					console               : false,
+					jQuery                : false,
+					idiOptions            : true,
+					IntentDrivenInterface : true,
+					wp                    : false
 				}
 			}
 		},
 
-		cssmin: {
-			combine: {
-				files: {
-					'css/intent-driven-interface.min.css': css_files
+		cssmin : {
+			combine : {
+				files : {
+					'css/intent-driven-interface.min.css' : css_files
 				}
 			}
 		},
 
-		watch: {
-			js: {
-				files: js_files,
-				tasks: [ 'concat', 'uglify', 'jshint', 'beep:error', 'reset-grunt-error-count' ]
+		watch : {
+			js : {
+				files : js_files,
+				tasks : [ 'concat', 'uglify', 'jshint', 'beep:error', 'reset-grunt-error-count' ]
 			},
 
-			css: {
-				files: css_files,
-				tasks: [ 'cssmin' ]
+			css : {
+				files : css_files,
+				tasks : [ 'cssmin' ]
 			},
 
-			options: {
-				spawn: false
+			options : {
+				spawn : false
 			}
 		}
 	} );
@@ -99,11 +99,12 @@ module.exports = function ( grunt ) {
 		grunt.fail.errorcount = 0;
 	} );
 
+	grunt.loadNpmTasks( 'grunt-beep'           );
+	grunt.loadNpmTasks( 'grunt-contrib-watch'  );
 	grunt.loadNpmTasks( 'grunt-contrib-concat' );
 	grunt.loadNpmTasks( 'grunt-contrib-uglify' );
 	grunt.loadNpmTasks( 'grunt-contrib-cssmin' );
 	grunt.loadNpmTasks( 'grunt-contrib-jshint' );
-	grunt.loadNpmTasks( 'grunt-beep' );
-	grunt.loadNpmTasks( 'grunt-contrib-watch' );
+
 	grunt.registerTask( 'default', [ 'concat', 'uglify', 'cssmin', 'jshint' ] );
 };
