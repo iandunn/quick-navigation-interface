@@ -1,6 +1,6 @@
 var IntentDrivenInterface = ( function( $ ) {
 	'use strict';
-	var options, mainContainer, searchContainer;
+	var options, mainContainer, searchField;
 
 	/**
 	 * Initialization that runs as soon as this file has loaded
@@ -11,12 +11,12 @@ var IntentDrivenInterface = ( function( $ ) {
 		options         = initOptions;
 		initOptions     = null;
 		mainContainer   = $( '#idi-container' );
-		searchContainer = $( '#idi-search' );
+		searchField = $( '#idi-search' );
 
 		try {
 			$( window ).keyup( toggleInterface );
 			$( mainContainer ).click( toggleInterface );
-			searchContainer.keyup( showRelevantLinks );
+			searchField.keyup( showRelevantLinks );
 		} catch ( exception ) {
 			log( exception );
 		}
@@ -31,7 +31,7 @@ var IntentDrivenInterface = ( function( $ ) {
 		if ( 'keyup' === event.type ) {
 			if ( event.key === options.shortcuts.open ) {
 				mainContainer.addClass( 'idi-active' );
-				searchContainer.focus();
+				searchField.focus();
 			} else if ( event.key === options.shortcuts.close ) {
 				mainContainer.removeClass( 'idi-active' );
 			}

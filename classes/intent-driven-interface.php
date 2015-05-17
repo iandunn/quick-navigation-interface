@@ -38,8 +38,8 @@ class Intent_Driven_Interface {
 				'shortcuts' => array(
 					'open'  => '`',
 					'close' => 'Escape',
-				),  // todo make them arrays in case want to use ctrl+key combinations?
-				'distance' => 3                     // todo what's a good default?
+				),
+				'distance' => 3     // todo what's a good default?
 			) )
 		);
 	}
