@@ -17,11 +17,7 @@
 
 		<p id="idi-instructions">Use the <code>Up</code> and <code>Down</code> arrow keys to navigate, and press <code>Enter</code> to open a link.</p>
 
-		<ul id="idi-menu">
-			<li><a href="#">Appearance > <span class="query-match">Theme</span></a></li>
-			<li class="idi-active"><a href="#">Customize</a></li>
-			<li><a href="#">Widgets</a></li>
-			<li><a href="#">Menus</a></li>
-		</ul>
+		<ul id="idi-menu"></ul>
+		<!-- todo rename to idi-results? -->
 	</div> <!-- #idi-dialog-->
 </div>

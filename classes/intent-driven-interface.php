@@ -49,5 +49,6 @@ class Intent_Driven_Interface {
 	 */
 	public function output_templates() {
 		require_once( dirname( dirname( __FILE__ ) ) . '/views/mockup.php' );
+		require_once( dirname( dirname( __FILE__ ) ) . '/views/intent-link.php' );
 	}
 }
