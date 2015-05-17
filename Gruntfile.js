@@ -43,7 +43,8 @@ module.exports = function ( grunt ) {
 					"Backbone": false,
 					"console": false,
 					"jQuery": false,
-					"idiOptions": true
+					"idiOptions": true,
+					"IntentDrivenInterface": true
 				}
 			}
 		},
