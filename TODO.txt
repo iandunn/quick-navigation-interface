@@ -18,6 +18,7 @@
 
 ### Misc
 
+* intent-driven-interface.js should be concatenated version of all other js files, not a normal file. otherwise it doesn't work w/ SCRIPT_DEBUG
 * Better shortcut than ` ? It's not as easy to get to on keyboard as /, but that has conflicts. ctrl/option/super + w would have conflicts on various OSes and browsers
 	* How easy is it on various keyboard layouts?
 * Make sure ` doesn't conflict w/ any browser shortcuts.

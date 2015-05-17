@@ -18,11 +18,13 @@ module.exports = function ( grunt ) {
 
 			options: {
 				"boss": true,
+				"browser": true,
 				"curly": true,
 				"eqeqeq": true,
 				"eqnull": true,
 				"es3": true,
 				"expr": true,
+				"force": true,
 				"immed": true,
 				"noarg": true,
 				"onevar": true,
@@ -30,7 +32,6 @@ module.exports = function ( grunt ) {
 				"trailing": true,
 				"undef": true,
 				"unused": true,
-				"browser": true,
 
 				"globals": {
 					"_": false,
@@ -53,7 +54,7 @@ module.exports = function ( grunt ) {
 		watch: {
 			js: {
 				files: js_files,
-				tasks: [ 'uglify', 'jshint' ]
+				tasks: [ 'uglify', 'jshint', 'beep:error', 'reset-grunt-error-count' ]
 			},
 
 			css: {
@@ -67,9 +68,23 @@ module.exports = function ( grunt ) {
 		}
 	} );
 
+	/**
+	 * Reset Grunt's error count
+	 *
+	 * We have grunt-beep setup to beep on errors, but we also have `spawn: false` setup for the watch task. That
+	 * means that the error count doesn't get reset on it's own, so after one error has been encountered, there'll
+	 * be a beep on all subsequent runs, even after the problem has been resolved.
+	 *
+	 * @see {@link https://github.com/shama/grunt-beep/issues/6 grunt-beep #6}
+	 */
+	grunt.registerTask( 'reset-grunt-error-count', "Reset Grunt's error count", function() {
+		grunt.fail.errorcount = 0;
+	} );
+
 	grunt.loadNpmTasks( 'grunt-contrib-uglify' );
 	grunt.loadNpmTasks( 'grunt-contrib-cssmin' );
 	grunt.loadNpmTasks( 'grunt-contrib-jshint' );
+	grunt.loadNpmTasks( 'grunt-beep' );
 	grunt.loadNpmTasks( 'grunt-contrib-watch' );
 	grunt.registerTask( 'default', [ 'uglify', 'cssmin', 'jshint' ] );
 };
