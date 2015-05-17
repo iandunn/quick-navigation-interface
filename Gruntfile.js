@@ -1,19 +1,28 @@
 module.exports = function ( grunt ) {
-	var js_files  = [
+	var js_files = [
+			'javascript/app.js',                        // this comes first because all the other classes depend on window.IntentDrivenInterface being defined
 			'javascript/**/*.js',
-			'!javascript/intent-driven-interface.js',   // ignore this until it's dependencies are concatenated, and then add it at the end
-			'!javascript/*.min.js',
-			'javascript/intent-driven-interface.js'
+			'!javascript/intent-driven-interface*.js',  // ignore concatenated and minified files
+			'!javascript/bootstrap.js',
+			'javascript/bootstrap.js'                   // this comes last because we don't want to initialize window.IntentDrivenInterface until all the files have been concatenated
+
 		],
 		css_files = [ 'css/*.css', '!css/*.min.css' ];
 
 	grunt.initConfig( {
 		pkg: grunt.file.readJSON( 'package.json' ),
 
+		concat: {
+			dist: {
+				src: js_files,
+				dest: 'javascript/intent-driven-interface.js'
+			}
+		},
+
 		uglify: {
 			dist: {
 				files: {
-					'javascript/intent-driven-interface.min.js': js_files
+					'javascript/intent-driven-interface.min.js': [ 'javascript/intent-driven-interface.js' ]
 				}
 			}
 		},
@@ -40,11 +49,14 @@ module.exports = function ( grunt ) {
 
 				"globals": {
 					"_": false,
+					"alert": false,
+					"app": false,
 					"Backbone": false,
 					"console": false,
 					"jQuery": false,
 					"idiOptions": true,
-					"IntentDrivenInterface": true
+					"IntentDrivenInterface": true,
+					"wp": false
 				}
 			}
 		},
@@ -60,7 +72,7 @@ module.exports = function ( grunt ) {
 		watch: {
 			js: {
 				files: js_files,
-				tasks: [ 'uglify', 'jshint', 'beep:error', 'reset-grunt-error-count' ]
+				tasks: [ 'concat', 'uglify', 'jshint', 'beep:error', 'reset-grunt-error-count' ]
 			},
 
 			css: {
@@ -87,10 +99,11 @@ module.exports = function ( grunt ) {
 		grunt.fail.errorcount = 0;
 	} );
 
+	grunt.loadNpmTasks( 'grunt-contrib-concat' );
 	grunt.loadNpmTasks( 'grunt-contrib-uglify' );
 	grunt.loadNpmTasks( 'grunt-contrib-cssmin' );
 	grunt.loadNpmTasks( 'grunt-contrib-jshint' );
 	grunt.loadNpmTasks( 'grunt-beep' );
 	grunt.loadNpmTasks( 'grunt-contrib-watch' );
-	grunt.registerTask( 'default', [ 'uglify', 'cssmin', 'jshint' ] );
+	grunt.registerTask( 'default', [ 'concat', 'uglify', 'cssmin', 'jshint' ] );
 };

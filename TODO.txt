@@ -1,6 +1,7 @@
 ### Design
 
 * Break into Backbone templates when start implementing behavior
+* Highlight exact query matches in link titles w/ bold
 
 
 ### Behavior
@@ -18,12 +19,13 @@
 
 ### Misc
 
-* intent-driven-interface.js should be concatenated version of all other js files, not a normal file. otherwise it doesn't work w/ SCRIPT_DEBUG
+* Move concat/minified files to separate folder to so can phpstorm exclude them from code hints etc to avoid collisions?
+* Read https://ozkatz.github.io/avoiding-common-backbonejs-pitfalls.html
 * Better shortcut than ` ? It's not as easy to get to on keyboard as /, but that has conflicts. ctrl/option/super + w would have conflicts on various OSes and browsers
 	* How easy is it on various keyboard layouts?
 * Make sure ` doesn't conflict w/ any browser shortcuts.
 	* Check different OSes and browsers
-* Setup Grunt to generate concatenated/minified css/js
+* Setup qunit tests
 
 
 ### 0.1 launch
@@ -40,4 +42,7 @@
 		* use an efficient structure like a b-tree.
 		* omnisearch indexs with elasticsearch on wpcom? check if cache results locally. maybe just copy that index and add on-page links to it, then send to client.
 		* search that file for content, on-page links, everything. that way don't have to submit ajax request for every search
-	* Listen for new links added by JS?
+* Listen for new links added by JS?
+* Add ability to search by additional keywords that are associated w/ each link, not just the title
+	* Can pull the keywords from link title tags, post excerpts, etc
+* Maybe show most popular links by default, and then track what links they visit and show those as default
