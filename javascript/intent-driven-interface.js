@@ -87,10 +87,13 @@
 		showRelevantLinks : function() {
 			// todo wait a few milliseconds before issuing query to avoid wasted searches when they're going to type more characters?
 
+			// todo if enter key and already have active links, open first one
+				// probably add controller above this, instead of mixing it here
+
 			try {
 				$( '#idi-instructions' ).addClass( 'idi-active' );
 				app.searchResults.addClass( 'idi-active' );
-				app.activeLinks.reset( app.allLinks.search( app.searchField.val() ) );
+				app.activeLinks.reset( app.allLinks.search( app.searchField.val(), app.options.limit ) );
 			} catch( exception ) {
 				app.log( exception );
 			}
@@ -125,17 +128,25 @@
 		/**
 		 * Search the collection for links matching the query
 		 *
+		 * This only finds the *first* X matches before the limit is reached, rather than the *best* X matches,
+		 * but in this context they can just keep typing to further narrow the results, so that's probably good
+		 * enough for now.
+		 *
 		 * @param {string} query
+		 * @param {int}    limit
+		 *
 		 * @returns {Array}
 		 */
-		search : function( query ) {
+		search : function( query, limit ) {
 			var results = [];
 
-			// todo add limit param
-
 			if ( '' !== query ) {
-				results = this.filter( function ( link ) {
-					return link.get( 'title' ).toLowerCase().indexOf( query.toLowerCase() ) >= 0;
+				this.every( function( link ) {
+					if ( link.get( 'title' ).toLowerCase().indexOf( query.toLowerCase() ) >= 0 ) {
+						results.push( link );
+					}
+
+					return results.length < limit;
 				} );
 			}
 

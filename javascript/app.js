@@ -87,10 +87,13 @@
 		showRelevantLinks : function() {
 			// todo wait a few milliseconds before issuing query to avoid wasted searches when they're going to type more characters?
 
+			// todo if enter key and already have active links, open first one
+				// probably add controller above this, instead of mixing it here
+
 			try {
 				$( '#idi-instructions' ).addClass( 'idi-active' );
 				app.searchResults.addClass( 'idi-active' );
-				app.activeLinks.reset( app.allLinks.search( app.searchField.val() ) );
+				app.activeLinks.reset( app.allLinks.search( app.searchField.val(), app.options.limit ) );
 			} catch( exception ) {
 				app.log( exception );
 			}

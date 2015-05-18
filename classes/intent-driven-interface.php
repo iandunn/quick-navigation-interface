@@ -39,6 +39,7 @@ class Intent_Driven_Interface {
 					'open'  => '`',
 					'close' => 'Escape',
 				),
+				'limit' => 5,
 			) )
 		);
 	}
