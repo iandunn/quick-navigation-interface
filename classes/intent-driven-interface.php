@@ -48,7 +48,7 @@ class Intent_Driven_Interface {
 	 * Output the raw Backbone templates so they're available later on
 	 */
 	public function output_templates() {
-		require_once( dirname( dirname( __FILE__ ) ) . '/views/mockup.php' );
+		require_once( dirname( dirname( __FILE__ ) ) . '/views/interface.php' );
 		require_once( dirname( dirname( __FILE__ ) ) . '/views/intent-link.php' );
 	}
 }

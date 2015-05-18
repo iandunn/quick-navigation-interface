@@ -1,8 +1,6 @@
 <?php defined( 'WPINC' ) or die; ?>
 
-<?php // todo This is just a mockup to get the UI down first. When we start building the JS out, it'll be deconstructed into Backbone templates ?>
 <?php // todo i18n ?>
-<?php // todo rename to interface.php or something ?>
 
 <div id="idi-container" class="notification-dialog-wrap">
 	<div class="notification-dialog-background"></div>
