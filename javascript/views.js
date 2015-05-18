@@ -5,7 +5,7 @@
 	/*
 	 * Base view
 	 */
-	app.View = wp.Backbone.View.extend( {
+	app.View = Backbone.View.extend( {
 		// todo maybe prepare?
 
 		// todo remove if not used

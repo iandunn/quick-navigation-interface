@@ -26,7 +26,7 @@ class Intent_Driven_Interface {
 		wp_enqueue_script(
 			'intent-driven-interface',
 			plugins_url( "javascript/intent-driven-interface$suffix.js", dirname( __FILE__ ) ),
-			array( 'jquery', 'wp-backbone', 'underscore', 'wp-util' ),
+			array( 'jquery', 'backbone', 'underscore', 'wp-util' ),
 			IDI_VERSION,
 			true
 		);
