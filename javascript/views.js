@@ -28,7 +28,7 @@
 			this.render();
 		},
 
-		// todo phpdoc on all functions
+		// todo jsdoc on all functions
 		// todo use inject() instead of overriding render()
 
 		render : function() {

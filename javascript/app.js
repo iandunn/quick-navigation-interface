@@ -67,11 +67,11 @@
 						app.searchField.focus();
 					} else if ( event.key === app.options.shortcuts.close ) {
 						app.mainContainer.removeClass( 'idi-active' );
+						app.activeLinks.reset();
 					}
 				} else if ( 'click' === event.type ) {
 					if ( 'notification-dialog-background' === event.target.className || 'media-modal-icon' === event.target.className ) {
 						app.mainContainer.removeClass( 'idi-active' );
-						// todo clear activeLinks
 					}
 				}
 			} catch( exception ) {

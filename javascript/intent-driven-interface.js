@@ -67,11 +67,11 @@
 						app.searchField.focus();
 					} else if ( event.key === app.options.shortcuts.close ) {
 						app.mainContainer.removeClass( 'idi-active' );
+						app.activeLinks.reset();
 					}
 				} else if ( 'click' === event.type ) {
 					if ( 'notification-dialog-background' === event.target.className || 'media-modal-icon' === event.target.className ) {
 						app.mainContainer.removeClass( 'idi-active' );
-						// todo clear activeLinks
 					}
 				}
 			} catch( exception ) {
@@ -159,7 +159,6 @@
 	'use strict';
 	var app = window.IntentDrivenInterface;
 
-	// todo should be doing try/catch here, or covered by app? test
 	// todo assigning to window is the best practice? double check
 
 	app.Models.Link = Backbone.Model.extend( {
@@ -200,7 +199,7 @@
 			this.render();
 		},
 
-		// todo phpdoc on all functions
+		// todo jsdoc on all functions
 		// todo use inject() instead of overriding render()
 
 		render : function() {

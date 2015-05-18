@@ -23,7 +23,7 @@ This was inspired by the Ubuntu's [Dash](todo) and [HUD](https://www.youtube.com
 
 For help installing this (or any other) WordPress plugin, please read the [Managing Plugins](http://codex.wordpress.org/Managing_Plugins) article on the Codex.
 
-Once the plugin is installed and activated, you don't need to do anything else. See the Description page for details on using the plugin.
+Once the plugin is installed and activated, you don't need to do anything else. See [the Description page](https://wordpress.org/plugins/intent-driven-interface/) for details on using the plugin.
 
 
 == Frequently Asked Questions ==
@@ -33,8 +33,12 @@ Make sure you're not focused on an input field, and then try again. You can
 
 This could also happen if JavaScript execution has been halted because of errors on the page, which is most likely caused by another plugin. Try disabling all other plugins temporarily, and see if that solves the problem.
 
-= Can I change the shortcut to open? =
-Yes, all of the shortcuts can be modified via the `idi_options` filter. If you're not familiar with using filters, you can [learn more about them](https://developer.wordpress.org/plugins/hooks/filters/) from the WordPress Plugin Developer's Handbook, and then implement them in [a functionality plugin](http://wpcandy.com/teaches/how-to-create-a-functionality-plugin) that you write, or via a plugin like [Functionality](https://wordpress.org/plugins/functionality/).
+Also, make sure you're not mistaking it for the ' (single-quote) key. You need to press the backtick key, which is normally located above the tab key and left of the 1 key.
+
+
+= Can I customize the keyboard shortcuts and other options? =
+There isn't a settings page, but all of the internal options can be modified via the `idi_options` filter. If you're not familiar with using filters, you can [learn more about them](https://developer.wordpress.org/plugins/hooks/filters/) from the WordPress Plugin Developer's Handbook, and then implement them in [a functionality plugin](http://wpcandy.com/teaches/how-to-create-a-functionality-plugin) that you write, or via a plugin like [Functionality](https://wordpress.org/plugins/functionality/).
+
 
 = Is this plugin secure? =
 I've done my best to ensure that it is, but just in case I missed anything [I also offer a security bounty](https://hackerone.com/iandunn-projects/) for any vulnerabilities that can be found and privately disclosed in any of my plugins.
