@@ -17,6 +17,7 @@
 			idiOptions         = null;
 
 			// todo change from this.options to app.options ?
+			// todo move above into try block
 
 			try {
 				this.allLinks          = new app.Collections.Links( app.getAllLinks() );
@@ -67,19 +68,25 @@
 		 * @param {object} event
 		 */
 		toggleInterface : function( event ) {
-			if ( 'keyup' === event.type ) {
-				// todo return if it happened inside an input/textarea/etc field
+			// todo app.searchField.val( '' ); each time open field
 
-				if ( event.key === app.options.shortcuts.open ) {
-					app.mainContainer.addClass( 'idi-active' );
-					app.searchField.focus();
-				} else if ( event.key === app.options.shortcuts.close ) {
-					app.mainContainer.removeClass( 'idi-active' );
+			try {
+				if ( 'keyup' === event.type ) {
+					// todo return if it happened inside an input/textarea/etc field
+
+					if ( event.key === app.options.shortcuts.open ) {
+						app.mainContainer.addClass( 'idi-active' );
+						app.searchField.focus();
+					} else if ( event.key === app.options.shortcuts.close ) {
+						app.mainContainer.removeClass( 'idi-active' );
+					}
+				} else if ( 'click' === event.type ) {
+					if ( 'notification-dialog-background' === event.target.className || 'media-modal-icon' === event.target.className ) {
+						app.mainContainer.removeClass( 'idi-active' );
+					}
 				}
-			} else if ( 'click' === event.type ) {
-				if ( 'notification-dialog-background' === event.target.className || 'media-modal-icon' === event.target.className ) {
-					app.mainContainer.removeClass( 'idi-active' );
-				}
+			} catch( exception ) {
+				app.log( exception );
 			}
 		},
 
@@ -89,10 +96,14 @@
 		 * @todo move to relevant view
 		 */
 		showRelevantLinks : function() {
-			$( '#idi-instructions' ).addClass( 'idi-active' );
-			app.searchResults.addClass( 'idi-active' );
+			try {
+				$( '#idi-instructions' ).addClass( 'idi-active' );
+				app.searchResults.addClass( 'idi-active' );
 
-			app.activeLinks.reset( [ app.allLinks.pop() ] ); // todo find ones matching query
+				app.activeLinks.reset( [ app.allLinks.pop() ] ); // todo find ones matching query
+			} catch( exception ) {
+				app.log( exception );
+			}
 		},
 
 		/**
