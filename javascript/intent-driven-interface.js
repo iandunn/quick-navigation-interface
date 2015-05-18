@@ -94,11 +94,12 @@
 		 * @todo move to relevant view
 		 */
 		showRelevantLinks : function() {
+			// todo wait a few milliseconds before issuing query to avoid wasted searches when they're going to type more characters?
+
 			try {
 				$( '#idi-instructions' ).addClass( 'idi-active' );
 				app.searchResults.addClass( 'idi-active' );
-
-				app.activeLinks.reset( [ app.allLinks.pop() ] ); // todo find ones matching query
+				app.activeLinks.reset( app.allLinks.search( app.searchField.val() ) );
 			} catch( exception ) {
 				app.log( exception );
 			}
@@ -128,7 +129,19 @@
 	var app = window.IntentDrivenInterface;
 
 	app.Collections.Links = Backbone.Collection.extend( {
-		model : app.Models.Link
+		model : app.Models.Link,
+
+		search : function( query ) {
+			var results = [];
+
+			if ( '' !== query ) {
+				results = this.filter( function ( link ) {
+					return link.get( 'title' ).toLowerCase().indexOf( query.toLowerCase() ) >= 0;
+				} );
+			}
+
+			return results;
+		}
 	} );
 } )();
 
