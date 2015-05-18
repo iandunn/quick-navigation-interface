@@ -1,9 +1,11 @@
-// todo rename to app.js when break apart concat and uglify tasks
-
 ( function( $ ) {
 	'use strict';
 
 	var app = window.IntentDrivenInterface = {
+		Models      : {},
+		Collections : {},
+		Views       : {},
+
 		/**
 		 * Initialization that runs as soon as this file has loaded
 		 */
@@ -11,12 +13,17 @@
 			this.options       = idiOptions;
 			this.mainContainer = $( '#idi-container' );
 			this.searchField   = $( '#idi-search' );
+			this.searchResults = $( '#idi-menu' );
 			idiOptions         = null;
 
 			// todo change from this.options to app.options ?
 			// todo can move try/catch to bootstrap?
 
 			try {
+				this.allLinks          = new app.Collections.Links( app.getAllLinks() );
+				this.activeLinks       = new app.Collections.Links( [] );
+				this.searchResultsView = new app.Views.Links( { el: app.searchResults, collection: this.activeLinks } );
+
 				$( window ).keyup( app.toggleInterface );
 				app.mainContainer.click( app.toggleInterface );
 				app.searchField.keyup( app.showRelevantLinks );
@@ -24,6 +31,32 @@
 			} catch ( exception ) {
 				app.log( exception );
 			}
+		},
+
+		/**
+		 * Collect all the links on the page
+		 *
+		 * @returns {array}
+		 */
+		getAllLinks : function() {
+			// todo stubbed
+
+			var themes = new app.Models.Link( {
+				'title' : 'Themes',
+				'url'   : 'http://wp.dev/wp-admin/themes.php'
+			} );
+
+			var plugins = new app.Models.Link( {
+				'title' : 'Plugins',
+				'url'   : 'http://wp.dev/wp-admin/plugins.php'
+			} );
+
+			var dashboard = new app.Models.Link( {
+				'title' : 'Dashboard',
+				'url'   : 'http://wp.dev/wp-admin/index.php'
+			} );
+
+			return [ themes, plugins, dashboard ];
 		},
 
 		/**
@@ -55,7 +88,9 @@
 		 */
 		showRelevantLinks : function() {
 			$( '#idi-instructions' ).addClass( 'idi-active' );
-			$( '#idi-menu' ).addClass( 'idi-active' );
+			app.searchResults.addClass( 'idi-active' );
+
+			app.activeLinks.reset( [ app.allLinks.pop() ] ); // todo find ones matching query
 		},
 
 		/**
@@ -111,6 +146,7 @@
 	app.View = wp.Backbone.View.extend( {
 		// todo maybe prepare?
 
+		// todo remove if not used
 		inject : function( selector ) {
 			this.render();
 			$( selector ).html( this.el );
@@ -127,13 +163,6 @@
 		template  : wp.template( 'intent-link' ),
 
 		initialize : function() {
-			if ( 'undefined' === typeof this.model ) {
-				app.log( 'model view init' );
-
-				return;
-				// todo temp workaround, not sure why this is being called when a model is instantiated, or even how
-			}
-
 			this.render();
 		},
 
@@ -150,17 +179,8 @@
 	 */
 	app.Views.Links = app.View.extend( {
 		tagName : 'ul',
-
-		// todo listen for changes and re-render
-
+		
 		initialize : function() {
-			if ( 'undefined' === typeof this.collection ) {
-				app.log( 'collect view init' );
-
-				return;
-				// todo temp workaround, not sure why this is being called when a model is instantiated, or even how
-			}
-
 			this.render();
 			this.listenTo( this.collection, 'reset', this.render );
 		},
@@ -168,21 +188,18 @@
 		render : function() {
 			this.$el.html( '' );
 
-			app.log( this.collection );
-			this.$el.append( '<li>bwoken</li>' );
-			return;
-
 			this.collection.each( function( link ) {
-				app.log( link );
-
 				var linkView = new app.Views.Link( { model: link } );
 				this.$el.append( linkView.el );
 			}, this );
 		}
 	} );
+
 } )( jQuery );
 
 // Initialize the main class after Grunt has concatenated all the files together
 IntentDrivenInterface.start();
 
 // todo think of a better way to do this?
+
+//# sourceMappingURL=intent-driven-interface.js.map

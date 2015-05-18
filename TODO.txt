@@ -19,6 +19,8 @@
 
 ### Misc
 
+* sourcemap xss issues? remove b/c not useful anyway?
+* update grunt task versions to latest available
 * Move concat/minified files to separate folder to so can phpstorm exclude them from code hints etc to avoid collisions?
 * Read https://ozkatz.github.io/avoiding-common-backbonejs-pitfalls.html
 * Better shortcut than ` ? It's not as easy to get to on keyboard as /, but that has conflicts. ctrl/option/super + w would have conflicts on various OSes and browsers

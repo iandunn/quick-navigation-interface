@@ -1,9 +1,11 @@
-// todo rename to app.js when break apart concat and uglify tasks
-
 ( function( $ ) {
 	'use strict';
 
 	var app = window.IntentDrivenInterface = {
+		Models      : {},
+		Collections : {},
+		Views       : {},
+
 		/**
 		 * Initialization that runs as soon as this file has loaded
 		 */
@@ -11,12 +13,17 @@
 			this.options       = idiOptions;
 			this.mainContainer = $( '#idi-container' );
 			this.searchField   = $( '#idi-search' );
+			this.searchResults = $( '#idi-menu' );
 			idiOptions         = null;
 
 			// todo change from this.options to app.options ?
 			// todo can move try/catch to bootstrap?
 
 			try {
+				this.allLinks          = new app.Collections.Links( app.getAllLinks() );
+				this.activeLinks       = new app.Collections.Links( [] );
+				this.searchResultsView = new app.Views.Links( { el: app.searchResults, collection: this.activeLinks } );
+
 				$( window ).keyup( app.toggleInterface );
 				app.mainContainer.click( app.toggleInterface );
 				app.searchField.keyup( app.showRelevantLinks );
@@ -24,6 +31,32 @@
 			} catch ( exception ) {
 				app.log( exception );
 			}
+		},
+
+		/**
+		 * Collect all the links on the page
+		 *
+		 * @returns {array}
+		 */
+		getAllLinks : function() {
+			// todo stubbed
+
+			var themes = new app.Models.Link( {
+				'title' : 'Themes',
+				'url'   : 'http://wp.dev/wp-admin/themes.php'
+			} );
+
+			var plugins = new app.Models.Link( {
+				'title' : 'Plugins',
+				'url'   : 'http://wp.dev/wp-admin/plugins.php'
+			} );
+
+			var dashboard = new app.Models.Link( {
+				'title' : 'Dashboard',
+				'url'   : 'http://wp.dev/wp-admin/index.php'
+			} );
+
+			return [ themes, plugins, dashboard ];
 		},
 
 		/**
@@ -55,7 +88,9 @@
 		 */
 		showRelevantLinks : function() {
 			$( '#idi-instructions' ).addClass( 'idi-active' );
-			$( '#idi-menu' ).addClass( 'idi-active' );
+			app.searchResults.addClass( 'idi-active' );
+
+			app.activeLinks.reset( [ app.allLinks.pop() ] ); // todo find ones matching query
 		},
 
 		/**
