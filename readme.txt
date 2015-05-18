@@ -28,8 +28,13 @@ Once the plugin is installed and activated, you don't need to do anything else. 
 
 == Frequently Asked Questions ==
 
-= todo? =
-todo
+= I'm pressing the ` key, but nothing happens =
+Make sure you're not focused on an input field, and then try again. You can
+
+This could also happen if JavaScript execution has been halted because of errors on the page, which is most likely caused by another plugin. Try disabling all other plugins temporarily, and see if that solves the problem.
+
+= Can I change the shortcut to open? =
+Yes, all of the shortcuts can be modified via the `idi_options` filter. If you're not familiar with using filters, you can [learn more about them](https://developer.wordpress.org/plugins/hooks/filters/) from the WordPress Plugin Developer's Handbook, and then implement them in [a functionality plugin](http://wpcandy.com/teaches/how-to-create-a-functionality-plugin) that you write, or via a plugin like [Functionality](https://wordpress.org/plugins/functionality/).
 
 = Is this plugin secure? =
 I've done my best to ensure that it is, but just in case I missed anything [I also offer a security bounty](https://hackerone.com/iandunn-projects/) for any vulnerabilities that can be found and privately disclosed in any of my plugins.

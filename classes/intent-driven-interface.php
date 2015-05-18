@@ -39,7 +39,6 @@ class Intent_Driven_Interface {
 					'open'  => '`',
 					'close' => 'Escape',
 				),
-				'distance' => 3     // todo what's a good default?
 			) )
 		);
 	}
