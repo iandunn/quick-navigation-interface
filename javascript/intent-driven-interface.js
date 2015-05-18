@@ -12,8 +12,8 @@
 		start : function() {
 			this.options       = idiOptions;
 			this.mainContainer = $( '#idi-container' );
-			this.searchField   = $( '#idi-search' );
-			this.searchResults = $( '#idi-menu' );
+			this.searchField   = $( '#idi-search-field' );
+			this.searchResults = $( '#idi-search-results' );
 			idiOptions         = null;
 
 			// todo change from this.options to app.options ?
@@ -179,7 +179,7 @@
 	 */
 	app.Views.Links = app.View.extend( {
 		tagName : 'ul',
-		
+
 		initialize : function() {
 			this.render();
 			this.listenTo( this.collection, 'reset', this.render );

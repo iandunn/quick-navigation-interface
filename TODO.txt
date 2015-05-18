@@ -1,18 +1,9 @@
-### Design
-
-* Break into Backbone templates when start implementing behavior
-* Highlight exact query matches in link titles w/ bold
-
-
 ### Behavior
 
 * Create Backbone models, collections and views for the interface
 	* One collection for all links (to search against)
 	* Another collection for matches (to display)
 * Watch search input and filter the active collection based on it
-	* Find a good JS implementation of Levenshtein
-		* https://stackoverflow.com/questions/11919065/sort-an-array-by-the-levenshtein-distance-with-best-performance-in-javascript
-	* Search by title alone, or title + url?
 * For WP menus, add in siblings with a higher distance than query matches
 * Capture up and down keys and move active class to corresponding list items
 
@@ -34,8 +25,14 @@
 * When committing to wporg repo, save screenshots to assets dir instead of plugin dir
 
 
+### Future iterations
 
-### v2
+* Improve search
+	* Get list of specific examples where current isn't good enough
+	* Maybe calculate a Levenshtein distance
+		* Find a good, performant implementation. Maybe https://stackoverflow.com/questions/11919065/sort-an-array-by-the-levenshtein-distance-with-best-performance-in-javascript
+* Add ability to search by additional keywords that are associated w/ each link, not just the title
+	* Can pull the keywords from link title tags, post excerpts, etc
 * Include content in results
 	* Use Jetpack Omnisearch under the hood
 	* Maybe fallback to a basic post/comment search if Omnisearch not available
@@ -45,6 +42,5 @@
 		* omnisearch indexs with elasticsearch on wpcom? check if cache results locally. maybe just copy that index and add on-page links to it, then send to client.
 		* search that file for content, on-page links, everything. that way don't have to submit ajax request for every search
 * Listen for new links added by JS?
-* Add ability to search by additional keywords that are associated w/ each link, not just the title
-	* Can pull the keywords from link title tags, post excerpts, etc
 * Maybe show most popular links by default, and then track what links they visit and show those as default
+* Highlight exact query matches in link titles w/ bold

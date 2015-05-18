@@ -41,7 +41,7 @@
 	 */
 	app.Views.Links = app.View.extend( {
 		tagName : 'ul',
-		
+
 		initialize : function() {
 			this.render();
 			this.listenTo( this.collection, 'reset', this.render );

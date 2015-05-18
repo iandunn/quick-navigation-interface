@@ -1,10 +1,11 @@
 /* todo make responsive, but the notifications in core aren't responsive :( see https://core.trac.wordpress.org/ticket/32194 */
 /* todo use rems? */
+/* todo indent */
 
 .idi-active,
 #idi-container.idi-active,
 #idi-instructions.idi-active,
-#idi-menu.idi-active {
+#idi-search-results.idi-active {
 	display: block;
 }
 
@@ -20,7 +21,7 @@
 	text-align: center;
 }
 
-#idi-search {
+#idi-search-field {
 	width: 100%;
 
 	/* todo rounded corners, maybe a magnifying glass icon */
@@ -37,17 +38,17 @@
 }
 
 
-#idi-menu {
+#idi-search-results {
 	display: none;
 }
 
-#idi-menu li {
+#idi-search-results li {
 	display: list-item;
 	list-style-type: disc;
 	list-style-position: inside;
 	font-size: 1.1em;
 }
 
-#idi-menu li a {
+#idi-search-results li a {
 	text-decoration: none;
 }

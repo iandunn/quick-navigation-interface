@@ -16,11 +16,10 @@
 
 		<h3 id="idi-introduction">Start typing to open any links on the current page</h3>
 
-		<input id="idi-search" name="" type="text" placeholder="e.g., Posts, Settings, Plugins, Comments, etc" />
+		<input id="idi-search-field" name="" type="text" placeholder="e.g., Posts, Settings, Plugins, Comments, etc" />
 
 		<p id="idi-instructions">Use the <code>Up</code> and <code>Down</code> arrow keys to navigate, and press <code>Enter</code> to open a link.</p>
 
-		<ul id="idi-menu"></ul>
-		<!-- todo rename to idi-results? -->
+		<ul id="idi-search-results"></ul>
 	</div> <!-- #idi-dialog-->
 </div>
