@@ -1,3 +1,4 @@
+<?php defined( 'WPINC' ) or die; ?>
 <?php // todo finish updating text and i18n ?>
 
 <div class="error">
