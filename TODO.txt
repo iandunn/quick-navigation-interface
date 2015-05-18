@@ -1,15 +1,21 @@
 ### Behavior
 
-* Create Backbone models, collections and views for the interface
-	* One collection for all links (to search against)
-	* Another collection for matches (to display)
-* Watch search input and filter the active collection based on it
-* For WP menus, add in siblings with a higher distance than query matches
 * Capture up and down keys and move active class to corresponding list items
+
+* Improve results
+	* Log each title/url to console, then browse through screens to get a feel for where the biggest problems are
+	* Links from admin bar New menu are duplicates and titles aren't helpful, maybe ignore them
+    		* maybe ignore all of admin bar b/c it's all duplicates
+    	* For menus, show parent > child if the current is a child?
+	* remove duplicate urls? but how to determine which one has the best title and keep that one? assume that a longer title contains more info and use that?
+	* Disambiguate links like "New" (new what?) and "Add new"
+		* Maybe loop through admin menu and add those w/ special context since those are known, then loop through rest of page and just add?
+		* Maybe detect append last part of url? only if conflict, or maybe always?
 
 
 ### Misc
 
+* Look at twitter typeahead and it's bloodhound suggestion engine. any compelling reason to use it? what about alternatives?
 * sourcemap xss issues? remove b/c not useful anyway?
 * update grunt task versions to latest available
 * Move concat/minified files to separate folder to so can phpstorm exclude them from code hints etc to avoid collisions?
@@ -22,6 +28,8 @@
 
 
 ### 0.1 launch
+* try it out for a few days on wordcamp.dev and see if you run into any annoyances, bugs, performance issues, etc
+* Look at all the todo comments through all files
 * When committing to wporg repo, save screenshots to assets dir instead of plugin dir
 
 

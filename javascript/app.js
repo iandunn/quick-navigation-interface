@@ -36,27 +36,19 @@
 		/**
 		 * Collect all the links on the page
 		 *
-		 * @returns {array}
+		 * @returns {Array}
 		 */
 		getAllLinks : function() {
-			// todo stubbed
+			var links = [];
 
-			var themes = new app.Models.Link( {
-				'title' : 'Themes',
-				'url'   : 'http://wp.dev/wp-admin/themes.php'
+			$( 'a' ).each( function() {
+				links.push( new app.Models.Link( {
+					'title': $( this ).text(),
+					'url'  : $( this ).attr( 'href' )
+				} ) );
 			} );
 
-			var plugins = new app.Models.Link( {
-				'title' : 'Plugins',
-				'url'   : 'http://wp.dev/wp-admin/plugins.php'
-			} );
-
-			var dashboard = new app.Models.Link( {
-				'title' : 'Dashboard',
-				'url'   : 'http://wp.dev/wp-admin/index.php'
-			} );
-
-			return [ themes, plugins, dashboard ];
+			return links;
 		},
 
 		/**
@@ -81,6 +73,7 @@
 				} else if ( 'click' === event.type ) {
 					if ( 'notification-dialog-background' === event.target.className || 'media-modal-icon' === event.target.className ) {
 						app.mainContainer.removeClass( 'idi-active' );
+						// todo clear activeLinks
 					}
 				}
 			} catch( exception ) {
