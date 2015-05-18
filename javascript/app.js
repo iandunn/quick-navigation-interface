@@ -52,8 +52,6 @@
 		/**
 		 * Reveal the interface when the user presses the shortcut
 		 *
-		 * @todo move to relevant view
-		 *
 		 * @param {object} event
 		 */
 		toggleInterface : function( event ) {
@@ -61,11 +59,11 @@
 				if ( 'keyup' === event.type ) {
 					// todo return if it happened inside an input/textarea/etc field
 
-					if ( event.key === app.options.shortcuts.open ) {
+					if ( event.key === app.options.shortcuts['open-interface'] ) {
 						app.searchField.val( '' );
 						app.mainContainer.addClass( 'idi-active' );
 						app.searchField.focus();
-					} else if ( event.key === app.options.shortcuts.close ) {
+					} else if ( event.key === app.options.shortcuts['close-interface'] ) {
 						app.mainContainer.removeClass( 'idi-active' );
 						app.activeLinks.reset();
 					}

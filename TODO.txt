@@ -26,6 +26,7 @@
 * Make sure ` doesn't conflict w/ any browser shortcuts.
 	* Check different OSes and browsers
 * Setup qunit tests
+* think about any ally issues
 
 
 ### 0.1 launch

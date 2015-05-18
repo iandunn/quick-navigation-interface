@@ -16,7 +16,10 @@
 
 		<input id="idi-search-field" name="" type="text" placeholder="e.g., Posts, Settings, Plugins, Comments, etc" />
 
-		<p id="idi-instructions">Use the <code>Up</code> and <code>Down</code> arrow keys to navigate, and press <code>Enter</code> to open a link.</p>
+		<p id="idi-instructions">
+			Use the <code><?php echo esc_html( $shortcuts['previous-link'] ); ?></code> and <code><?php echo esc_html( $shortcuts['next-link'] ); ?></code>
+			keys to navigate, and press <code><?php echo esc_html( $shortcuts['open-link'] ); ?></code> to open a link.
+		</p>
 
 		<ul id="idi-search-results"></ul>
 	</div> <!-- #idi-dialog-->

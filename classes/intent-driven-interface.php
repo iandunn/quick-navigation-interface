@@ -1,10 +1,23 @@
 <?php
 
 class Intent_Driven_Interface {
+	protected $options;
+
 	/**
 	 * Constructor
 	 */
 	public function __construct() {
+		$this->options = array(
+			'shortcuts' => array(
+				'open-interface'  => '`',
+				'next-link'       => 'ArrowDown',
+				'previous-link'   => 'ArrowUp',
+				'open-link'       => 'Enter',
+				'close-interface' => 'Escape',
+			),
+			'limit' => 5,
+		);
+
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts'  ) );
 		add_action( 'admin_footer',          array( $this, 'output_templates' ) );
 	}
@@ -34,13 +47,7 @@ class Intent_Driven_Interface {
 		wp_localize_script(
 			'intent-driven-interface',
 			'idiOptions',
-			apply_filters( 'idi_options', array(
-				'shortcuts' => array(
-					'open'  => '`',
-					'close' => 'Escape',
-				),
-				'limit' => 5,
-			) )
+			apply_filters( 'idi_options', $this->options )
 		);
 	}
 
@@ -48,6 +55,13 @@ class Intent_Driven_Interface {
 	 * Output the raw Backbone templates so they're available later on
 	 */
 	public function output_templates() {
+		$shortcuts = $this->options['shortcuts'];
+
+		// Change "ArrowDown" to just "Down"
+		foreach( $shortcuts as & $shortcut ) {
+			$shortcut = ltrim( $shortcut, 'Arrow' );
+		}
+
 		require_once( dirname( dirname( __FILE__ ) ) . '/views/interface.php' );
 		require_once( dirname( dirname( __FILE__ ) ) . '/views/intent-link.php' );
 	}
