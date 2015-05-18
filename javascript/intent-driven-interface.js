@@ -10,19 +10,18 @@
 		 * Initialization that runs as soon as this file has loaded
 		 */
 		start : function() {
-			this.options       = idiOptions;
-			this.mainContainer = $( '#idi-container'      );
-			this.searchField   = $( '#idi-search-field'   );
-			this.searchResults = $( '#idi-search-results' );
-			idiOptions         = null;
-
-			// todo change from this.options to app.options ?
-			// todo move above into try block
-
 			try {
+				this.options       = idiOptions;
+				this.mainContainer = $( '#idi-container'      );
+				this.searchField   = $( '#idi-search-field'   );
+				this.searchResults = $( '#idi-search-results' );
+				idiOptions         = null;
+
 				this.allLinks          = new app.Collections.Links( app.getAllLinks() );
 				this.activeLinks       = new app.Collections.Links( [] );
 				this.searchResultsView = new app.Views.Links( { el: app.searchResults, collection: this.activeLinks } );
+
+				// todo change from this.options to app.options ?
 
 				$( window ).keyup(       app.toggleInterface   );
 				app.mainContainer.click( app.toggleInterface   );
