@@ -1,5 +1,6 @@
 ### Behavior
 
+* Enter opens first link, even if haven't hit down key to access it
 * Capture up and down keys and move active class to corresponding list items
 
 * Improve results

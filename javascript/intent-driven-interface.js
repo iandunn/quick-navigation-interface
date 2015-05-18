@@ -11,17 +11,15 @@
 		 */
 		start : function() {
 			try {
-				this.options       = idiOptions;
-				this.mainContainer = $( '#idi-container'      );
-				this.searchField   = $( '#idi-search-field'   );
-				this.searchResults = $( '#idi-search-results' );
+				app.options       = idiOptions;
+				app.mainContainer = $( '#idi-container'      );
+				app.searchField   = $( '#idi-search-field'   );
+				app.searchResults = $( '#idi-search-results' );
 				idiOptions         = null;
 
-				this.allLinks          = new app.Collections.Links( app.getAllLinks() );
-				this.activeLinks       = new app.Collections.Links( [] );
-				this.searchResultsView = new app.Views.Links( { el: app.searchResults, collection: this.activeLinks } );
-
-				// todo change from this.options to app.options ?
+				app.allLinks          = new app.Collections.Links( app.getAllLinks() );
+				app.activeLinks       = new app.Collections.Links( [] );
+				app.searchResultsView = new app.Views.Links( { el: app.searchResults, collection: app.activeLinks } );
 
 				$( window ).keyup(       app.toggleInterface   );
 				app.mainContainer.click( app.toggleInterface   );
