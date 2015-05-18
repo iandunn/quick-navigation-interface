@@ -11,22 +11,22 @@
 		 */
 		start : function() {
 			this.options       = idiOptions;
-			this.mainContainer = $( '#idi-container' );
-			this.searchField   = $( '#idi-search-field' );
+			this.mainContainer = $( '#idi-container'      );
+			this.searchField   = $( '#idi-search-field'   );
 			this.searchResults = $( '#idi-search-results' );
 			idiOptions         = null;
 
 			// todo change from this.options to app.options ?
-			// todo can move try/catch to bootstrap?
 
 			try {
 				this.allLinks          = new app.Collections.Links( app.getAllLinks() );
 				this.activeLinks       = new app.Collections.Links( [] );
 				this.searchResultsView = new app.Views.Links( { el: app.searchResults, collection: this.activeLinks } );
 
-				$( window ).keyup( app.toggleInterface );
-				app.mainContainer.click( app.toggleInterface );
-				app.searchField.keyup( app.showRelevantLinks );
+				$( window ).keyup(       app.toggleInterface   );
+				app.mainContainer.click( app.toggleInterface   );
+				app.searchField.keyup(   app.showRelevantLinks );
+
 				// todo maybe make this a controller that calls toggleinteface, showrelevantlinks, etc. better than having two listeners for same event?
 			} catch ( exception ) {
 				app.log( exception );
@@ -68,6 +68,8 @@
 		 */
 		toggleInterface : function( event ) {
 			if ( 'keyup' === event.type ) {
+				// todo return if it happened inside an input/textarea/etc field
+
 				if ( event.key === app.options.shortcuts.open ) {
 					app.mainContainer.addClass( 'idi-active' );
 					app.searchField.focus();
