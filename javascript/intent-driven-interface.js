@@ -67,13 +67,12 @@
 		 * @param {object} event
 		 */
 		toggleInterface : function( event ) {
-			// todo app.searchField.val( '' ); each time open field
-
 			try {
 				if ( 'keyup' === event.type ) {
 					// todo return if it happened inside an input/textarea/etc field
 
 					if ( event.key === app.options.shortcuts.open ) {
+						app.searchField.val( '' );
 						app.mainContainer.addClass( 'idi-active' );
 						app.searchField.focus();
 					} else if ( event.key === app.options.shortcuts.close ) {
