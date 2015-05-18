@@ -13,6 +13,10 @@ module.exports = function ( grunt ) {
 		pkg : grunt.file.readJSON( 'package.json' ),
 
 		concat : {
+			options : {
+				sourceMap : true
+			},
+
 			dist : {
 				src  : js_files,
 				dest : 'javascript/intent-driven-interface.js'
@@ -20,6 +24,12 @@ module.exports = function ( grunt ) {
 		},
 
 		uglify : {
+			options : {
+				sourceMap               : true,
+				sourceMapIncludeSources : true,
+				sourceMapIn             : 'javascript/intent-driven-interface.js.map'
+			},
+
 			dist : {
 				files : {
 					'javascript/intent-driven-interface.min.js' : [ 'javascript/intent-driven-interface.js' ]
