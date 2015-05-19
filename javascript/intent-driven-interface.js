@@ -15,6 +15,7 @@
 				app.mainContainer = $( '#idi-container'      );
 				app.searchField   = $( '#idi-search-field'   );
 				app.searchResults = $( '#idi-search-results' );
+				app.instructions  = $( '#idi-instructions'   );
 				idiOptions         = null;
 
 				app.allLinks          = new app.Collections.Links( app.getAllLinks() );
@@ -67,6 +68,7 @@
 						app.searchField.focus();
 					} else if ( event.key === app.options.shortcuts['close-interface'] ) {
 						app.mainContainer.removeClass( 'idi-active' );
+						app.instructions.removeClass(  'idi-active' );
 						app.activeLinks.reset();
 					}
 				} else if ( 'click' === event.type ) {
@@ -87,7 +89,7 @@
 		 * @param {object} event
 		 */
 		showRelevantLinks : function( event ) {
-			var link;
+			var link, query;
 
 			// todo maybe refactor this once adding up/down keys are implemented, to make it a controller that calls modularized functions
 
@@ -99,9 +101,17 @@
 						link.get( 0 ).click();
 					}
 				} else {
-					$( '#idi-instructions' ).addClass( 'idi-active' );
-					app.searchResults.addClass( 'idi-active' );
-					app.activeLinks.reset( app.allLinks.search( app.searchField.val(), app.options.limit ) );
+					query = app.searchField.val();
+
+					if ( '' === query ) {
+						app.instructions.removeClass( 'idi-active' );
+						app.searchResults.removeClass( 'idi-active' );
+					} else {
+						app.instructions.addClass( 'idi-active' );
+						app.searchResults.addClass( 'idi-active' );
+					}
+
+					app.activeLinks.reset( app.allLinks.search( query, app.options.limit ) );
 				}
 			} catch( exception ) {
 				app.log( exception );
