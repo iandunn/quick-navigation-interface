@@ -13,8 +13,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 define( 'IDI_VERSION',              '0.1'   );
-define( 'IDI_REQUIRED_PHP_VERSION', '5.2.4' );  // because of WordPress minimum requirements  // todo
-define( 'IDI_REQUIRED_WP_VERSION',  '0'     );  // because of todo   // todo
+define( 'IDI_REQUIRED_PHP_VERSION', '5.2.4' );  // because of WordPress minimum requirements
+define( 'IDI_REQUIRED_WP_VERSION',  '3.6'   );  // because of wp-util
 
 /**
  * Checks if the system requirements are met
@@ -53,5 +53,5 @@ if ( idi_requirements_met() ) {
 	require_once( dirname( __FILE__ ) . '/classes/intent-driven-interface.php' );
 	$GLOBALS['intent_driven_interface'] = new Intent_Driven_Interface();
 } else {
-	add_action( 'admin_notices', 'ini_requirements_error' );    // todo test
+	add_action( 'admin_notices', 'idi_requirements_error' );
 }

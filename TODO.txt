@@ -34,6 +34,7 @@
 * test in various browsers/devices
 * try it out for a few days on wordcamp.dev and see if you run into any annoyances, bugs, performance issues, etc
 * Look at all the todo comments through all files
+* create banner image and icon
 * When committing to wporg repo, save screenshots to assets dir instead of plugin dir
 
 
@@ -56,3 +57,6 @@
 * Listen for new links added by JS?
 * Maybe show most popular links by default, and then track what links they visit and show those as default
 * Highlight exact query matches in link titles w/ bold
+* showRelevantLinks -- improve performance by waiting a few milliseconds before issuing a query, to avoid wasted searches when they're going to type more characters?
+	* if this is non-trivial, then might be better to rely on twitter typeahead (or something similar).
+	* but wouldn't be worth adding weight just for this, unless it's a noticeable problem, which right now it isn't

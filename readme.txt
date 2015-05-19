@@ -2,7 +2,7 @@
 Contributors:      iandunn
 Donate link:       todo - maybe debian or linux foundation or something
 Tags:              keyboard,navigation,keyboard shortcuts,interface,wp-admin
-Requires at least: todo
+Requires at least: 3.6
 Tested up to:      4.2
 Stable tag:        0.1
 License:           GPLv2
@@ -16,7 +16,9 @@ Intent-Driven Interface provides a new way to navigate through the Administratio
 
 Just press ` (above the tab key) to bring up the interface, and then start typing what you want to do. As you type, you'll be shown a list of matching links. Use the up and down keys to move between them, and press enter to open one.
 
-This was inspired by the Ubuntu's [Dash](todo) and [HUD](https://www.youtube.com/watch?v=hfmSTWyYbms), and is also similar to the Spotlight feature in OS X.
+This was inspired by the Ubuntu's [Dash](https://www.youtube.com/watch?v=dUS8DHYwP5U) and [HUD](https://www.youtube.com/watch?v=hfmSTWyYbms), and is also similar to the Spotlight feature in OS X.
+
+todo take screencast and embed video here
 
 
 == Installation ==

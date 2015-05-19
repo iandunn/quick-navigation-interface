@@ -5,11 +5,11 @@
 	<p><?php _e( "Intent Driven Interface error: Your environment doesn't meet all of the system requirements listed below.", 'intent-driven-interface' ); ?></p>
 
 	<ul class="ul-disc">
-		<li><strong>PHP <?php echo GAPUP_REQUIRED_PHP_VERSION; ?>+</strong>
+		<li><strong>PHP <?php echo IDI_REQUIRED_PHP_VERSION; ?>+</strong>
 			<em>(<?php printf( __( "You're running version %s", 'intent-driven-interface' ), PHP_VERSION ); ?>)</em>
 		</li>
 
-		<li><strong>WordPress <?php echo GAPUP_REQUIRED_WP_VERSION; ?>+</strong>
+		<li><strong>WordPress <?php echo IDI_REQUIRED_WP_VERSION; ?>+</strong>
 			<em>(You're running version <?php echo esc_html( $wp_version ); ?>)</em>
 		</li>
 	</ul>

@@ -87,9 +87,6 @@
 		showRelevantLinks : function( event ) {
 			var link;
 
-			// todo improve performance by waiting a few milliseconds before issuing a query, to avoid wasted searches when they're going to type more characters?
-				// if this is non-trivial, then might be better to rely on twitter typeahead (or something similar).
-				// but wouldn't be worth adding weight just for this, unless it's a noticeable problem, which right now it isn't
 			// todo maybe refactor this once adding up/down keys are implemented, to make it a controller that calls modularized functions
 
 			try {
