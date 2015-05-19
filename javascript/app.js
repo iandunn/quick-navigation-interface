@@ -84,8 +84,6 @@
 		/**
 		 * Show relevant links based on the user's query
 		 *
-		 * @todo move to relevant view
-		 *
 		 * @param {object} event
 		 */
 		showRelevantLinks : function( event ) {

@@ -2,7 +2,41 @@
 
 * Capture up and down keys and move active class to corresponding list items
 
-* Improve results
+
+### Misc
+
+
+* Better shortcut than ` ? It's not as easy to get to on keyboard as /, but that has conflicts. ctrl/option/super + w would have conflicts on various OSes and browsers
+	* How easy is it on various keyboard layouts?
+* Make sure ` doesn't conflict w/ any browser shortcuts.
+	* Check different OSes and browsers
+* sourcemap xss issues? remove b/c not useful anyway?
+* Read https://ozkatz.github.io/avoiding-common-backbonejs-pitfalls.html
+
+
+### 0.1 launch
+
+* test in various browsers/devices
+* try it out for a few days on wordcamp.dev and see if you run into any annoyances, bugs, performance issues, etc
+* Look at all the todo comments through all files
+* create banner image and icon
+* generate pot file
+* When committing to wporg repo, save screenshots to assets dir instead of plugin dir
+
+
+### 0.2
+
+* think about any ally issues
+* Setup qunit tests
+* update grunt task versions to latest available
+* Move concat/minified files to separate folder to so can phpstorm exclude them from code hints etc to avoid collisions?
+* Maybe don't ship the dev related files w/ the plugin?
+* better way to call start() after everything concatenated, so you can remove bootstrap.js?
+
+
+### Future iterations
+
+* Improve search results
 	* Log each title/url to console, then browse through screens to get a feel for where the biggest problems are
 	* Links from admin bar New menu are duplicates and titles aren't helpful, maybe ignore them
     		* maybe ignore all of admin bar b/c it's all duplicates
@@ -14,39 +48,14 @@
 	* Remove any links that are just # or javascript: b/c the handlers are setup based on ID and won't do anything here
 		* What about normal anchor links, want those to work.
 
-
-### Misc
-
-* Look at twitter typeahead and it's bloodhound suggestion engine. any compelling reason to use it? what about alternatives?
-* sourcemap xss issues? remove b/c not useful anyway?
-* update grunt task versions to latest available
-* Move concat/minified files to separate folder to so can phpstorm exclude them from code hints etc to avoid collisions?
-* Read https://ozkatz.github.io/avoiding-common-backbonejs-pitfalls.html
-* Better shortcut than ` ? It's not as easy to get to on keyboard as /, but that has conflicts. ctrl/option/super + w would have conflicts on various OSes and browsers
-	* How easy is it on various keyboard layouts?
-* Make sure ` doesn't conflict w/ any browser shortcuts.
-	* Check different OSes and browsers
-* Setup qunit tests
-* think about any ally issues
-
-
-### 0.1 launch
-* test in various browsers/devices
-* try it out for a few days on wordcamp.dev and see if you run into any annoyances, bugs, performance issues, etc
-* Look at all the todo comments through all files
-* create banner image and icon
-* generate pot file
-* When committing to wporg repo, save screenshots to assets dir instead of plugin dir
-
-
-### Future iterations
-
-* Improve search
+* More sophisticated search if above tweaks don't make it good enough
 	* Get list of specific examples where current isn't good enough
-	* Maybe calculate a Levenshtein distance
+	* Maybe calculate a Levenshtein distance, or soundex, or something else
 		* Find a good, performant implementation. Maybe https://stackoverflow.com/questions/11919065/sort-an-array-by-the-levenshtein-distance-with-best-performance-in-javascript
+
 * Add ability to search by additional keywords that are associated w/ each link, not just the title
 	* Can pull the keywords from link title tags, post excerpts, etc
+
 * Include content in results
 	* Use Jetpack Omnisearch under the hood
 	* Maybe fallback to a basic post/comment search if Omnisearch not available
@@ -55,9 +64,15 @@
 		* use an efficient structure like a b-tree.
 		* omnisearch indexs with elasticsearch on wpcom? check if cache results locally. maybe just copy that index and add on-page links to it, then send to client.
 		* search that file for content, on-page links, everything. that way don't have to submit ajax request for every search
+
 * Listen for new links added by JS?
+
 * Maybe show most popular links by default, and then track what links they visit and show those as default
+
 * Highlight exact query matches in link titles w/ bold
+
 * showRelevantLinks -- improve performance by waiting a few milliseconds before issuing a query, to avoid wasted searches when they're going to type more characters?
 	* if this is non-trivial, then might be better to rely on twitter typeahead (or something similar).
 	* but wouldn't be worth adding weight just for this, unless it's a noticeable problem, which right now it isn't
+
+* Look at twitter typeahead and it's bloodhound suggestion engine. any compelling reason to use it? what about alternatives?

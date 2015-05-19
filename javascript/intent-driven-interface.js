@@ -84,8 +84,6 @@
 		/**
 		 * Show relevant links based on the user's query
 		 *
-		 * @todo move to relevant view
-		 *
 		 * @param {object} event
 		 */
 		showRelevantLinks : function( event ) {
@@ -249,7 +247,5 @@
 
 // Initialize the main class after Grunt has concatenated all the files together
 IntentDrivenInterface.start();
-
-// todo think of a better way to do this?
 
 //# sourceMappingURL=intent-driven-interface.js.map
