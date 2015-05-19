@@ -1,4 +1,4 @@
-( function( $ ) {
+( function() {
 	'use strict';
 	var app = window.IntentDrivenInterface;
 
@@ -10,12 +10,16 @@
 		className : 'idi-active',   // todo set when up/down keys pressed
 		template  : wp.template( 'intent-link' ),
 
+		/**
+		 * Initialize the view
+		 */
 		initialize : function() {
 			this.render();
 		},
 
-		// todo jsdoc on all functions
-
+		/**
+		 * Render the view
+		 */
 		render : function() {
 			this.$el.html( this.template( this.model.toJSON() ) );
 		}
@@ -27,11 +31,17 @@
 	app.Views.Links = Backbone.View.extend( {
 		tagName : 'ul',
 
+		/**
+		 * Initialize the view
+		 */
 		initialize : function() {
 			this.render();
 			this.listenTo( this.collection, 'reset', this.render );
 		},
 
+		/**
+		 * Render the view
+		 */
 		render : function() {
 			this.$el.html( '' );
 
@@ -42,4 +52,4 @@
 		}
 	} );
 
-} )( jQuery );
+} )();
