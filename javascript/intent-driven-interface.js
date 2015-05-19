@@ -57,9 +57,11 @@
 		toggleInterface : function( event ) {
 			try {
 				if ( 'keyup' === event.type ) {
-					// todo return if it happened inside an input/textarea/etc field
-
 					if ( event.key === app.options.shortcuts['open-interface'] ) {
+						if ( 'input' === event.target.tagName.toLowerCase() || 'textarea' === event.target.tagName.toLowerCase() ) {
+							return;
+						}
+
 						app.searchField.val( '' );
 						app.mainContainer.addClass( 'idi-active' );
 						app.searchField.focus();

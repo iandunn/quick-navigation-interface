@@ -1,6 +1,6 @@
 === Intent-Driven Interface ===
 Contributors:      iandunn
-Donate link:       todo - maybe debian or linux foundation or something
+Donate link:       https://www.debian.org/donations
 Tags:              keyboard,navigation,keyboard shortcuts,interface,wp-admin
 Requires at least: 3.6
 Tested up to:      4.2
