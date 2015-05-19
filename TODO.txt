@@ -35,6 +35,7 @@
 * try it out for a few days on wordcamp.dev and see if you run into any annoyances, bugs, performance issues, etc
 * Look at all the todo comments through all files
 * create banner image and icon
+* generate pot file
 * When committing to wporg repo, save screenshots to assets dir instead of plugin dir
 
 
