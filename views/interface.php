@@ -1,24 +1,26 @@
 <?php defined( 'WPINC' ) or die; ?>
 
-<?php // todo i18n ?>
-
 <div id="idi-container" class="notification-dialog-wrap">
 	<div class="notification-dialog-background"></div>
 
 	<div id="idi-dialog" class="notification-dialog">
 		<a class="media-modal-close" href="#">
 			<span class="media-modal-icon">
-				<span class="screen-reader-text">Close media panel</span>
+				<span class="screen-reader-text"><?php _e( 'Close media panel', 'intent-driven-interface' ); ?></span>
 			</span>
 		</a>
 
-		<h3 id="idi-introduction">Start typing to open any links on the current page</h3>
+		<h3 id="idi-introduction"><?php _e( 'Start typing to open any links on the current page', 'intent-driven-interface' ); ?></h3>
 
-		<input id="idi-search-field" name="" type="text" placeholder="e.g., Posts, Settings, Plugins, Comments, etc" />
+		<input id="idi-search-field" name="" type="text" placeholder="<?php _e( 'e.g., Posts, Settings, Plugins, Comments, etc', 'intent-driven-interface' ); ?>" />
 
 		<p id="idi-instructions">
-			Use the <code><?php echo esc_html( $shortcuts['previous-link'] ); ?></code> and <code><?php echo esc_html( $shortcuts['next-link'] ); ?></code>
-			keys to navigate, and press <code><?php echo esc_html( $shortcuts['open-link'] ); ?></code> to open a link.
+			<?php printf(
+				__( 'Use the <code>%s</code> and <code>%s</code> keys to navigate, and press <code>%s</code> to open a link.', 'intent-driven-interface' ),
+				esc_html( $shortcuts['previous-link'] ),
+				esc_html( $shortcuts['next-link']     ),
+				esc_html( $shortcuts['open-link']     )
+			); ?>
 		</p>
 
 		<ul id="idi-search-results"></ul>
