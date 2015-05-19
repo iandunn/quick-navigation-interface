@@ -138,7 +138,7 @@
 		/**
 		 * Search the collection for links matching the query
 		 *
-		 * This only finds the *first* X matches before the limit is reached, rather than the *best* X matches,
+		 * This only finds the _first_ X matches before the limit is reached, rather than the _best_ X matches,
 		 * but in this context they can just keep typing to further narrow the results, so that's probably good
 		 * enough for now.
 		 *
@@ -184,23 +184,9 @@
 	var app = window.IntentDrivenInterface;
 
 	/*
-	 * Base view
-	 */
-	app.View = Backbone.View.extend( {
-		// todo maybe prepare?
-
-		// todo remove if not used
-		inject : function( selector ) {
-			this.render();
-			$( selector ).html( this.el );
-			this.views.ready();
-		}
-	} );
-
-	/*
 	 * View for an individual Link model
 	 */
-	app.Views.Link = app.View.extend( {
+	app.Views.Link = Backbone.View.extend( {
 		tagName   : 'li',
 		className : 'idi-active',   // todo set when up/down keys pressed
 		template  : wp.template( 'intent-link' ),
@@ -210,7 +196,6 @@
 		},
 
 		// todo jsdoc on all functions
-		// todo use inject() instead of overriding render()
 
 		render : function() {
 			this.$el.html( this.template( this.model.toJSON() ) );
@@ -220,7 +205,7 @@
 	/*
 	 * View for a collection of Links
 	 */
-	app.Views.Links = app.View.extend( {
+	app.Views.Links = Backbone.View.extend( {
 		tagName : 'ul',
 
 		initialize : function() {

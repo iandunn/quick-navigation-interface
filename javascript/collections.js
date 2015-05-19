@@ -8,7 +8,7 @@
 		/**
 		 * Search the collection for links matching the query
 		 *
-		 * This only finds the *first* X matches before the limit is reached, rather than the *best* X matches,
+		 * This only finds the _first_ X matches before the limit is reached, rather than the _best_ X matches,
 		 * but in this context they can just keep typing to further narrow the results, so that's probably good
 		 * enough for now.
 		 *
