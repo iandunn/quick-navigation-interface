@@ -52,8 +52,6 @@
 		/**
 		 * Reveal the interface when the user presses the shortcut
 		 *
-		 * @todo move to relevant view
-		 *
 		 * @param {object} event
 		 */
 		toggleInterface : function( event ) {
@@ -61,11 +59,11 @@
 				if ( 'keyup' === event.type ) {
 					// todo return if it happened inside an input/textarea/etc field
 
-					if ( event.key === app.options.shortcuts.open ) {
+					if ( event.key === app.options.shortcuts['open-interface'] ) {
 						app.searchField.val( '' );
 						app.mainContainer.addClass( 'idi-active' );
 						app.searchField.focus();
-					} else if ( event.key === app.options.shortcuts.close ) {
+					} else if ( event.key === app.options.shortcuts['close-interface'] ) {
 						app.mainContainer.removeClass( 'idi-active' );
 						app.activeLinks.reset();
 					}
@@ -83,17 +81,29 @@
 		 * Show relevant links based on the user's query
 		 *
 		 * @todo move to relevant view
+		 *
+		 * @param {object} event
 		 */
-		showRelevantLinks : function() {
-			// todo wait a few milliseconds before issuing query to avoid wasted searches when they're going to type more characters?
+		showRelevantLinks : function( event ) {
+			var link;
 
-			// todo if enter key and already have active links, open first one
-				// probably add controller above this, instead of mixing it here
+			// todo improve performance by waiting a few milliseconds before issuing a query, to avoid wasted searches when they're going to type more characters?
+				// if this is non-trivial, then might be better to rely on twitter typeahead (or something similar).
+				// but wouldn't be worth adding weight just for this, unless it's a noticeable problem, which right now it isn't
+			// todo maybe refactor this once adding up/down keys are implemented, to make it a controller that calls modularized functions
 
 			try {
-				$( '#idi-instructions' ).addClass( 'idi-active' );
-				app.searchResults.addClass( 'idi-active' );
-				app.activeLinks.reset( app.allLinks.search( app.searchField.val(), app.options.limit ) );
+				if ( event.key === app.options.shortcuts['open-link'] ) {
+					link = app.searchResults.find( 'li:first-child' ).find( 'a' );
+
+					if ( undefined !== link.attr( 'href' ) ) {
+						link.get( 0 ).click();
+					}
+				} else {
+					$( '#idi-instructions' ).addClass( 'idi-active' );
+					app.searchResults.addClass( 'idi-active' );
+					app.activeLinks.reset( app.allLinks.search( app.searchField.val(), app.options.limit ) );
+				}
 			} catch( exception ) {
 				app.log( exception );
 			}

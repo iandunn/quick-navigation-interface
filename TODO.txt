@@ -12,6 +12,8 @@
 	* Disambiguate links like "New" (new what?) and "Add new"
 		* Maybe loop through admin menu and add those w/ special context since those are known, then loop through rest of page and just add?
 		* Maybe detect append last part of url? only if conflict, or maybe always?
+	* Remove any links that are just # or javascript: b/c the handlers are setup based on ID and won't do anything here
+		* What about normal anchor links, want those to work.
 
 
 ### Misc
