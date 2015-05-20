@@ -1,10 +1,10 @@
 ### Misc
 
-* switch to event.which to standardized keys
+* safari open, close, won't open again
+* ie8 doesn't open - might work w/ different keys? can't use "event" as param? https://stackoverflow.com/a/2412501/450127
 * open, type, click x to close, open again, results are still there, should have been clearedd
+
 * normal anchor links work, but interface doesn't close
-* Make sure ` doesn't conflict w/ any browser shortcuts.
-	* Check different OSes and browsers
 * up and down are bad b/c they move the cursor left/right? maybe disable that?
 * sourcemap xss issues? remove b/c not useful anyway?
 * Read https://ozkatz.github.io/avoiding-common-backbonejs-pitfalls.html
@@ -12,7 +12,6 @@
 
 ### 0.1 launch
 
-* test in various browsers/devices
 * Look at all the todo comments through all files
 * try it out for a few days on wordcamp.dev and see if you run into any annoyances, bugs, performance issues, etc
 

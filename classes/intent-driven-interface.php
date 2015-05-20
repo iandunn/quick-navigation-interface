@@ -8,14 +8,30 @@ class Intent_Driven_Interface {
 	 */
 	public function __construct() {
 		$this->options = array(
-			'shortcuts' => array(
-				'open-interface'  => '`',
-				'next-link'       => 'ArrowDown',
-				'previous-link'   => 'ArrowUp',
-				'open-link'       => 'Enter',
-				'close-interface' => 'Escape',
-			),
 			'limit' => 4,
+
+			'shortcuts' => array(
+				'open-interface' => array(
+					'code'  => 192,
+					'label' => __( '`',      'intent-driven-interface' )
+				),
+				'next-link' => array(
+					'code'  => 40,
+					'label' => __( 'Down',   'intent-driven-interface' )
+				),
+				'previous-link' => array(
+					'code'  => 38,
+					'label' => __( 'Up',     'intent-driven-interface' )
+				),
+				'open-link' => array(
+					'code'  => 13,
+					'label' => __( 'Enter',  'intent-driven-interface' )
+				),
+				'close-interface' => array(
+					'code'  => 27,
+					'label' => __( 'Escape', 'intent-driven-interface' )
+				),
+			),
 		);
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts'  ) );
@@ -55,13 +71,6 @@ class Intent_Driven_Interface {
 	 * Output the raw Backbone templates so they're available later on
 	 */
 	public function output_templates() {
-		$shortcuts = $this->options['shortcuts'];
-
-		// Change "ArrowDown" to just "Down"
-		foreach( $shortcuts as & $shortcut ) {
-			$shortcut = ltrim( $shortcut, 'Arrow' );
-		}
-
 		require_once( dirname( dirname( __FILE__ ) ) . '/views/interface.php' );
 		require_once( dirname( dirname( __FILE__ ) ) . '/views/intent-link.php' );
 	}

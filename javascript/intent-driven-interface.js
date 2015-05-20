@@ -60,7 +60,7 @@
 		toggleInterface : function( event ) {
 			try {
 				if ( 'keyup' === event.type ) {
-					if ( event.key === app.options.shortcuts['open-interface'] ) {
+					if ( event.which === app.options.shortcuts['open-interface'].code ) {
 						if ( 'input' === event.target.tagName.toLowerCase() || 'textarea' === event.target.tagName.toLowerCase() ) {
 							return;
 						}
@@ -68,7 +68,7 @@
 						app.searchField.val( '' );
 						app.mainContainer.addClass( 'idi-active' );
 						app.searchField.focus();
-					} else if ( event.key === app.options.shortcuts['close-interface'] ) {
+					} else if ( event.which === app.options.shortcuts['close-interface'].code ) {
 						app.mainContainer.removeClass( 'idi-active' );
 						app.instructions.removeClass(  'idi-active' );
 						app.activeLinks.reset();
@@ -94,15 +94,15 @@
 			// todo maybe refactor, to make it a controller that calls modularized functions
 
 			try {
-				if ( event.key === app.options.shortcuts[ 'open-link' ] ) {
+				if ( event.which === app.options.shortcuts['open-link'].code ) {
 					link = app.searchResults.find( 'li.idi-active' ).find( 'a' );
 
 					if ( undefined !== link.attr( 'href' ) ) {
 						link.get( 0 ).click();
 					}
-				} else if ( event.key === app.options.shortcuts[ 'next-link' ] ) {
+				} else if ( event.which === app.options.shortcuts['next-link'].code ) {
 					app.activeLinks.moveActiveLink( 'forwards' );
-				} else if ( event.key === app.options.shortcuts[ 'previous-link' ] ) {
+				} else if ( event.which === app.options.shortcuts['previous-link'].code ) {
 					app.activeLinks.moveActiveLink( 'backwards' );
 				} else {
 					query = app.searchField.val();

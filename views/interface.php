@@ -17,9 +17,9 @@
 		<p id="idi-instructions">
 			<?php printf(
 				__( 'Use the <code>%s</code> and <code>%s</code> keys to navigate, and press <code>%s</code> to open a link.', 'intent-driven-interface' ),
-				esc_html( $shortcuts['previous-link'] ),
-				esc_html( $shortcuts['next-link']     ),
-				esc_html( $shortcuts['open-link']     )
+				esc_html( $this->options['shortcuts']['previous-link']['label'] ),
+				esc_html( $this->options['shortcuts']['next-link'    ]['label'] ),
+				esc_html( $this->options['shortcuts']['open-link'    ]['label'] )
 			); ?>
 		</p>
 

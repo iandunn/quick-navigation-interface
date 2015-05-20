@@ -42,7 +42,7 @@ Also, make sure you're not mistaking it for the ' (single-quote) key. You need t
 = Can I customize the keyboard shortcuts and other options? =
 There isn't a settings page, but all of the internal options can be modified via the `idi_options` filter. If you're not familiar with using filters, you can [learn more about them](https://developer.wordpress.org/plugins/hooks/filters/) from the WordPress Plugin Developer's Handbook, and then implement them in [a functionality plugin](http://wpcandy.com/teaches/how-to-create-a-functionality-plugin) that you write, or via a plugin like [Functionality](https://wordpress.org/plugins/functionality/).
 
-The values of the keys must correspond to [the DOM Level 3 KeyboardEvent key Values](https://w3c.github.io/DOM-Level-3-Events-key/), and the plugin doesn't currently support using combinations.
+The values of the keys must correspond to [jQuery's standardized key codes](http://jquerypp.com/release/latest/docs/key.html), and the plugin doesn't currently support using combinations.
 
 
 = Will posts, comments, media and other content show up in the results? =
