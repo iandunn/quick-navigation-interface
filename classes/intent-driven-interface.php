@@ -15,7 +15,7 @@ class Intent_Driven_Interface {
 				'open-link'       => 'Enter',
 				'close-interface' => 'Escape',
 			),
-			'limit' => 5,
+			'limit' => 4,
 		);
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts'  ) );

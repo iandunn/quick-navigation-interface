@@ -7,7 +7,6 @@
 	 */
 	app.Views.Link = Backbone.View.extend( {
 		tagName   : 'li',
-		className : 'idi-active',   // todo set when up/down keys pressed
 		template  : wp.template( 'intent-link' ),
 
 		/**
@@ -15,12 +14,19 @@
 		 */
 		initialize : function() {
 			this.render();
+			this.listenTo( this.model, 'change', this.render );
 		},
 
 		/**
 		 * Render the view
 		 */
 		render : function() {
+			if ( 'active' === this.model.get( 'state' ) ) {
+				this.$el.addClass( 'idi-active' );
+			} else {
+				this.$el.removeClass( 'idi-active' );
+			}
+
 			this.$el.html( this.template( this.model.toJSON() ) );
 		}
 	} );

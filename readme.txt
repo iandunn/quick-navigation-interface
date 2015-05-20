@@ -16,9 +16,10 @@ Intent-Driven Interface provides a new way to navigate through the Administratio
 
 Just press ` (above the tab key) to bring up the interface, and then start typing what you want to do. As you type, you'll be shown a list of matching links. Use the up and down keys to move between them, and press enter to open one.
 
-This was inspired by the Ubuntu's [Dash](https://www.youtube.com/watch?v=dUS8DHYwP5U) and [HUD](https://www.youtube.com/watch?v=hfmSTWyYbms), and is also similar to the Spotlight feature in OS X.
-
 todo take screencast and embed video here
+	todo maybe don't need following paragraph if have screencast to explain it
+
+This was inspired by the Ubuntu's [Dash](https://www.youtube.com/watch?v=dUS8DHYwP5U) and [HUD](https://www.youtube.com/watch?v=hfmSTWyYbms), and is also similar to the Spotlight feature in OS X.
 
 
 == Installation ==
@@ -31,7 +32,7 @@ Once the plugin is installed and activated, you don't need to do anything else. 
 == Frequently Asked Questions ==
 
 = I'm pressing the ` key, but nothing happens =
-Make sure you're not focused on an input field, and then try again. You can
+Make sure you're not focused on an input field (like a text area or a button), and then try again. You can click anywhere outside an input field (like the page's background) to move the focus off of the input field.
 
 This could also happen if JavaScript execution has been halted because of errors on the page, which is most likely caused by another plugin. Try disabling all other plugins temporarily, and see if that solves the problem.
 

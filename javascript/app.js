@@ -20,6 +20,8 @@
 
 				app.allLinks          = new app.Collections.Links( app.getAllLinks() );
 				app.activeLinks       = new app.Collections.Links( [] );
+				    // todo rename, b/c only 1 is active, these are more like search results collection
+					// alllinks might be better as pagelinks to something
 				app.searchResultsView = new app.Views.Links( { el: app.searchResults, collection: app.activeLinks } );
 
 				$( window ).keyup(       app.toggleInterface   );
@@ -89,15 +91,19 @@
 		showRelevantLinks : function( event ) {
 			var link, query;
 
-			// todo maybe refactor this once adding up/down keys are implemented, to make it a controller that calls modularized functions
+			// todo maybe refactor, to make it a controller that calls modularized functions
 
 			try {
-				if ( event.key === app.options.shortcuts['open-link'] ) {
-					link = app.searchResults.find( 'li:first-child' ).find( 'a' );
+				if ( event.key === app.options.shortcuts[ 'open-link' ] ) {
+					link = app.searchResults.find( 'li.idi-active' ).find( 'a' );
 
 					if ( undefined !== link.attr( 'href' ) ) {
 						link.get( 0 ).click();
 					}
+				} else if ( event.key === app.options.shortcuts[ 'next-link' ] ) {
+					app.activeLinks.moveActiveLink( 'forwards' );
+				} else if ( event.key === app.options.shortcuts[ 'previous-link' ] ) {
+					app.activeLinks.moveActiveLink( 'backwards' );
 				} else {
 					query = app.searchField.val();
 
@@ -109,6 +115,7 @@
 						app.searchResults.addClass( 'idi-active' );
 					}
 
+					app.allLinks.invoke( 'set', { state: 'inactive' } );
 					app.activeLinks.reset( app.allLinks.search( query, app.options.limit ) );
 				}
 			} catch( exception ) {

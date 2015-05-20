@@ -38,14 +38,25 @@
 
 		#idi-search-results {
 			display: none;
+			margin-bottom: 0;
 		}
 
 			#idi-search-results li {
 				display: list-item;
+				margin-left: 1em;
+				padding: 2px 5px 0 10px;
+				border-radius: 10px;
 				list-style-type: disc;
-				list-style-position: inside;
 				font-size: 1.1em;
 			}
+
+				#idi-search-results li:last-child {
+					margin-bottom: 0;
+				}
+
+				#idi-search-results li.idi-active {
+					background-color: #DFEEFF;
+				}
 
 				#idi-search-results li a {
 					text-decoration: none;

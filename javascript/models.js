@@ -7,7 +7,8 @@
 	app.Models.Link = Backbone.Model.extend( {
 		defaults : {
 			'title' : '',
-			'url'   : ''
+			'url'   : '',
+			'state' : 'inactive'
 		}
 	} );
 

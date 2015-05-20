@@ -30,7 +30,39 @@
 				} );
 			}
 
+			if ( results.hasOwnProperty( 0 ) ) {
+				results[ 0 ].set( { state: 'active' } );
+			}
+
 			return results;
+		},
+
+		/**
+		 * Set a new link to be the active one
+		 *
+		 * @param {string} direction
+		 */
+		moveActiveLink : function( direction ) {
+			var newIndex,
+				currentActiveLink = this.where( { state: 'active' } ),
+				currentIndex      = this.indexOf( currentActiveLink[0] );
+
+			if ( 'forwards' === direction ) {
+				newIndex = currentIndex + 1;
+
+				if ( this.length === newIndex ) {
+					newIndex = 0;
+				}
+			} else {
+				newIndex = currentIndex - 1;
+
+				if ( -1 === newIndex ) {
+					newIndex = this.length - 1;
+				}
+			}
+
+			this.at( currentIndex ).set( { state: 'inactive' } );
+			this.at( newIndex ).set( { state: 'active' } );
 		}
 	} );
 

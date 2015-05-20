@@ -20,6 +20,8 @@
 
 				app.allLinks          = new app.Collections.Links( app.getAllLinks() );
 				app.activeLinks       = new app.Collections.Links( [] );
+				    // todo rename, b/c only 1 is active, these are more like search results collection
+					// alllinks might be better as pagelinks to something
 				app.searchResultsView = new app.Views.Links( { el: app.searchResults, collection: app.activeLinks } );
 
 				$( window ).keyup(       app.toggleInterface   );
@@ -89,15 +91,19 @@
 		showRelevantLinks : function( event ) {
 			var link, query;
 
-			// todo maybe refactor this once adding up/down keys are implemented, to make it a controller that calls modularized functions
+			// todo maybe refactor, to make it a controller that calls modularized functions
 
 			try {
-				if ( event.key === app.options.shortcuts['open-link'] ) {
-					link = app.searchResults.find( 'li:first-child' ).find( 'a' );
+				if ( event.key === app.options.shortcuts[ 'open-link' ] ) {
+					link = app.searchResults.find( 'li.idi-active' ).find( 'a' );
 
 					if ( undefined !== link.attr( 'href' ) ) {
 						link.get( 0 ).click();
 					}
+				} else if ( event.key === app.options.shortcuts[ 'next-link' ] ) {
+					app.activeLinks.moveActiveLink( 'forwards' );
+				} else if ( event.key === app.options.shortcuts[ 'previous-link' ] ) {
+					app.activeLinks.moveActiveLink( 'backwards' );
 				} else {
 					query = app.searchField.val();
 
@@ -109,6 +115,7 @@
 						app.searchResults.addClass( 'idi-active' );
 					}
 
+					app.allLinks.invoke( 'set', { state: 'inactive' } );
 					app.activeLinks.reset( app.allLinks.search( query, app.options.limit ) );
 				}
 			} catch( exception ) {
@@ -168,7 +175,39 @@
 				} );
 			}
 
+			if ( results.hasOwnProperty( 0 ) ) {
+				results[ 0 ].set( { state: 'active' } );
+			}
+
 			return results;
+		},
+
+		/**
+		 * Set a new link to be the active one
+		 *
+		 * @param {string} direction
+		 */
+		moveActiveLink : function( direction ) {
+			var newIndex,
+				currentActiveLink = this.where( { state: 'active' } ),
+				currentIndex      = this.indexOf( currentActiveLink[0] );
+
+			if ( 'forwards' === direction ) {
+				newIndex = currentIndex + 1;
+
+				if ( this.length === newIndex ) {
+					newIndex = 0;
+				}
+			} else {
+				newIndex = currentIndex - 1;
+
+				if ( -1 === newIndex ) {
+					newIndex = this.length - 1;
+				}
+			}
+
+			this.at( currentIndex ).set( { state: 'inactive' } );
+			this.at( newIndex ).set( { state: 'active' } );
 		}
 	} );
 
@@ -183,7 +222,8 @@
 	app.Models.Link = Backbone.Model.extend( {
 		defaults : {
 			'title' : '',
-			'url'   : ''
+			'url'   : '',
+			'state' : 'inactive'
 		}
 	} );
 
@@ -198,7 +238,6 @@
 	 */
 	app.Views.Link = Backbone.View.extend( {
 		tagName   : 'li',
-		className : 'idi-active',   // todo set when up/down keys pressed
 		template  : wp.template( 'intent-link' ),
 
 		/**
@@ -206,12 +245,19 @@
 		 */
 		initialize : function() {
 			this.render();
+			this.listenTo( this.model, 'change', this.render );
 		},
 
 		/**
 		 * Render the view
 		 */
 		render : function() {
+			if ( 'active' === this.model.get( 'state' ) ) {
+				this.$el.addClass( 'idi-active' );
+			} else {
+				this.$el.removeClass( 'idi-active' );
+			}
+
 			this.$el.html( this.template( this.model.toJSON() ) );
 		}
 	} );
