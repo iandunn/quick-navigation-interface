@@ -2,10 +2,6 @@
 
 * open, type, click x to close, open again, results are still there, should have been clearedd
 * normal anchor links work, but interface doesn't close
-* maybe implement the main container as a view, even though it's not dynamic?
-	* it still has behavior on it like events, even though it doesn't change visually
-* Better shortcut than ` ? It's not as easy to get to on keyboard as /, but that has conflicts. ctrl/option/super + w would have conflicts on various OSes and browsers
-	* How easy is it on various keyboard layouts?
 * Make sure ` doesn't conflict w/ any browser shortcuts.
 	* Check different OSes and browsers
 * up and down are bad b/c they move the cursor left/right? maybe disable that?
@@ -27,7 +23,10 @@
 
 ### 0.2
 
+* maybe implement the main container as a view, even though it's not dynamic?
+	* it still has behavior on it like events, even though it doesn't change visually
 * think about any ally issues
+* todo check responsiveness once https://core.trac.wordpress.org/ticket/32194 lands
 * Setup qunit tests
 * update grunt task versions to latest available
 * Move concat/minified files to separate folder to so can phpstorm exclude them from code hints etc to avoid collisions?
