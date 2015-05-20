@@ -8,7 +8,7 @@
 * up and down are bad b/c they move the cursor left/right? maybe disable that?
 * sourcemap xss issues? remove b/c not useful anyway?
 * Read https://ozkatz.github.io/avoiding-common-backbonejs-pitfalls.html
-
+* csslint
 
 ### 0.1 launch
 
