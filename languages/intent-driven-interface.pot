@@ -1,0 +1,79 @@
+# Copyright (C) 2015 Ian Dunn
+# This file is distributed under the same license as the Intent Driven Interface package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Intent Driven Interface 0.1\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/intent-driven-"
+"interface\n"
+"POT-Creation-Date: 2015-05-20 05:07:59+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2015-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Ian Dunn <ian@iandunn.name>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: views/interface.php:9
+msgid "Close media panel"
+msgstr ""
+
+#: views/interface.php:13
+msgid "Start typing to open any links on the current page"
+msgstr ""
+
+#: views/interface.php:15
+msgid "e.g., Posts, Settings, Plugins, Comments, etc"
+msgstr ""
+
+#: views/interface.php:19
+msgid ""
+"Use the <code>%s</code> and <code>%s</code> keys to navigate, and press "
+"<code>%s</code> to open a link."
+msgstr ""
+
+#: views/requirements-error.php:4
+msgid ""
+"Intent Driven Interface error: Your environment doesn't meet all of the "
+"system requirements listed below."
+msgstr ""
+
+#: views/requirements-error.php:8
+msgid "PHP %s+"
+msgstr ""
+
+#: views/requirements-error.php:9 views/requirements-error.php:14
+msgid "(You're running version %s)"
+msgstr ""
+
+#: views/requirements-error.php:13
+msgid "WordPress %s+"
+msgstr ""
+
+#: views/requirements-error.php:20
+msgid ""
+"If you need to upgrade your version of PHP you can ask your hosting company "
+"for assistance, and if you need help upgrading WordPress you can refer to <a "
+"href=\"%s\">the Codex</a>."
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "Intent Driven Interface"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "http://wordpress.org/plugins/intent-driven-interface"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Allows you to quickly access any navigation link within wp-admin just by "
+"typing the first few letters."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Ian Dunn"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://iandunn.name"
+msgstr ""

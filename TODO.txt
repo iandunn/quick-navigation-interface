@@ -1,5 +1,6 @@
 ### Misc
 
+* switch to event.which to standardized keys
 * open, type, click x to close, open again, results are still there, should have been clearedd
 * normal anchor links work, but interface doesn't close
 * Make sure ` doesn't conflict w/ any browser shortcuts.
@@ -12,13 +13,11 @@
 ### 0.1 launch
 
 * test in various browsers/devices
-* try it out for a few days on wordcamp.dev and see if you run into any annoyances, bugs, performance issues, etc
 * Look at all the todo comments through all files
-* create banner image and icon
-* generate pot file
-* redo screenshot2 with real results
+* try it out for a few days on wordcamp.dev and see if you run into any annoyances, bugs, performance issues, etc
+
 * svn:ignore all the dev files like grunt, packg, all js except minified ?
-* When committing to wporg repo, save screenshots to assets dir instead of plugin dir
+* When committing to wporg repo, save screenshots to assets dir instead of plugin dir, then remove from GitHub
 
 
 ### 0.2
