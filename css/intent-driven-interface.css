@@ -22,8 +22,7 @@
 
 		#idi-search-field {
 			width: 100%;
-
-			/* todo rounded corners, maybe a magnifying glass icon */
+			padding: 6px 5px 3px 10px;
 		}
 
 		#idi-instructions {
