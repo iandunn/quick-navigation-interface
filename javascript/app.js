@@ -95,6 +95,7 @@
 			app.mainContainer.removeClass( 'idi-active' );
 			app.instructions.removeClass(  'idi-active' );
 			app.activeLinks.reset();
+			app.searchField.blur();    // because toggleInterface() will return early if we're focused on an input field
 		},
 
 		/**

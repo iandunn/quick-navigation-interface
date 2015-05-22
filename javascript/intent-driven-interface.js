@@ -65,9 +65,7 @@
 							return;
 						}
 
-						app.searchField.val( '' );
-						app.mainContainer.addClass( 'idi-active' );
-						app.searchField.focus();
+						app.openInterface();
 					} else if ( event.which === app.options.shortcuts['close-interface'].code ) {
 						app.closeInterface();
 					}
@@ -82,12 +80,22 @@
 		},
 
 		/**
+		 * Open the interface
+		 */
+		openInterface : function() {
+			app.searchField.val( '' );
+			app.mainContainer.addClass( 'idi-active' );
+			app.searchField.focus();
+		},
+
+		/**
 		 * Close the interface
 		 */
 		closeInterface : function() {
 			app.mainContainer.removeClass( 'idi-active' );
 			app.instructions.removeClass(  'idi-active' );
 			app.activeLinks.reset();
+			app.searchField.blur();    // because toggleInterface() will return early if we're focused on an input field
 		},
 
 		/**
