@@ -65,9 +65,7 @@
 							return;
 						}
 
-						app.searchField.val( '' );
-						app.mainContainer.addClass( 'idi-active' );
-						app.searchField.focus();
+						app.openInterface();
 					} else if ( event.which === app.options.shortcuts['close-interface'].code ) {
 						app.closeInterface();
 					}
@@ -79,6 +77,15 @@
 			} catch( exception ) {
 				app.log( exception );
 			}
+		},
+
+		/**
+		 * Open the interface
+		 */
+		openInterface : function() {
+			app.searchField.val( '' );
+			app.mainContainer.addClass( 'idi-active' );
+			app.searchField.focus();
 		},
 
 		/**
