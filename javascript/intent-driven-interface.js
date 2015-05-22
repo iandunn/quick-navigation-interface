@@ -58,6 +58,8 @@
 		 * @param {object} event
 		 */
 		toggleInterface : function( event ) {
+			var closeInterface = false;
+
 			try {
 				if ( 'keyup' === event.type ) {
 					if ( event.which === app.options.shortcuts['open-interface'].code ) {
@@ -69,14 +71,18 @@
 						app.mainContainer.addClass( 'idi-active' );
 						app.searchField.focus();
 					} else if ( event.which === app.options.shortcuts['close-interface'].code ) {
-						app.mainContainer.removeClass( 'idi-active' );
-						app.instructions.removeClass(  'idi-active' );
-						app.activeLinks.reset();
+						closeInterface = true;
 					}
 				} else if ( 'click' === event.type ) {
 					if ( 'notification-dialog-background' === event.target.className || 'media-modal-icon' === event.target.className ) {
-						app.mainContainer.removeClass( 'idi-active' );
+						closeInterface = true;
 					}
+				}
+
+				if ( closeInterface ) {
+					app.mainContainer.removeClass( 'idi-active' );
+					app.instructions.removeClass(  'idi-active' );
+					app.activeLinks.reset();
 				}
 			} catch( exception ) {
 				app.log( exception );
