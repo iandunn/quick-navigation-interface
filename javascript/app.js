@@ -1,7 +1,7 @@
 ( function( $ ) {
 	'use strict';
 
-	var app = window.IntentDrivenInterface = {
+	var app = window.QuickNavigationInterface = {
 		Models      : {},
 		Collections : {},
 		Views       : {},
@@ -150,9 +150,9 @@
 			}
 
 			if ( 'string' === typeof error ) {
-				console.log( 'Intent-Driven Interface: ' + error );
+				console.log( 'Quick Navigation Interface: ' + error );
 			} else {
-				console.log( 'Intent-Driven Interface: ', error );
+				console.log( 'Quick Navigation Interface: ', error );
 			}
 		}
 	};

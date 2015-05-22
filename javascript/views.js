@@ -1,13 +1,13 @@
 ( function() {
 	'use strict';
-	var app = window.IntentDrivenInterface;
+	var app = window.QuickNavigationInterface;
 
 	/*
 	 * View for an individual Link model
 	 */
 	app.Views.Link = Backbone.View.extend( {
 		tagName   : 'li',
-		template  : wp.template( 'intent-link' ),
+		template  : wp.template( 'qni-link' ),
 
 		/**
 		 * Initialize the view

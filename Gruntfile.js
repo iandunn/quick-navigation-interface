@@ -1,10 +1,10 @@
 module.exports = function ( grunt ) {
 	var js_files = [
-			'javascript/app.js',                        // this comes first because all the other classes depend on window.IntentDrivenInterface being defined
+			'javascript/app.js',                        // this comes first because all the other classes depend on window.QuickNavigationInterface being defined
 			'javascript/**/*.js',
-			'!javascript/intent-driven-interface*.js',  // ignore concatenated and minified files
+			'!javascript/quick-navigation-interface*.js',  // ignore concatenated and minified files
 			'!javascript/bootstrap.js',
-			'javascript/bootstrap.js'                   // this comes last because we don't want to initialize window.IntentDrivenInterface until all the files have been concatenated
+			'javascript/bootstrap.js'                   // this comes last because we don't want to initialize window.QuickNavigationInterface until all the files have been concatenated
 
 		],
 		css_files = [ 'css/*.css', '!css/*.min.css' ];
@@ -19,7 +19,7 @@ module.exports = function ( grunt ) {
 
 			dist : {
 				src  : js_files,
-				dest : 'javascript/intent-driven-interface.js'
+				dest : 'javascript/quick-navigation-interface.js'
 			}
 		},
 
@@ -27,12 +27,12 @@ module.exports = function ( grunt ) {
 			options : {
 				sourceMap               : true,
 				sourceMapIncludeSources : true,
-				sourceMapIn             : 'javascript/intent-driven-interface.js.map'
+				sourceMapIn             : 'javascript/quick-navigation-interface.js.map'
 			},
 
 			dist : {
 				files : {
-					'javascript/intent-driven-interface.min.js' : [ 'javascript/intent-driven-interface.js' ]
+					'javascript/quick-navigation-interface.min.js' : [ 'javascript/quick-navigation-interface.js' ]
 				}
 			}
 		},
@@ -65,7 +65,7 @@ module.exports = function ( grunt ) {
 					console               : false,
 					jQuery                : false,
 					idiOptions            : true,
-					IntentDrivenInterface : true,
+					QuickNavigationInterface : true,
 					wp                    : false
 				}
 			}
@@ -74,7 +74,7 @@ module.exports = function ( grunt ) {
 		cssmin : {
 			combine : {
 				files : {
-					'css/intent-driven-interface.min.css' : css_files
+					'css/quick-navigation-interface.min.css' : css_files
 				}
 			}
 		},

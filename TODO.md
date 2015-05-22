@@ -9,11 +9,12 @@
 
 * Include content in results
 	* Build an index mapping urls to keywords and titles
-	* store in transient, then enqueue as .json file, separate from normal js file, so it can be cached client side rather than sent with every page
+	* store in an option, then enqueue as .json file, separate from normal js file, so it can be cached client side rather than sent with every page
+	* update asynchronously on `save_post`
 	* add to same collection as on-page links, rename it to reflect new contents
 	* get each model an ID that's a hash of its url, to avoid duplicates. won't always pick best title, but better that dupes
-	* remove readme bit about not having content
 	* limit it to most recent X, to keep it under ~100k (not gzipped)
+	* remove readme bit about not having content, and description
 * maybe implement the main container as a view, even though it's not dynamic?
 	* it still has behavior on it like events, even though it doesn't change visually
 * think about any ally issues

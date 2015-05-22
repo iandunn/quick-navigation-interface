@@ -1,8 +1,8 @@
 <?php
 /*
-Plugin Name: Intent Driven Interface
-Plugin URI:  http://wordpress.org/plugins/intent-driven-interface
-Description: Allows you to quickly access any navigation link within wp-admin just by typing the first few letters.
+Plugin Name: Quick Navigation Interface
+Plugin URI:  http://wordpress.org/plugins/quick-navigation-interface
+Description: Allows you to quickly access links within wp-admin just by typing the first few letters.
 Version:     0.1
 Author:      Ian Dunn
 Author URI:  http://iandunn.name
@@ -48,8 +48,8 @@ function idi_requirements_error() {
  * The main program needs to be in a separate file that only gets loaded if the plugin requirements are met. Otherwise older PHP installations could crash when trying to parse it.
  */
 if ( idi_requirements_met() ) {
-	require_once( dirname( __FILE__ ) . '/classes/intent-driven-interface.php' );
-	$GLOBALS['intent_driven_interface'] = new Intent_Driven_Interface();
+	require_once( dirname( __FILE__ ) . '/classes/quick-navigation-interface.php' );
+	$GLOBALS['Quick_Navigation_Interface'] = new Quick_Navigation_Interface();
 } else {
 	add_action( 'admin_notices', 'idi_requirements_error' );
 }

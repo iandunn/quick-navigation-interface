@@ -1,7 +1,7 @@
 ( function( $ ) {
 	'use strict';
 
-	var app = window.IntentDrivenInterface = {
+	var app = window.QuickNavigationInterface = {
 		Models      : {},
 		Collections : {},
 		Views       : {},
@@ -150,9 +150,9 @@
 			}
 
 			if ( 'string' === typeof error ) {
-				console.log( 'Intent-Driven Interface: ' + error );
+				console.log( 'Quick Navigation Interface: ' + error );
 			} else {
-				console.log( 'Intent-Driven Interface: ', error );
+				console.log( 'Quick Navigation Interface: ', error );
 			}
 		}
 	};
@@ -161,7 +161,7 @@
 
 ( function() {
 	'use strict';
-	var app = window.IntentDrivenInterface;
+	var app = window.QuickNavigationInterface;
 
 	app.Collections.Links = Backbone.Collection.extend( {
 		model : app.Models.Link,
@@ -231,7 +231,7 @@
 
 ( function() {
 	'use strict';
-	var app = window.IntentDrivenInterface;
+	var app = window.QuickNavigationInterface;
 
 	// todo assigning to window is the best practice? double check
 
@@ -247,14 +247,14 @@
 
 ( function() {
 	'use strict';
-	var app = window.IntentDrivenInterface;
+	var app = window.QuickNavigationInterface;
 
 	/*
 	 * View for an individual Link model
 	 */
 	app.Views.Link = Backbone.View.extend( {
 		tagName   : 'li',
-		template  : wp.template( 'intent-link' ),
+		template  : wp.template( 'qni-link' ),
 
 		/**
 		 * Initialize the view
@@ -308,6 +308,6 @@
 } )();
 
 // Initialize the main class after Grunt has concatenated all the files together
-IntentDrivenInterface.start();
+QuickNavigationInterface.start();
 
-//# sourceMappingURL=intent-driven-interface.js.map
+//# sourceMappingURL=quick-navigation-interface.js.map

@@ -1,32 +1,34 @@
-=== Intent-Driven Interface ===
+=== Quick Navigation Interface ===
 Contributors:      iandunn
 Donate link:       https://www.debian.org/donations
-Tags:              keyboard,navigation,keyboard shortcuts,interface,wp-admin
+Tags:              keyboard,navigation,shortcuts,wp-admin
 Requires at least: 3.6
 Tested up to:      4.2
 Stable tag:        0.1
 License:           GPLv2
 
-Allows you to quickly access any navigation link within wp-admin just by typing the first few letters.
+Allows you to quickly access links within wp-admin just by typing the first few letters.
 
 
 == Description ==
 
-Intent-Driven Interface provides a new way to navigate through the Administration Panels, combining the speed of keyboard shortcuts with the ease of a graphical user interface.
+Quick Navigation Interface provides a new way to navigate through the Administration Panels, combining the speed of keyboard shortcuts with the ease of a graphical user interface.
 
-Just press ` (above the tab key) to bring up the interface, and then start typing what you want to do. As you type, you'll be shown a list of matching links. Use the up and down keys to move between them, and press enter to open one.
+Just press ` (above the tab key) to bring up the interface, and then start typing part of a link on the current page. As you type, you'll be shown a list of matching links. Use the `Up` and `Down` keys to move between them, and press `Enter` to open one.
 
 todo take screencast and embed video here
 	todo maybe don't need following paragraph if have screencast to explain it
 
 This was inspired by the Ubuntu's [Dash](https://www.youtube.com/watch?v=dUS8DHYwP5U) and [HUD](https://www.youtube.com/watch?v=hfmSTWyYbms), and is also similar to the Spotlight feature in OS X.
 
+http://www.markshuttleworth.com/archives/939
+
 
 == Installation ==
 
 For help installing this (or any other) WordPress plugin, please read the [Managing Plugins](http://codex.wordpress.org/Managing_Plugins) article on the Codex.
 
-Once the plugin is installed and activated, you don't need to do anything else. See [the Description page](https://wordpress.org/plugins/intent-driven-interface/) for details on using the plugin.
+Once the plugin is installed and activated, you don't need to do anything else. See [the Description page](https://wordpress.org/plugins/quick-navigation-interface/) for details on using the plugin.
 
 
 == Frequently Asked Questions ==

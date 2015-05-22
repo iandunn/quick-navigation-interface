@@ -1,6 +1,6 @@
 <?php
 
-class Intent_Driven_Interface {
+class Quick_Navigation_Interface {
 	protected $options;
 
 	/**
@@ -13,23 +13,23 @@ class Intent_Driven_Interface {
 			'shortcuts' => array(
 				'open-interface' => array(
 					'code'  => 192,
-					'label' => __( '`',      'intent-driven-interface' )
+					'label' => __( '`',      'quick-navigation-interface' )
 				),
 				'next-link' => array(
 					'code'  => 40,
-					'label' => __( 'Down',   'intent-driven-interface' )
+					'label' => __( 'Down',   'quick-navigation-interface' )
 				),
 				'previous-link' => array(
 					'code'  => 38,
-					'label' => __( 'Up',     'intent-driven-interface' )
+					'label' => __( 'Up',     'quick-navigation-interface' )
 				),
 				'open-link' => array(
 					'code'  => 13,
-					'label' => __( 'Enter',  'intent-driven-interface' )
+					'label' => __( 'Enter',  'quick-navigation-interface' )
 				),
 				'close-interface' => array(
 					'code'  => 27,
-					'label' => __( 'Escape', 'intent-driven-interface' )
+					'label' => __( 'Escape', 'quick-navigation-interface' )
 				),
 			),
 		);
@@ -45,23 +45,23 @@ class Intent_Driven_Interface {
 		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
 		wp_enqueue_style(
-			'intent-driven-interface',
-			plugins_url( "css/intent-driven-interface$suffix.css", dirname( __FILE__ ) ),
+			'quick-navigation-interface',
+			plugins_url( "css/quick-navigation-interface$suffix.css", dirname( __FILE__ ) ),
 			array( 'media-views' ),
 			IDI_VERSION,
 			'all'
 		);
 
 		wp_enqueue_script(
-			'intent-driven-interface',
-			plugins_url( "javascript/intent-driven-interface$suffix.js", dirname( __FILE__ ) ),
+			'quick-navigation-interface',
+			plugins_url( "javascript/quick-navigation-interface$suffix.js", dirname( __FILE__ ) ),
 			array( 'jquery', 'backbone', 'underscore', 'wp-util' ),
 			IDI_VERSION,
 			true
 		);
 
 		wp_localize_script(
-			'intent-driven-interface',
+			'quick-navigation-interface',
 			'idiOptions',
 			apply_filters( 'idi_options', $this->options )
 		);
@@ -115,6 +115,6 @@ class Intent_Driven_Interface {
 	 */
 	public function output_templates() {
 		echo $this->render_template( 'interface.php', array ( 'shortcuts' => $this->options['shortcuts'] ) );
-		echo $this->render_template( 'intent-link.php' );
+		echo $this->render_template( 'link.php' );
 	}
 }

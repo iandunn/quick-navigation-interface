@@ -1,6 +1,6 @@
 ( function() {
 	'use strict';
-	var app = window.IntentDrivenInterface;
+	var app = window.QuickNavigationInterface;
 
 	app.Collections.Links = Backbone.Collection.extend( {
 		model : app.Models.Link,
