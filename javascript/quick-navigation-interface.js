@@ -25,8 +25,6 @@
 				$( window ).keyup(       app.toggleInterface   );
 				app.mainContainer.click( app.toggleInterface   );
 				app.searchField.keyup(   app.showRelevantLinks );
-
-				// todo maybe make this a controller that calls toggleinteface, showrelevantlinks, etc. better than having two listeners for same event?
 			} catch ( exception ) {
 				app.log( exception );
 			}
@@ -59,6 +57,7 @@
 			try {
 				if ( 'keyup' === event.type ) {
 					if ( event.which === app.options.shortcuts['open-interface'].code ) {
+						// Don't prevent the open shortcut from being used in input fields
 						if ( 'input' === event.target.tagName.toLowerCase() || 'textarea' === event.target.tagName.toLowerCase() ) {
 							return;
 						}
@@ -102,39 +101,49 @@
 		 * @param {object} event
 		 */
 		showRelevantLinks : function( event ) {
-			var link, query;
-
-			// todo maybe refactor, to make it a controller that calls modularized functions
-
 			try {
 				if ( event.which === app.options.shortcuts['open-link'].code ) {
-					link = app.searchResults.find( 'li.idi-active' ).find( 'a' );
-
-					if ( undefined !== link.attr( 'href' ) ) {
-						link.get( 0 ).click();
-						app.closeInterface();
-					}
+					app.openLink();
 				} else if ( event.which === app.options.shortcuts['next-link'].code ) {
 					app.searchResultsCollection.moveActiveLink( 'forwards' );
 				} else if ( event.which === app.options.shortcuts['previous-link'].code ) {
 					app.searchResultsCollection.moveActiveLink( 'backwards' );
 				} else {
-					query = app.searchField.val();
-
-					if ( '' === query ) {
-						app.instructions.removeClass( 'idi-active' );
-						app.searchResults.removeClass( 'idi-active' );
-					} else {
-						app.instructions.addClass( 'idi-active' );
-						app.searchResults.addClass( 'idi-active' );
-					}
-
-					app.allLinks.invoke( 'set', { state : 'inactive' } );
-					app.searchResultsCollection.reset( app.allLinks.search( query, app.options.limit ) );
+					app.updateSearchResults();
 				}
 			} catch( exception ) {
 				app.log( exception );
 			}
+		},
+
+		/**
+		 * Open the active link
+		 */
+		openLink : function() {
+			var link = app.searchResults.find( 'li.idi-active' ).find( 'a' );
+
+			if ( undefined !== link.attr( 'href' ) ) {
+				link.get( 0 ).click();
+				app.closeInterface();
+			}
+		},
+
+		/**
+		 * Update the search results with based on new input
+		 */
+		updateSearchResults : function() {
+			var query = app.searchField.val();
+
+			if ( '' === query ) {
+				app.instructions.removeClass( 'idi-active' );
+				app.searchResults.removeClass( 'idi-active' );
+			} else {
+				app.instructions.addClass( 'idi-active' );
+				app.searchResults.addClass( 'idi-active' );
+			}
+
+			app.allLinks.invoke( 'set', { state : 'inactive' } );
+			app.searchResultsCollection.reset( app.allLinks.search( query, app.options.limit ) );
 		},
 
 		/**
