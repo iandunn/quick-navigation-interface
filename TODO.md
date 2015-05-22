@@ -1,8 +1,5 @@
 ### Misc
 
-
-* normal anchor links work, but interface doesn't close
-
 * safari open, close, won't open again
 * ie8 doesn't open - might work w/ different keys? can't use "event" as param? https://stackoverflow.com/a/2412501/450127
 

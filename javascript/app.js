@@ -58,8 +58,6 @@
 		 * @param {object} event
 		 */
 		toggleInterface : function( event ) {
-			var closeInterface = false;
-
 			try {
 				if ( 'keyup' === event.type ) {
 					if ( event.which === app.options.shortcuts['open-interface'].code ) {
@@ -71,22 +69,25 @@
 						app.mainContainer.addClass( 'idi-active' );
 						app.searchField.focus();
 					} else if ( event.which === app.options.shortcuts['close-interface'].code ) {
-						closeInterface = true;
+						app.closeInterface();
 					}
 				} else if ( 'click' === event.type ) {
 					if ( 'notification-dialog-background' === event.target.className || 'media-modal-icon' === event.target.className ) {
-						closeInterface = true;
+						app.closeInterface();
 					}
-				}
-
-				if ( closeInterface ) {
-					app.mainContainer.removeClass( 'idi-active' );
-					app.instructions.removeClass(  'idi-active' );
-					app.activeLinks.reset();
 				}
 			} catch( exception ) {
 				app.log( exception );
 			}
+		},
+
+		/**
+		 * Close the interface
+		 */
+		closeInterface : function() {
+			app.mainContainer.removeClass( 'idi-active' );
+			app.instructions.removeClass(  'idi-active' );
+			app.activeLinks.reset();
 		},
 
 		/**
@@ -105,6 +106,7 @@
 
 					if ( undefined !== link.attr( 'href' ) ) {
 						link.get( 0 ).click();
+						app.closeInterface();
 					}
 				} else if ( event.which === app.options.shortcuts['next-link'].code ) {
 					app.activeLinks.moveActiveLink( 'forwards' );
