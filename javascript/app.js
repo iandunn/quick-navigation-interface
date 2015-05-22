@@ -19,10 +19,9 @@
 				idiOptions         = null;
 
 				app.allLinks          = new app.Collections.Links( app.getAllLinks() );
-				app.activeLinks       = new app.Collections.Links( [] );
-				    // todo rename, b/c only 1 is active, these are more like search results collection
-					// alllinks might be better as pagelinks to something
-				app.searchResultsView = new app.Views.Links( { el : app.searchResults, collection : app.activeLinks } );
+				app.searchResultsCollection = new app.Collections.Links( [] );
+				app.searchResultsView = new app.Views.Links( { el : app.searchResults, collection : app.searchResultsCollection } );
+				// todo re-align
 
 				$( window ).keyup(       app.toggleInterface   );
 				app.mainContainer.click( app.toggleInterface   );
@@ -94,7 +93,7 @@
 		closeInterface : function() {
 			app.mainContainer.removeClass( 'idi-active' );
 			app.instructions.removeClass(  'idi-active' );
-			app.activeLinks.reset();
+			app.searchResultsCollection.reset();
 			app.searchField.blur();    // because toggleInterface() will return early if we're focused on an input field
 		},
 
@@ -117,9 +116,9 @@
 						app.closeInterface();
 					}
 				} else if ( event.which === app.options.shortcuts['next-link'].code ) {
-					app.activeLinks.moveActiveLink( 'forwards' );
+					app.searchResultsCollection.moveActiveLink( 'forwards' );
 				} else if ( event.which === app.options.shortcuts['previous-link'].code ) {
-					app.activeLinks.moveActiveLink( 'backwards' );
+					app.searchResultsCollection.moveActiveLink( 'backwards' );
 				} else {
 					query = app.searchField.val();
 
@@ -132,7 +131,7 @@
 					}
 
 					app.allLinks.invoke( 'set', { state : 'inactive' } );
-					app.activeLinks.reset( app.allLinks.search( query, app.options.limit ) );
+					app.searchResultsCollection.reset( app.allLinks.search( query, app.options.limit ) );
 				}
 			} catch( exception ) {
 				app.log( exception );

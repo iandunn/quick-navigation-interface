@@ -1,10 +1,3 @@
-### 0.1 launch
-
-* Look at all the todo comments through all files
-* svn:ignore all the dev files like grunt, packg, all js except main/main.min
-* When committing to wporg repo, save screenshots to assets dir instead of plugin dir, then remove from GitHub
-
-
 ### 0.2
 
 * Include content in results
@@ -18,7 +11,7 @@
 * maybe implement the main container as a view, even though it's not dynamic?
 	* it still has behavior on it like events, even though it doesn't change visually
 * think about any ally issues
-* todo check responsiveness once https://core.trac.wordpress.org/ticket/32194 lands
+* check responsiveness once https://core.trac.wordpress.org/ticket/32194 lands
 * Read https://ozkatz.github.io/avoiding-common-backbonejs-pitfalls.html
 * sourcemap xss issues? remove b/c not useful anyway?
 	* users safe b/c not distributed w/ wporg repo version, but still want to look into

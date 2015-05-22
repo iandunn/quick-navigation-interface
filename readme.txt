@@ -14,21 +14,18 @@ Allows you to quickly access links within wp-admin just by typing the first few 
 
 Quick Navigation Interface provides a new way to navigate through the Administration Panels, combining the speed of keyboard shortcuts with the ease of a graphical user interface.
 
-Just press ` (above the tab key) to bring up the interface, and then start typing part of a link on the current page. As you type, you'll be shown a list of matching links. Use the `Up` and `Down` keys to move between them, and press `Enter` to open one.
+Just press \` (above the tab key) to bring up the interface, and then start typing part of any link on the current page. As you type, you'll be shown a list of matching links. Use the `Up` and `Down` keys to move between them, and press `Enter` to open one.
 
-todo take screencast and embed video here
-	todo maybe don't need following paragraph if have screencast to explain it
+https://www.youtube.com/watch?v=jhjt9hSyMZw
 
-This was inspired by the Ubuntu's [Dash](https://www.youtube.com/watch?v=dUS8DHYwP5U) and [HUD](https://www.youtube.com/watch?v=hfmSTWyYbms), and is also similar to the Spotlight feature in OS X.
-
-http://www.markshuttleworth.com/archives/939
+This was inspired by Ubuntu's Dash and [HUD](http://www.markshuttleworth.com/archives/939), and is also similar to the Spotlight feature in OS X.
 
 
 == Installation ==
 
 For help installing this (or any other) WordPress plugin, please read the [Managing Plugins](http://codex.wordpress.org/Managing_Plugins) article on the Codex.
 
-Once the plugin is installed and activated, you don't need to do anything else. See [the Description page](https://wordpress.org/plugins/quick-navigation-interface/) for details on using the plugin.
+Once the plugin is installed and activated, you don't need to do anything else. See [the Description page](https://wordpress.org/plugins/quick-navigation-interface/) and [FAQ](https://wordpress.org/plugins/quick-navigation-interface/faq/) for details on using the plugin.
 
 
 == Frequently Asked Questions ==
@@ -70,13 +67,13 @@ I've done my best to ensure that it is, but just in case I missed anything [I al
 
 == Screenshots ==
 
-1. Pressing ` (above the tab key) brings up the interface
+1. Pressing \` (above the tab key) brings up the interface
 2. Matches are displayed and filtered as you type
 
 
 == Changelog ==
 
-= v0.1 (2015-todo-todo) =
+= v0.1 (2015-05-22) =
 * [NEW] Initial release
 
 
