@@ -1,18 +1,7 @@
-### Misc
-
-* ie8 doesn't open - might work w/ different keys? can't use "event" as param? https://stackoverflow.com/a/2412501/450127
-
-* up and down are bad b/c they move the cursor left/right? maybe disable that?
-* sourcemap xss issues? remove b/c not useful anyway?
-* Read https://ozkatz.github.io/avoiding-common-backbonejs-pitfalls.html
-
-
 ### 0.1 launch
 
 * Look at all the todo comments through all files
-* try it out for a few days on wordcamp.dev and see if you run into any annoyances, bugs, performance issues, etc
-
-* svn:ignore all the dev files like grunt, packg, all js except main/main.min?
+* svn:ignore all the dev files like grunt, packg, all js except main/main.min
 * When committing to wporg repo, save screenshots to assets dir instead of plugin dir, then remove from GitHub
 
 
@@ -29,15 +18,20 @@
 	* it still has behavior on it like events, even though it doesn't change visually
 * think about any ally issues
 * todo check responsiveness once https://core.trac.wordpress.org/ticket/32194 lands
-* Setup qunit tests
-* update grunt task versions to latest available
-* Move concat/minified files to separate folder to so can phpstorm exclude them from code hints etc to avoid collisions?
-* Maybe don't ship the dev related files w/ the plugin?
-* better way to call start() after everything concatenated, so you can remove bootstrap.js?
-* setup csslint
+* Read https://ozkatz.github.io/avoiding-common-backbonejs-pitfalls.html
+* sourcemap xss issues? remove b/c not useful anyway?
+	* users safe b/c not distributed w/ wporg repo version, but still want to look into
+* ie8 doesn't open - might work w/ different keys? can't use "event" as param? https://stackoverflow.com/a/2412501/450127
+
 
 
 ### Future iterations
+
+* Setup qunit tests
+* update grunt task versions to latest available
+* Move concat/minified files to separate folder to so can phpstorm exclude them from code hints etc to avoid collisions?
+* better way to call start() after everything concatenated, so you can remove bootstrap.js?
+* setup csslint
 
 * Improve search results if current method is not good enough
 	* Log each title/url to console, then browse through screens to get a feel for where the biggest problems are
