@@ -22,7 +22,7 @@
 				app.activeLinks       = new app.Collections.Links( [] );
 				    // todo rename, b/c only 1 is active, these are more like search results collection
 					// alllinks might be better as pagelinks to something
-				app.searchResultsView = new app.Views.Links( { el: app.searchResults, collection: app.activeLinks } );
+				app.searchResultsView = new app.Views.Links( { el : app.searchResults, collection : app.activeLinks } );
 
 				$( window ).keyup(       app.toggleInterface   );
 				app.mainContainer.click( app.toggleInterface   );
@@ -44,8 +44,8 @@
 
 			$( 'a' ).each( function() {
 				links.push( new app.Models.Link( {
-					'title': $( this ).text(),
-					'url'  : $( this ).attr( 'href' )
+					'title' : $( this ).text(),
+					'url'   : $( this ).attr( 'href' )
 				} ) );
 			} );
 
@@ -115,7 +115,7 @@
 						app.searchResults.addClass( 'idi-active' );
 					}
 
-					app.allLinks.invoke( 'set', { state: 'inactive' } );
+					app.allLinks.invoke( 'set', { state : 'inactive' } );
 					app.activeLinks.reset( app.allLinks.search( query, app.options.limit ) );
 				}
 			} catch( exception ) {

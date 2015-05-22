@@ -31,7 +31,7 @@
 			}
 
 			if ( results.hasOwnProperty( 0 ) ) {
-				results[ 0 ].set( { state: 'active' } );
+				results[ 0 ].set( { state : 'active' } );
 			}
 
 			return results;
@@ -44,7 +44,7 @@
 		 */
 		moveActiveLink : function( direction ) {
 			var newIndex,
-				currentActiveLink = this.where( { state: 'active' } ),
+				currentActiveLink = this.where( { state : 'active' } ),
 				currentIndex      = this.indexOf( currentActiveLink[0] );
 
 			if ( 'forwards' === direction ) {
@@ -61,8 +61,8 @@
 				}
 			}
 
-			this.at( currentIndex ).set( { state: 'inactive' } );
-			this.at( newIndex ).set( { state: 'active' } );
+			this.at( currentIndex ).set( { state : 'inactive' } );
+			this.at( newIndex     ).set( { state : 'active'   } );
 		}
 	} );
 
