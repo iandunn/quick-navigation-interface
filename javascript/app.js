@@ -18,10 +18,9 @@
 				app.instructions  = $( '#idi-instructions'   );
 				idiOptions         = null;
 
-				app.allLinks          = new app.Collections.Links( app.getAllLinks() );
+				app.allLinks                = new app.Collections.Links( app.getAllLinks() );
 				app.searchResultsCollection = new app.Collections.Links( [] );
-				app.searchResultsView = new app.Views.Links( { el : app.searchResults, collection : app.searchResultsCollection } );
-				// todo re-align
+				app.searchResultsView       = new app.Views.Links( { el : app.searchResults, collection : app.searchResultsCollection } );
 
 				$( window ).keyup(       app.toggleInterface   );
 				app.mainContainer.click( app.toggleInterface   );
