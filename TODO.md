@@ -10,6 +10,7 @@
 * Read https://ozkatz.github.io/avoiding-common-backbonejs-pitfalls.html
 * csslint
 
+
 ### 0.1 launch
 
 * Look at all the todo comments through all files
@@ -30,6 +31,7 @@
 * Move concat/minified files to separate folder to so can phpstorm exclude them from code hints etc to avoid collisions?
 * Maybe don't ship the dev related files w/ the plugin?
 * better way to call start() after everything concatenated, so you can remove bootstrap.js?
+* setup csslint
 
 
 ### Future iterations

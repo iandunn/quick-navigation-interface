@@ -8,9 +8,7 @@ Author:      Ian Dunn
 Author URI:  http://iandunn.name
 */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	die( 'Access denied' );
-}
+defined( 'WPINC' ) or die;
 
 define( 'IDI_VERSION',              '0.1'   );
 define( 'IDI_REQUIRED_PHP_VERSION', '5.2.4' );  // because of WordPress minimum requirements

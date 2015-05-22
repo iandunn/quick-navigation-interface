@@ -50,6 +50,18 @@ The values of the keys must correspond to [jQuery's standardized key codes](http
 Not right now, but that may be added in the future. If you'd like something that does that now, take a look at [Jarvis](https://wordpress.org/plugins/jarvis/).
 
 
+= How can I override or customize the UI templates? =
+
+There are several methods:
+
+1. Use the `idi_template_path` filter to provide an arbitrary path for any template file.
+1. Copy the file you want to replace into your theme's root file, and add `idi-` to the begining of the filename. For example, copy `interface.php` in the plugin's views folder to `idi-interface.php` in your theme's folder.
+1. Use the `idi_template_content` filter to provide the content as a string.
+1. If you just want to add content to the beginning and/or end of a template, you can hook into the `idi_render_template_pre` and `idi_render_template_post` actions and echo whatever you want.
+
+Regardless of the method you choose, all of the variables used to build the original template will be available to you. Read the `render_template()` function for details.
+
+
 = Is this plugin secure? =
 I've done my best to ensure that it is, but just in case I missed anything [I also offer a security bounty](https://hackerone.com/iandunn-projects/) for any vulnerabilities that can be found and privately disclosed in any of my plugins.
 
