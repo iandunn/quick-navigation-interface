@@ -7,7 +7,19 @@ class Quick_Navigation_Interface {
 	 * Constructor
 	 */
 	public function __construct() {
-		$this->options = array(
+		$this->options = $this->get_options();
+
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts'  ) );
+		add_action( 'admin_footer',          array( $this, 'output_templates' ) );
+	}
+
+	/**
+	 * Define the plugin's options
+	 *
+	 * @return array
+	 */
+	protected function get_options() {
+		$options = array(
 			'limit' => 4,
 
 			'shortcuts' => array(
@@ -34,8 +46,7 @@ class Quick_Navigation_Interface {
 			),
 		);
 
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts'  ) );
-		add_action( 'admin_footer',          array( $this, 'output_templates' ) );
+		return apply_filters( 'idi_options', $options );
 	}
 
 	/**
@@ -63,7 +74,7 @@ class Quick_Navigation_Interface {
 		wp_localize_script(
 			'quick-navigation-interface',
 			'idiOptions',
-			apply_filters( 'idi_options', $this->options )
+			$this->options
 		);
 	}
 
