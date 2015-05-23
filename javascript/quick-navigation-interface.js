@@ -147,7 +147,7 @@
 			}
 
 			app.allLinks.invoke( 'set', { state : 'inactive' } );
-			app.searchResultsCollection.reset( app.allLinks.search( query, app.options.limit ) );
+			app.searchResultsCollection.reset( app.allLinks.search( query, app.options['search-results-limit'] ) );
 		},
 
 		/**
@@ -174,6 +174,9 @@
 	'use strict';
 	var app = window.QuickNavigationInterface;
 
+	/*
+	 * Collection for link models
+	 */
 	app.Collections.Links = Backbone.Collection.extend( {
 		model : app.Models.Link,
 
@@ -246,6 +249,9 @@
 
 	// todo assigning to window is the best practice? double check
 
+	/*
+	 * Model for a link
+	 */
 	app.Models.Link = Backbone.Model.extend( {
 		defaults : {
 			id    : 0,

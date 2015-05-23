@@ -20,7 +20,7 @@ class Quick_Navigation_Interface {
 	 */
 	protected function get_options() {
 		$options = array(
-			'limit' => 4,
+			'search-results-limit' => 4,
 
 			'shortcuts' => array(
 				'open-interface' => array(

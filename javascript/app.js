@@ -147,7 +147,7 @@
 			}
 
 			app.allLinks.invoke( 'set', { state : 'inactive' } );
-			app.searchResultsCollection.reset( app.allLinks.search( query, app.options.limit ) );
+			app.searchResultsCollection.reset( app.allLinks.search( query, app.options['search-results-limit'] ) );
 		},
 
 		/**
