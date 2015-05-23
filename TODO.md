@@ -5,7 +5,6 @@
 	* store in an option, then enqueue as .json file, separate from normal js file, so it can be cached client side rather than sent with every page
 	* update asynchronously on `save_post`
 	* add to same collection as on-page links, rename it to reflect new contents
-	* get each model an ID that's a hash of its url, to avoid duplicates. won't always pick best title, but better that dupes
 	* limit it to most recent X, to keep it under ~100k (not gzipped)
 	* remove readme bit about not having content, and description
 * maybe implement the main container as a view, even though it's not dynamic?
@@ -16,7 +15,7 @@
 * sourcemap xss issues? remove b/c not useful anyway?
 	* users safe b/c not distributed w/ wporg repo version, but still want to look into
 * ie8 doesn't open - might work w/ different keys? can't use "event" as param? https://stackoverflow.com/a/2412501/450127
-
+* Redo banner image so that the name doesn't overlap the container
 
 
 ### Future iterations
@@ -30,13 +29,15 @@
 * Improve search results if current method is not good enough
 	* Log each title/url to console, then browse through screens to get a feel for where the biggest problems are
 	* Links from admin bar New menu are duplicates and titles aren't helpful, maybe ignore them
-    		* maybe ignore all of admin bar b/c it's all duplicates
+    	* maybe ignore all of admin bar b/c it's all duplicates
     	* For menus, show parent > child if the current is a child?
 	* remove duplicate urls? but how to determine which one has the best title and keep that one? assume that a longer title contains more info and use that?
+		* maybe not. already removed ones with same url and title, which was worst of part. if removed ones w/ same url but diff title, would be confusing for user searching for title that isn't there
 	* Disambiguate links like "New" (new what?) and "Add new"
 		* Maybe loop through admin menu and add those w/ special context since those are known, then loop through rest of page and just add?
 		* Maybe detect append last part of url? only if conflict, or maybe always?
 	* Remove any links that are just # or javascript: b/c the handlers are setup based on ID and won't do anything here
+	* Don't add links that aren't visible?
 
 * More sophisticated search if above tweaks don't make it good enough
 	* Get list of specific examples where current isn't good enough

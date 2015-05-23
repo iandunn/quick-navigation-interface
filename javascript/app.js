@@ -39,9 +39,14 @@
 			var links = [];
 
 			$( 'a' ).each( function() {
+				var title = $( this ).text(),
+					url   = $( this ).attr( 'href' );
+
 				links.push( new app.Models.Link( {
-					'title' : $( this ).text(),
-					'url'   : $( this ).attr( 'href' )
+					'id'    : murmurhash3_32_gc( title + url ),
+					'title' : title,
+					'url'   : url
+					// todo remove quotes on indices
 				} ) );
 			} );
 

@@ -6,9 +6,11 @@
 
 	app.Models.Link = Backbone.Model.extend( {
 		defaults : {
+			'id'    : 0,
 			'title' : '',
 			'url'   : '',
 			'state' : 'inactive'
+			// todo remove quotes around indices
 		}
 	} );
 

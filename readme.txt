@@ -73,6 +73,9 @@ I've done my best to ensure that it is, but just in case I missed anything [I al
 
 == Changelog ==
 
+= v0.2 (todo) =
+* [NEW] Exact duplicate links have been removed from the search results
+
 = v0.1 (2015-05-22) =
 * [NEW] Initial release
 

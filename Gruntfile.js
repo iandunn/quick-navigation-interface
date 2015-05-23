@@ -1,13 +1,17 @@
 module.exports = function ( grunt ) {
-	var js_files = [
+	var jshint_files,
+		js_files = [
 			'javascript/app.js',                        // this comes first because all the other classes depend on window.QuickNavigationInterface being defined
 			'javascript/**/*.js',
 			'!javascript/quick-navigation-interface*.js',  // ignore concatenated and minified files
 			'!javascript/bootstrap.js',
 			'javascript/bootstrap.js'                   // this comes last because we don't want to initialize window.QuickNavigationInterface until all the files have been concatenated
-
+			// todo realign comments
 		],
 		css_files = [ 'css/*.css', '!css/*.min.css' ];
+
+		jshint_files = js_files.slice();
+		jshint_files.push( '!javascript/murmurhash3_gc.js' );
 
 	grunt.initConfig( {
 		pkg : grunt.file.readJSON( 'package.json' ),
@@ -38,7 +42,7 @@ module.exports = function ( grunt ) {
 		},
 
 		jshint : {
-			files : js_files,
+			files : jshint_files,
 
 			options : {
 				boss     : true,
@@ -65,6 +69,7 @@ module.exports = function ( grunt ) {
 					console                  : false,
 					jQuery                   : false,
 					idiOptions               : true,
+					murmurhash3_32_gc        : true,
 					QuickNavigationInterface : true,
 					wp                       : false
 				}
