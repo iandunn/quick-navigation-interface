@@ -1,12 +1,11 @@
 module.exports = function ( grunt ) {
 	var jshint_files,
 		js_files = [
-			'javascript/app.js',                        // this comes first because all the other classes depend on window.QuickNavigationInterface being defined
+			'javascript/app.js',                           // this comes first because all the other classes depend on window.QuickNavigationInterface being defined
 			'javascript/**/*.js',
 			'!javascript/quick-navigation-interface*.js',  // ignore concatenated and minified files
 			'!javascript/bootstrap.js',
-			'javascript/bootstrap.js'                   // this comes last because we don't want to initialize window.QuickNavigationInterface until all the files have been concatenated
-			// todo realign comments
+			'javascript/bootstrap.js'                      // this comes last because we don't want to initialize window.QuickNavigationInterface until all the files have been concatenated
 		],
 		css_files = [ 'css/*.css', '!css/*.min.css' ];
 
