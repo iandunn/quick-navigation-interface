@@ -43,10 +43,9 @@
 					url   = $( this ).attr( 'href' );
 
 				links.push( new app.Models.Link( {
-					'id'    : murmurhash3_32_gc( title + url ),
-					'title' : title,
-					'url'   : url
-					// todo remove quotes on indices
+					id    : murmurhash3_32_gc( title + url ),
+					title : title,
+					url   : url
 				} ) );
 			} );
 
