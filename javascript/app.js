@@ -138,16 +138,16 @@
 		updateSearchResults : function() {
 			var query = app.searchField.val();
 
-			if ( '' === query ) {
-				app.instructions.removeClass( 'idi-active' );
-				app.searchResults.removeClass( 'idi-active' );
-			} else {
-				app.instructions.addClass( 'idi-active' );
-				app.searchResults.addClass( 'idi-active' );
-			}
-
 			app.allLinks.invoke( 'set', { state : 'inactive' } );
 			app.searchResultsCollection.reset( app.allLinks.search( query, app.options['search-results-limit'] ) );
+
+			if ( app.searchResultsCollection.length > 0 ) {
+				app.instructions.addClass( 'idi-active' );
+				app.searchResults.addClass( 'idi-active' );
+			} else {
+				app.instructions.removeClass( 'idi-active' );
+				app.searchResults.removeClass( 'idi-active' );
+			}
 		},
 
 		/**
