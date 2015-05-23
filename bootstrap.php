@@ -48,8 +48,10 @@ function idi_requirements_error() {
  * The main program needs to be in a separate file that only gets loaded if the plugin requirements are met. Otherwise older PHP installations could crash when trying to parse it.
  */
 if ( idi_requirements_met() ) {
-	require_once( dirname( __FILE__ ) . '/classes/quick-navigation-interface.php' );
-	$GLOBALS['Quick_Navigation_Interface'] = new Quick_Navigation_Interface();
+	if ( is_admin() ) {
+		require_once( dirname( __FILE__ ) . '/classes/quick-navigation-interface.php' );
+		$GLOBALS['Quick_Navigation_Interface'] = new Quick_Navigation_Interface();
+	}
 } else {
 	add_action( 'admin_notices', 'idi_requirements_error' );
 }
