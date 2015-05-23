@@ -58,15 +58,15 @@ module.exports = function ( grunt ) {
 				unused   : true,
 
 				globals : {
-					_                     : false,
-					alert                 : false,
-					app                   : false,
-					Backbone              : false,
-					console               : false,
-					jQuery                : false,
-					idiOptions            : true,
+					_                        : false,
+					alert                    : false,
+					app                      : false,
+					Backbone                 : false,
+					console                  : false,
+					jQuery                   : false,
+					idiOptions               : true,
 					QuickNavigationInterface : true,
-					wp                    : false
+					wp                       : false
 				}
 			}
 		},
