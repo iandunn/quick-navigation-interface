@@ -4,6 +4,9 @@
 
 	// todo assigning to window is the best practice? double check
 
+	/*
+	 * Model for a link
+	 */
 	app.Models.Link = Backbone.Model.extend( {
 		defaults : {
 			id    : 0,

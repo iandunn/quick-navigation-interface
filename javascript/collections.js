@@ -2,6 +2,9 @@
 	'use strict';
 	var app = window.QuickNavigationInterface;
 
+	/*
+	 * Collection for link models
+	 */
 	app.Collections.Links = Backbone.Collection.extend( {
 		model : app.Models.Link,
 
