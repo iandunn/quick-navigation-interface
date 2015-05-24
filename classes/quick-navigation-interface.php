@@ -9,14 +9,12 @@ class Quick_Navigation_Interface {
 	public function __construct() {
 		$this->options = $this->get_options();
 
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts'  ) );
+		add_action( 'admin_enqueue_scripts',     array( $this, 'enqueue_scripts'  ) );
 		add_action( 'post_updated',              array( $this, 'update_content_index_expiration_timestamp' ), 10, 3 );
 		add_action( 'transition_post_status',    array( $this, 'update_content_index_expiration_timestamp' ), 10, 3 );
 		add_action( 'wp_ajax_qni_content_index', array( $this, 'output_content_index' ) ); // intentionally only registered for authenticated users, because output is user-specific
 		add_filter( 'nocache_headers',           array( $this, 'set_cache_headers' ) );
-		add_action( 'admin_footer',          array( $this, 'output_templates' ) );
-
-		// todo re-align
+		add_action( 'admin_footer',              array( $this, 'output_templates' ) );
 	}
 
 	/**
