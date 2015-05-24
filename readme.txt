@@ -7,14 +7,14 @@ Tested up to:      4.2
 Stable tag:        0.1
 License:           GPLv2
 
-Allows you to quickly access links within wp-admin just by typing the first few letters.
+Quickly access screens and content within wp-admin just by typing the first few letters of the name.
 
 
 == Description ==
 
 Quick Navigation Interface provides a new way to navigate through the Administration Panels, combining the speed of keyboard shortcuts with the ease of a graphical user interface.
 
-Just press \` (above the tab key) to bring up the interface, and then start typing part of any link on the current page. As you type, you'll be shown a list of matching links. Use the `Up` and `Down` keys to move between them, and press `Enter` to open one.
+Just press \` (above the tab key) to bring up the interface, and then start typing part of the name of any screen, post, page, etc. As you type, you'll be shown a list of matching links. Use the `Up` and `Down` keys to move between them, and press `Enter` to open one.
 
 https://www.youtube.com/watch?v=jhjt9hSyMZw
 
@@ -35,7 +35,16 @@ Make sure you're not focused on an input field (like a text area or a button), a
 
 This could also happen if JavaScript execution has been halted because of errors on the page, which is most likely caused by another plugin. Try disabling all other plugins temporarily, and see if that solves the problem.
 
-Also, make sure you're not mistaking it for the ' (single-quote) key. You need to press the backtick key, which is normally located above the tab key and left of the 1 key.
+Also, make sure you're not mistaking it for the ' (single-quote) key. You need to press the backtick key, which is normally located above the `tab` key and left of the `1` key.
+
+
+= Why doesn't the content I'm searching for show up? =
+
+There are a few reasons why you may not see all content.
+
+1. For performance reasons, only a limited number of posts are searched. The default is 500, and can be changed via the `qni_content_index_params` filter.
+1. The search term must match the title of the content exactly. It doesn't need to be the entire word, but it can't be a typo or a "fuzzy" match.
+1. You'll only be shown content that your user account has permission to edit.
 
 
 = Can I customize the keyboard shortcuts and other options? =
@@ -44,17 +53,12 @@ There isn't a settings page, but all of the internal options can be modified via
 The values of the keys must correspond to [jQuery's standardized key codes](http://jquerypp.com/release/latest/docs/key.html), and the plugin doesn't currently support using combinations.
 
 
-= Will posts, comments, media and other content show up in the results? =
-
-Not right now, but that may be added in the future. If you'd like something that does that now, take a look at [Jarvis](https://wordpress.org/plugins/jarvis/).
-
-
 = How can I override or customize the UI templates? =
 
 There are several methods:
 
 1. Use the `idi_template_path` filter to provide an arbitrary path for any template file.
-1. Copy the file you want to replace into your theme's root file, and add `idi-` to the begining of the filename. For example, copy `interface.php` in the plugin's views folder to `idi-interface.php` in your theme's folder.
+1. Copy the file you want to replace into your theme's root file, and add `idi-` to the beginning of the filename. For example, copy `interface.php` in the plugin's views folder to `idi-interface.php` in your theme's folder.
 1. Use the `idi_template_content` filter to provide the content as a string.
 1. If you just want to add content to the beginning and/or end of a template, you can hook into the `idi_render_template_pre` and `idi_render_template_post` actions and echo whatever you want.
 
@@ -74,13 +78,20 @@ I've done my best to ensure that it is, but just in case I missed anything [I al
 == Changelog ==
 
 = v0.2 (todo) =
-* [NEW] Exact duplicate links have been removed from the search results
+* [NEW] Post, pages, and other content now appears in the search results.
+* [FIX] Exact duplicate links have been removed from the search results.
+
+[Full changelog](todo github compare)
+
 
 = v0.1 (2015-05-22) =
 * [NEW] Initial release
 
 
 == Upgrade Notice ==
+
+= 0.2 =
+Version 0.2 adds posts, pages and other content to the search results, and reduces the number of duplicate results.
 
 = 0.1 =
 Initial release.

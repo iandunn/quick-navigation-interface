@@ -1,30 +1,30 @@
 ### 0.2
 
-* Include content in results
-	* Build an index mapping urls to keywords and titles
-	* store in an option, then enqueue as .json file, separate from normal js file, so it can be cached client side rather than sent with every page
-	* update asynchronously on `save_post`
-	* add to same collection as on-page links, rename it to reflect new contents
-	* limit it to most recent X, to keep it under ~100k (not gzipped)
-	* remove readme bit about not having content, and description
+* Redo banner image so that the name doesn't overlap the container
+* redo video and screenshots to show content and no duplicates
+	
+	
+### 0.3
+
+* exclude nav_menu_item and revisions from qni_content_index_params
 * maybe implement the main container as a view, even though it's not dynamic?
 	* it still has behavior on it like events, even though it doesn't change visually
 * think about any ally issues
-* check responsiveness once https://core.trac.wordpress.org/ticket/32194 lands
 * Read https://ozkatz.github.io/avoiding-common-backbonejs-pitfalls.html
 * sourcemap xss issues? remove b/c not useful anyway?
 	* users safe b/c not distributed w/ wporg repo version, but still want to look into
 * ie8 doesn't open - might work w/ different keys? can't use "event" as param? https://stackoverflow.com/a/2412501/450127
-* Redo banner image so that the name doesn't overlap the container
+* when up/down to select link, trigger url showing up in status bar, just like when hover w/ mouse
 
 
 ### Future iterations
 
+* check responsiveness once https://core.trac.wordpress.org/ticket/32194 lands
 * Setup qunit tests
 * update grunt task versions to latest available
 * Move concat/minified files to separate folder to so can phpstorm exclude them from code hints etc to avoid collisions?
 * better way to call start() after everything concatenated, so you can remove bootstrap.js?
-* setup csslint
+* setup csslint, php codesniffer
 
 * Improve search results if current method is not good enough
 	* Log each title/url to console, then browse through screens to get a feel for where the biggest problems are

@@ -19,6 +19,7 @@
 				window.idiOptions = null;
 
 				app.allLinks                = new app.Collections.Links( app.getAllLinks() );
+					// todo rename it to reflect new contents
 				app.searchResultsCollection = new app.Collections.Links( [] );
 				app.searchResultsView       = new app.Views.Links( { el : app.searchResults, collection : app.searchResultsCollection } );
 
@@ -36,8 +37,11 @@
 		 * @returns {Array}
 		 */
 		getAllLinks : function() {
+			// todo rename it to reflect new contents
+
 			var links = [];
 
+			// Add links on the current page
 			$( 'a' ).each( function() {
 				var title = $( this ).text(),
 					url   = $( this ).attr( 'href' );
@@ -48,6 +52,17 @@
 					url   : url
 				} ) );
 			} );
+
+			// Add content items
+			_.each( window.qniContentIndex, function( item ) {
+				links.push( new app.Models.Link( {
+					id    : murmurhash3_32_gc( item.title + item.url ),
+					title : item.title,
+					url   : item.url
+				} ) );
+			} );
+
+			window.qniContentIndex = null;    // there's no need to keep this in memory anymore, now that the data is stored in the links collection
 
 			return links;
 		},
