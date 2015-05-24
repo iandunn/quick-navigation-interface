@@ -11,12 +11,12 @@
 		 */
 		start : function() {
 			try {
-				app.options       = idiOptions;
+				app.options       = window.idiOptions;
 				app.mainContainer = $( '#idi-container'      );
 				app.searchField   = $( '#idi-search-field'   );
 				app.searchResults = $( '#idi-search-results' );
 				app.instructions  = $( '#idi-instructions'   );
-				idiOptions         = null;
+				window.idiOptions = null;
 
 				app.allLinks                = new app.Collections.Links( app.getAllLinks() );
 				app.searchResultsCollection = new app.Collections.Links( [] );

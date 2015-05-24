@@ -67,7 +67,6 @@ module.exports = function ( grunt ) {
 					Backbone                 : false,
 					console                  : false,
 					jQuery                   : false,
-					idiOptions               : true,
 					murmurhash3_32_gc        : true,
 					QuickNavigationInterface : true,
 					wp                       : false
