@@ -5,12 +5,12 @@
 
 	<ul class="ul-disc">
 		<li>
-			<strong><?php printf( __( 'PHP %s+', 'quick-navigation-interface' ), esc_html( IDI_REQUIRED_PHP_VERSION ) ); ?></strong>
+			<strong><?php printf( __( 'PHP %s+', 'quick-navigation-interface' ), esc_html( QNI_REQUIRED_PHP_VERSION ) ); ?></strong>
 			<em><?php printf( __( "(You're running version %s)", 'quick-navigation-interface' ), esc_html( PHP_VERSION ) ); ?></em>
 		</li>
 
 		<li>
-			<strong><?php printf( __( 'WordPress %s+', 'quick-navigation-interface' ), esc_html( IDI_REQUIRED_WP_VERSION ) ); ?></strong>
+			<strong><?php printf( __( 'WordPress %s+', 'quick-navigation-interface' ), esc_html( QNI_REQUIRED_WP_VERSION ) ); ?></strong>
 			<em><?php printf( __( "(You're running version %s)", 'quick-navigation-interface' ), esc_html( $wp_version ) ); ?></em>
 		</li>
 	</ul>

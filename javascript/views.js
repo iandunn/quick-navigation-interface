@@ -22,9 +22,9 @@
 		 */
 		render : function() {
 			if ( 'active' === this.model.get( 'state' ) ) {
-				this.$el.addClass( 'idi-active' );
+				this.$el.addClass( 'qni-active' );
 			} else {
-				this.$el.removeClass( 'idi-active' );
+				this.$el.removeClass( 'qni-active' );
 			}
 
 			this.$el.html( this.template( this.model.toJSON() ) );

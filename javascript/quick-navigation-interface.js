@@ -11,12 +11,12 @@
 		 */
 		start : function() {
 			try {
-				app.options       = window.idiOptions;
-				app.mainContainer = $( '#idi-container'      );
-				app.searchField   = $( '#idi-search-field'   );
-				app.searchResults = $( '#idi-search-results' );
-				app.instructions  = $( '#idi-instructions'   );
-				window.idiOptions = null;
+				app.options       = window.qniOptions;
+				app.mainContainer = $( '#qni-container'      );
+				app.searchField   = $( '#qni-search-field'   );
+				app.searchResults = $( '#qni-search-results' );
+				app.instructions  = $( '#qni-instructions'   );
+				window.qniOptions = null;
 
 				app.allLinks                = new app.Collections.Links( app.getAllLinks() );
 					// todo rename it to reflect new contents
@@ -100,7 +100,7 @@
 		 */
 		openInterface : function() {
 			app.searchField.val( '' );
-			app.mainContainer.addClass( 'idi-active' );
+			app.mainContainer.addClass( 'qni-active' );
 			app.searchField.focus();
 		},
 
@@ -108,8 +108,8 @@
 		 * Close the interface
 		 */
 		closeInterface : function() {
-			app.mainContainer.removeClass( 'idi-active' );
-			app.instructions.removeClass(  'idi-active' );
+			app.mainContainer.removeClass( 'qni-active' );
+			app.instructions.removeClass(  'qni-active' );
 			app.searchResultsCollection.reset();
 			app.searchField.blur();    // because toggleInterface() will return early if we're focused on an input field
 		},
@@ -139,7 +139,7 @@
 		 * Open the active link
 		 */
 		openLink : function() {
-			var link = app.searchResults.find( 'li.idi-active' ).find( 'a' );
+			var link = app.searchResults.find( 'li.qni-active' ).find( 'a' );
 
 			if ( undefined !== link.attr( 'href' ) ) {
 				link.get( 0 ).click();
@@ -157,11 +157,11 @@
 			app.searchResultsCollection.reset( app.allLinks.search( query, app.options['search-results-limit'] ) );
 
 			if ( app.searchResultsCollection.length > 0 ) {
-				app.instructions.addClass( 'idi-active' );
-				app.searchResults.addClass( 'idi-active' );
+				app.instructions.addClass( 'qni-active' );
+				app.searchResults.addClass( 'qni-active' );
 			} else {
-				app.instructions.removeClass( 'idi-active' );
-				app.searchResults.removeClass( 'idi-active' );
+				app.instructions.removeClass( 'qni-active' );
+				app.searchResults.removeClass( 'qni-active' );
 			}
 		},
 
@@ -372,9 +372,9 @@ if ( 'function' !== typeof murmurhash3_32_gc ) {
 		 */
 		render : function() {
 			if ( 'active' === this.model.get( 'state' ) ) {
-				this.$el.addClass( 'idi-active' );
+				this.$el.addClass( 'qni-active' );
 			} else {
-				this.$el.removeClass( 'idi-active' );
+				this.$el.removeClass( 'qni-active' );
 			}
 
 			this.$el.html( this.template( this.model.toJSON() ) );

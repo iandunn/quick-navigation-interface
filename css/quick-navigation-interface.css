@@ -1,43 +1,43 @@
-.idi-active,
-#idi-container.idi-active,
-#idi-instructions.idi-active,
-#idi-search-results.idi-active {
+.qni-active,
+#qni-container.qni-active,
+#qni-instructions.qni-active,
+#qni-search-results.qni-active {
 	display: block;
 }
 
-#idi-container {
+#qni-container {
 	display: none;
 }
 
-	#idi-dialog {
+	#qni-dialog {
 		padding: 2em;
 	}
 
-		#idi-introduction {
+		#qni-introduction {
 			text-align: center;
 		}
 
-		#idi-search-field {
+		#qni-search-field {
 			width: 100%;
 			padding: 6px 5px 3px 10px;
 		}
 
-		#idi-instructions {
+		#qni-instructions {
 			display: none;
 			font-size: .9em;
 			font-style: italic;
 		}
 
-			#idi-instructions code {
+			#qni-instructions code {
 				font-size: .9em;
 			}
 
-		#idi-search-results {
+		#qni-search-results {
 			display: none;
 			margin-bottom: 0;
 		}
 
-			#idi-search-results li {
+			#qni-search-results li {
 				display: list-item;
 				margin-left: 1em;
 				padding: 2px 5px 0 10px;
@@ -46,14 +46,14 @@
 				font-size: 1.1em;
 			}
 
-				#idi-search-results li:last-child {
+				#qni-search-results li:last-child {
 					margin-bottom: 0;
 				}
 
-				#idi-search-results li.idi-active {
+				#qni-search-results li.qni-active {
 					background-color: #DFEEFF;
 				}
 
-				#idi-search-results li a {
+				#qni-search-results li a {
 					text-decoration: none;
 				}

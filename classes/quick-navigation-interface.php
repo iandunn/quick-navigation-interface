@@ -50,7 +50,7 @@ class Quick_Navigation_Interface {
 			),
 		);
 
-		return apply_filters( 'idi_options', $options );
+		return apply_filters( 'qni_options', $options );
 	}
 
 	/**
@@ -193,7 +193,7 @@ class Quick_Navigation_Interface {
 			'quick-navigation-interface',
 			plugins_url( "css/quick-navigation-interface$suffix.css", dirname( __FILE__ ) ),
 			array( 'media-views' ),
-			IDI_VERSION,
+			QNI_VERSION,
 			'all'
 		);
 
@@ -209,13 +209,13 @@ class Quick_Navigation_Interface {
 			'quick-navigation-interface',
 			plugins_url( "javascript/quick-navigation-interface$suffix.js", dirname( __FILE__ ) ),
 			array( 'jquery', 'backbone', 'underscore', 'wp-util', 'qni-content-index' ),
-			IDI_VERSION,
+			QNI_VERSION,
 			true
 		);
 
 		wp_localize_script(
 			'quick-navigation-interface',
-			'idiOptions',
+			'qniOptions',
 			$this->options
 		);
 	}
@@ -307,13 +307,13 @@ class Quick_Navigation_Interface {
 	 * @return string
 	 */
 	protected static function render_template( $default_template_path = false, $variables = array(), $require = 'once' ) {
-		do_action( 'idi_render_template_pre', $default_template_path, $variables );
+		do_action( 'qni_render_template_pre', $default_template_path, $variables );
 
-		$template_path = locate_template( 'idi-' . basename( $default_template_path ) );
+		$template_path = locate_template( 'qni-' . basename( $default_template_path ) );
 		if ( ! $template_path ) {
 			$template_path = dirname( dirname( __FILE__ ) ) . '/views/' . $default_template_path;
 		}
-		$template_path = apply_filters( 'idi_template_path', $template_path );
+		$template_path = apply_filters( 'qni_template_path', $template_path );
 
 		if ( is_file( $template_path ) ) {
 			extract( $variables );
@@ -325,12 +325,12 @@ class Quick_Navigation_Interface {
 				require_once( $template_path );
 			}
 
-			$template_content = apply_filters( 'idi_template_content', ob_get_clean(), $default_template_path, $template_path, $variables );
+			$template_content = apply_filters( 'qni_template_content', ob_get_clean(), $default_template_path, $template_path, $variables );
 		} else {
 			$template_content = '';
 		}
 
-		do_action( 'idi_render_template_post', $default_template_path, $variables, $template_path, $template_content );
+		do_action( 'qni_render_template_post', $default_template_path, $variables, $template_path, $template_content );
 		return $template_content;
 	}
 

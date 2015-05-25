@@ -2,6 +2,8 @@
 
 * Redo banner image so that the name doesn't overlap the container
 * redo video and screenshots to show content and no duplicates
+* regenerate pot
+* bump version number etc
 	
 	
 ### 0.3

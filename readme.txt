@@ -48,7 +48,7 @@ There are a few reasons why you may not see all content.
 
 
 = Can I customize the keyboard shortcuts and other options? =
-There isn't a settings page, but all of the internal options can be modified via the `idi_options` filter. If you're not familiar with using filters, you can [learn more about them](https://developer.wordpress.org/plugins/hooks/filters/) from the WordPress Plugin Developer's Handbook, and then implement them in [a functionality plugin](http://wpcandy.com/teaches/how-to-create-a-functionality-plugin) that you write, or via a plugin like [Functionality](https://wordpress.org/plugins/functionality/).
+There isn't a settings page, but all of the internal options can be modified via the `qni_options` filter. If you're not familiar with using filters, you can [learn more about them](https://developer.wordpress.org/plugins/hooks/filters/) from the WordPress Plugin Developer's Handbook, and then implement them in [a functionality plugin](http://wpcandy.com/teaches/how-to-create-a-functionality-plugin) that you write, or via a plugin like [Functionality](https://wordpress.org/plugins/functionality/).
 
 The values of the keys must correspond to [jQuery's standardized key codes](http://jquerypp.com/release/latest/docs/key.html), and the plugin doesn't currently support using combinations.
 
@@ -57,10 +57,10 @@ The values of the keys must correspond to [jQuery's standardized key codes](http
 
 There are several methods:
 
-1. Use the `idi_template_path` filter to provide an arbitrary path for any template file.
-1. Copy the file you want to replace into your theme's root file, and add `idi-` to the beginning of the filename. For example, copy `interface.php` in the plugin's views folder to `idi-interface.php` in your theme's folder.
-1. Use the `idi_template_content` filter to provide the content as a string.
-1. If you just want to add content to the beginning and/or end of a template, you can hook into the `idi_render_template_pre` and `idi_render_template_post` actions and echo whatever you want.
+1. Use the `qni_template_path` filter to provide an arbitrary path for any template file.
+1. Copy the file you want to replace into your theme's root file, and add `qni-` to the beginning of the filename. For example, copy `interface.php` in the plugin's views folder to `qni-interface.php` in your theme's folder.
+1. Use the `qni_template_content` filter to provide the content as a string.
+1. If you just want to add content to the beginning and/or end of a template, you can hook into the `qni_render_template_pre` and `qni_render_template_post` actions and echo whatever you want.
 
 Regardless of the method you choose, all of the variables used to build the original template will be available to you. Read the `render_template()` function for details.
 
