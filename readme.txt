@@ -79,11 +79,11 @@ I've done my best to ensure that it is, but just in case I missed anything [I al
 
 == Changelog ==
 
-= v0.2 (todo) =
+= v0.2 (2015-05-24) =
 * [NEW] Post, pages, and other content now appears in the search results.
 * [FIX] Exact duplicate links have been removed from the search results.
 
-[Full changelog](todo github compare)
+[Full changelog](https://github.com/iandunn/quick-navigation-interface/compare/3fa0405482f7fe97a6a6e4023af33af2493eb306...32e4e9b0c8a57147368fcd9bedae3ce563501e77)
 
 
 = v0.1 (2015-05-22) =
