@@ -4,7 +4,7 @@ Donate link:       https://www.debian.org/donations
 Tags:              keyboard,navigation,shortcuts,wp-admin
 Requires at least: 3.6
 Tested up to:      4.2
-Stable tag:        0.1
+Stable tag:        0.2
 License:           GPLv2
 
 Quickly access screens and content within wp-admin just by typing the first few letters of the name.
@@ -16,7 +16,7 @@ Quick Navigation Interface provides a new way to navigate through the Administra
 
 Just press \` (above the tab key) to bring up the interface, and then start typing part of the name of any screen, post, page, etc. As you type, you'll be shown a list of matching links. Use the `Up` and `Down` keys to move between them, and press `Enter` to open one.
 
-https://www.youtube.com/watch?v=jhjt9hSyMZw
+https://www.youtube.com/watch?v=60iVn94hEIE
 
 This was inspired by Ubuntu's Dash and [HUD](http://www.markshuttleworth.com/archives/939), and is also similar to the Spotlight feature in OS X.
 

@@ -1,9 +1,3 @@
-### 0.2
-
-* redo video and screenshots to show content and no duplicates
-* bump version number etc
-	
-	
 ### 0.3
 
 * html entities show up in titles, e.g., "Doesn&#8217;t" instead of "Doesn't"
