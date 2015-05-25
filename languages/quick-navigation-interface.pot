@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Quick Navigation Interface 0.1\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/quick-navigation-"
 "interface\n"
-"POT-Creation-Date: 2015-05-22 06:30:12+00:00\n"
+"POT-Creation-Date: 2015-05-25 00:22:20+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -13,23 +13,23 @@ msgstr ""
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#: classes/quick-navigation-interface.php:16
+#: classes/quick-navigation-interface.php:32
 msgid "`"
 msgstr ""
 
-#: classes/quick-navigation-interface.php:20
+#: classes/quick-navigation-interface.php:36
 msgid "Down"
 msgstr ""
 
-#: classes/quick-navigation-interface.php:24
+#: classes/quick-navigation-interface.php:40
 msgid "Up"
 msgstr ""
 
-#: classes/quick-navigation-interface.php:28
+#: classes/quick-navigation-interface.php:44
 msgid "Enter"
 msgstr ""
 
-#: classes/quick-navigation-interface.php:32
+#: classes/quick-navigation-interface.php:48
 msgid "Escape"
 msgstr ""
 
@@ -86,8 +86,8 @@ msgstr ""
 
 #. Description of the plugin/theme
 msgid ""
-"Allows you to quickly access links within wp-admin just by typing the first "
-"few letters."
+"Quickly access screens and content within wp-admin just by typing the first "
+"few letters of the name."
 msgstr ""
 
 #. Author of the plugin/theme
