@@ -1,12 +1,12 @@
 ### 0.2
 
-* Redo banner image so that the name doesn't overlap the container
 * redo video and screenshots to show content and no duplicates
 * bump version number etc
 	
 	
 ### 0.3
 
+* html entities show up in titles, e.g., "Doesn&#8217;t" instead of "Doesn't"
 * exclude nav_menu_item and revisions from qni_content_index_params
 * maybe implement the main container as a view, even though it's not dynamic?
 	* it still has behavior on it like events, even though it doesn't change visually

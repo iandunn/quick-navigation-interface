@@ -10,7 +10,7 @@
 			</span>
 		</a>
 
-		<h3 id="qni-introduction"><?php _e( 'Start typing to open any links on the current page', 'quick-navigation-interface' ); ?></h3>
+		<h3 id="qni-introduction"><?php _e( 'Start typing to open any post, menu item, etc', 'quick-navigation-interface' ); ?></h3>
 
 		<input id="qni-search-field" name="" type="text" placeholder="<?php _e( 'e.g., Posts, Settings, Plugins, Comments, etc', 'quick-navigation-interface' ); ?>" />
 
