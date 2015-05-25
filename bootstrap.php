@@ -2,7 +2,7 @@
 /*
 Plugin Name: Quick Navigation Interface
 Plugin URI:  http://wordpress.org/plugins/quick-navigation-interface
-Description: Allows you to quickly access links within wp-admin just by typing the first few letters.
+Description: Quickly access screens and content within wp-admin just by typing the first few letters of the name.
 Version:     0.1
 Author:      Ian Dunn
 Author URI:  http://iandunn.name

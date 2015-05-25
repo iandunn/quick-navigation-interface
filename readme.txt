@@ -31,11 +31,13 @@ Once the plugin is installed and activated, you don't need to do anything else. 
 == Frequently Asked Questions ==
 
 = I'm pressing the ` key, but nothing happens =
-Make sure you're not focused on an input field (like a text area or a button), and then try again. You can click anywhere outside an input field (like the page's background) to move the focus off of the input field.
 
-This could also happen if JavaScript execution has been halted because of errors on the page, which is most likely caused by another plugin. Try disabling all other plugins temporarily, and see if that solves the problem.
+There are a few likely causes for this:
 
-Also, make sure you're not mistaking it for the ' (single-quote) key. You need to press the backtick key, which is normally located above the `tab` key and left of the `1` key.
+1. The page hasn't finished loading yet. Make sure you wait until the circle in the title bar has stopped spinning.
+1. The cursor could be focused on an input field (like a text area or a button). Try clicking anywhere outside an input field (like the page's background) to move the focus off of the input field, and then try to open the interface again.
+1. You might be mistaking the \` (backtick) key for the ' (single-quote) key. You need to press the backtick key, which is normally located above the `tab` key and left of the `1` key.
+1. JavaScript execution might have been halted because of errors on the page, which would most likely be caused by the theme or another plugin. You can check your browser's error console for details, and send the error to the plugin's developer. To work around it, try disabling all other plugins temporarily, and switching to one of the Core themes, and see if that solves the problem. If it does, turn them back on one-by-one until you isolate which one is causing the problem.
 
 
 = Why doesn't the content I'm searching for show up? =

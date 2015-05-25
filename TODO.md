@@ -16,6 +16,7 @@
 	* users safe b/c not distributed w/ wporg repo version, but still want to look into
 * ie8 doesn't open - might work w/ different keys? can't use "event" as param? https://stackoverflow.com/a/2412501/450127
 * when up/down to select link, trigger url showing up in status bar, just like when hover w/ mouse
+* load the plugin earlier, so can start using it even before page finishes loading?
 
 
 ### Future iterations
