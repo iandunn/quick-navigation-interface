@@ -2,7 +2,6 @@
 
 * Redo banner image so that the name doesn't overlap the container
 * redo video and screenshots to show content and no duplicates
-* regenerate pot
 * bump version number etc
 	
 	
@@ -27,6 +26,7 @@
 * Move concat/minified files to separate folder to so can phpstorm exclude them from code hints etc to avoid collisions?
 * better way to call start() after everything concatenated, so you can remove bootstrap.js?
 * setup csslint, php codesniffer
+* setup grunt task to update pot file?
 
 * Improve search results if current method is not good enough
 	* Log each title/url to console, then browse through screens to get a feel for where the biggest problems are

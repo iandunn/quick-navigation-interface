@@ -255,6 +255,8 @@ class Quick_Navigation_Interface {
 	 * it each time is trivial, and no greater than it would be if using wp_localize_script().
 	 */
 	public function output_content_index() {
+		header( 'Content-Type: application/x-javascript; charset=' . get_option( 'blog_charset' ) );
+
 		?>
 
 		window.qniContentIndex = <?php echo wp_json_encode( $this->get_content_index() ); ?>;
