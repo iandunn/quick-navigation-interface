@@ -1,14 +1,22 @@
 ### 0.3
 
+* localization
+	* https://wordpress.org/support/topic/localization-86?replies=1#post-7013544
+	* add proper headers
+	* audit german po file
+	* compile german mo
+	* test
+
+### 0.4
+
+* for content, add post type in parenthesis
+* use qni-search-results.ul-disc instead of manually setting that style
+* add to hacker1 list, maybe as top target
 * html entities show up in titles, e.g., "Doesn&#8217;t" instead of "Doesn't"
 * exclude nav_menu_item and revisions from qni_content_index_params
 * maybe implement the main container as a view, even though it's not dynamic?
 	* it still has behavior on it like events, even though it doesn't change visually
 * think about any ally issues
-* Read https://ozkatz.github.io/avoiding-common-backbonejs-pitfalls.html
-* sourcemap xss issues? remove b/c not useful anyway?
-	* users safe b/c not distributed w/ wporg repo version, but still want to look into
-* ie8 doesn't open - might work w/ different keys? can't use "event" as param? https://stackoverflow.com/a/2412501/450127
 * when up/down to select link, trigger url showing up in status bar, just like when hover w/ mouse
 * load the plugin earlier, so can start using it even before page finishes loading?
 
@@ -21,7 +29,13 @@
 * Move concat/minified files to separate folder to so can phpstorm exclude them from code hints etc to avoid collisions?
 * better way to call start() after everything concatenated, so you can remove bootstrap.js?
 * setup csslint, php codesniffer
-* setup grunt task to update pot file?
+* setup grunt task to update pot file? see password-confirm-action
+* setup grunt-wp-readme-to-markdown
+* Read https://ozkatz.github.io/avoiding-common-backbonejs-pitfalls.html
+* sourcemap xss issues? remove b/c not useful anyway?
+	* users safe b/c not distributed w/ wporg repo version, but still want to look into
+* ie8 doesn't open - might work w/ different keys? can't use "event" as param? https://stackoverflow.com/a/2412501/450127
+
 
 * Improve search results if current method is not good enough
 	* Log each title/url to console, then browse through screens to get a feel for where the biggest problems are
@@ -40,6 +54,8 @@
 	* Get list of specific examples where current isn't good enough
 	* Maybe calculate a Levenshtein distance, or soundex, or something else
 		* Find a good, performant implementation. Maybe https://stackoverflow.com/questions/11919065/sort-an-array-by-the-levenshtein-distance-with-best-performance-in-javascript
+
+* Add a way to search for more content via AJAX if some posts were left out of local index b/c of limit?
 
 * Add ability to search by additional keywords that are associated w/ each link, not just the title
 	* Can pull the keywords from link title tags, post excerpts, etc

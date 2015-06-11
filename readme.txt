@@ -79,6 +79,12 @@ I've done my best to ensure that it is, but just in case I missed anything [I al
 
 == Changelog ==
 
+= v0.3 (todo) =
+* [NEW] Added hierarchy information to menu items
+
+[Full changelog](todo)
+
+
 = v0.2 (2015-05-24) =
 * [NEW] Post, pages, and other content now appears in the search results.
 * [FIX] Exact duplicate links have been removed from the search results.
@@ -91,6 +97,9 @@ I've done my best to ensure that it is, but just in case I missed anything [I al
 
 
 == Upgrade Notice ==
+
+= 0.3 =
+todo
 
 = 0.2 =
 Version 0.2 adds posts, pages and other content to the search results, and reduces the number of duplicate results.

@@ -11,8 +11,11 @@
 		defaults : {
 			id    : 0,
 			title : '',
+			parentTitle : '',
 			url   : '',
 			state : 'inactive'
+
+			// todo re-align
 		}
 	} );
 
