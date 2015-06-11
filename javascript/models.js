@@ -9,13 +9,11 @@
 	 */
 	app.Models.Link = Backbone.Model.extend( {
 		defaults : {
-			id    : 0,
-			title : '',
+			id          : 0,
+			title       : '',
 			parentTitle : '',
-			url   : '',
-			state : 'inactive'
-
-			// todo re-align
+			url         : '',
+			state       : 'inactive'
 		}
 	} );
 

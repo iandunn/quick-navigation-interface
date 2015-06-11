@@ -43,10 +43,9 @@
 
 			// Add links on the current page
 			$( 'a' ).each( function() {
-				var title = $( this ).text(),
+				var title       = $( this ).text(),
 					parentTitle = '',
-					url   = $( this ).attr( 'href' );
-					// todo re-align
+					url         = $( this ).attr( 'href' );
 
 				if ( $( this ).parent().parent().hasClass( 'wp-submenu' ) ) {
 					parentTitle = $( this ).parent().parent().parent().find( '.wp-menu-name' ).text();
@@ -55,12 +54,10 @@
 				}
 
 				links.push( new app.Models.Link( {
-					id    : murmurhash3_32_gc( title + url ),
-					title : title,
+					id          : murmurhash3_32_gc( title + url ),
+					title       : title,
 					parentTitle : parentTitle,
-					url   : url
-
-					// todo re-align
+					url         : url
 				} ) );
 			} );
 
