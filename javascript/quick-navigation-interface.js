@@ -43,8 +43,8 @@
 
 			// Add links on the current page
 			$( 'a' ).each( function() {
-				var title       = $( this ).text(),
-					parentTitle = '',
+				var parentTitle = '',
+					title       = $( this ).text(),
 					url         = $( this ).attr( 'href' );
 
 				if ( $( this ).parent().parent().hasClass( 'wp-submenu' ) ) {
