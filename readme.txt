@@ -80,7 +80,9 @@ I've done my best to ensure that it is, but just in case I missed anything [I al
 == Changelog ==
 
 = v0.3 (todo) =
-* [NEW] Added hierarchy information to menu items
+* [NEW] Added hierarchy information to menu items.
+* [NEW] Added German localization (props tmconnect).
+* [FIX] Added missing text domain.
 
 [Full changelog](todo)
 

@@ -1,12 +1,3 @@
-### 0.3
-
-* localization
-	* https://wordpress.org/support/topic/localization-86?replies=1#post-7013544
-	* add proper headers
-	* audit german po file
-	* compile german mo
-	* test
-
 ### 0.4
 
 * for content, add post type in parenthesis
@@ -29,7 +20,7 @@
 * Move concat/minified files to separate folder to so can phpstorm exclude them from code hints etc to avoid collisions?
 * better way to call start() after everything concatenated, so you can remove bootstrap.js?
 * setup csslint, php codesniffer
-* setup grunt task to update pot file? see password-confirm-action
+* setup grunt task to update pot file? see password-confirm-action and https://developer.wordpress.org/plugins/internationalization/localization/
 * setup grunt-wp-readme-to-markdown
 * Read https://ozkatz.github.io/avoiding-common-backbonejs-pitfalls.html
 * sourcemap xss issues? remove b/c not useful anyway?
