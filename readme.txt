@@ -4,7 +4,7 @@ Donate link:       https://www.debian.org/donations
 Tags:              keyboard,navigation,shortcuts,wp-admin
 Requires at least: 3.6
 Tested up to:      4.2
-Stable tag:        0.2
+Stable tag:        0.3
 License:           GPLv2
 
 Quickly access screens and content within wp-admin just by typing the first few letters of the name.
@@ -36,6 +36,7 @@ There are a few likely causes for this:
 
 1. The page hasn't finished loading yet. Make sure you wait until the circle in the title bar has stopped spinning.
 1. The cursor could be focused on an input field (like a text area or a button). Try clicking anywhere outside an input field (like the page's background) to move the focus off of the input field, and then try to open the interface again.
+1. If you're not using an English keyboard, the key might not work. You can pick another key by following the instructions in the FAQ entry below. To help improve this for other non-English users, please [let me know what a good key would be for your language](https://github.com/iandunn/quick-navigation-interface/issues/1).
 1. You might be mistaking the \` (backtick) key for the ' (single-quote) key. You need to press the backtick key, which is normally located above the `tab` key and left of the `1` key.
 1. JavaScript execution might have been halted because of errors on the page, which would most likely be caused by the theme or another plugin. You can check your browser's error console for details, and send the error to the plugin's developer. To work around it, try disabling all other plugins temporarily, and switching to one of the Core themes, and see if that solves the problem. If it does, turn them back on one-by-one until you isolate which one is causing the problem.
 
@@ -79,12 +80,12 @@ I've done my best to ensure that it is, but just in case I missed anything [I al
 
 == Changelog ==
 
-= v0.3 (todo) =
+= v0.3 (2015-06-12) =
 * [NEW] Added hierarchy information to menu items.
 * [NEW] Added German localization (props tmconnect).
 * [FIX] Added missing text domain.
 
-[Full changelog](todo)
+[Full changelog](https://github.com/iandunn/quick-navigation-interface/compare/dbf46705a210a25e3ea2da8ca1b94398356f35be...963912d37c4d14a24320b8645572562bd016d34e)
 
 
 = v0.2 (2015-05-24) =
@@ -101,7 +102,7 @@ I've done my best to ensure that it is, but just in case I missed anything [I al
 == Upgrade Notice ==
 
 = 0.3 =
-todo
+Version 0.3 adds hierarchy information to menu items and a German localization.
 
 = 0.2 =
 Version 0.2 adds posts, pages and other content to the search results, and reduces the number of duplicate results.
