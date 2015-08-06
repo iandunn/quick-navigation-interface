@@ -1,5 +1,12 @@
+usermeta is global, so what happens in multisite when you store content index there?
+index if for site A b/c that was first site to load, but then it gets used for site B b/c code isn't aware of changes?
+need to store index as qni_content_index_{blog_id} ?
+git ignore source maps and delete from repo, only need locally
+
+
 ### 0.4
 
+* Positioning styles for X in modal changed in 4.3
 * for content, add post type in parenthesis
 * use qni-search-results.ul-disc instead of manually setting that style
 * add to hacker1 list, maybe as top target
@@ -27,6 +34,10 @@
 	* users safe b/c not distributed w/ wporg repo version, but still want to look into
 * ie8 doesn't open - might work w/ different keys? can't use "event" as param? https://stackoverflow.com/a/2412501/450127
 
+* use local storage for client-side data caching?
+  	* Or something like it, whatever's best now
+  	* Can double/triple limit or eliminate it?
+  	* But still need to store in db so limit there
 
 * Improve search results if current method is not good enough
 	* Log each title/url to console, then browse through screens to get a feel for where the biggest problems are
