@@ -3,7 +3,7 @@
 Plugin Name: Quick Navigation Interface
 Plugin URI:  http://wordpress.org/plugins/quick-navigation-interface
 Description: Quickly access screens and content within wp-admin just by typing the first few letters of the name.
-Version:     0.3
+Version:     0.4
 Author:      Ian Dunn
 Author URI:  http://iandunn.name
 Text Domain: quick-navigation-interface
@@ -12,7 +12,7 @@ Domain Path: /languages
 
 defined( 'WPINC' ) or die;
 
-define( 'QNI_VERSION',              '0.3'   );
+define( 'QNI_VERSION',              '0.4'   );
 define( 'QNI_REQUIRED_PHP_VERSION', '5.2.4' );  // because of WordPress minimum requirements
 define( 'QNI_REQUIRED_WP_VERSION',  '3.6'   );  // because of wp-util
 

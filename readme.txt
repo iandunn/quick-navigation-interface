@@ -4,7 +4,7 @@ Donate link:       https://www.debian.org/donations
 Tags:              keyboard,navigation,shortcuts,wp-admin
 Requires at least: 3.6
 Tested up to:      4.3
-Stable tag:        0.3
+Stable tag:        0.4
 License:           GPLv2
 
 Quickly access screens and content within wp-admin just by typing the first few letters of the name.
@@ -80,6 +80,9 @@ I've done my best to ensure that it is, but just in case I missed anything [I al
 
 == Changelog ==
 
+= v0.4 (2015-08-14) =
+* [UPDATE] Close button markup updated to match WordPress 4.3.
+
 = v0.3 (2015-06-12) =
 * [NEW] Added hierarchy information to menu items.
 * [NEW] Added German localization (props tmconnect).
@@ -100,6 +103,9 @@ I've done my best to ensure that it is, but just in case I missed anything [I al
 
 
 == Upgrade Notice ==
+
+= 0.4 =
+Version 0.4 makes a small adjustment to the close button to stay in sync with WordPress 4.3.
 
 = 0.3 =
 Version 0.3 adds hierarchy information to menu items and a German localization.

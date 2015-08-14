@@ -94,7 +94,7 @@
 						app.closeInterface();
 					}
 				} else if ( 'click' === event.type ) {
-					if ( 'notification-dialog-background' === event.target.className || 'media-modal-icon' === event.target.className ) {
+					if ( 'notification-dialog-background' === event.target.className || 'button-link media-modal-close' === event.target.className ) {
 						app.closeInterface();
 					}
 				}

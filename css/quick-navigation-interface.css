@@ -13,6 +13,14 @@
 		padding: 2em;
 	}
 
+		/* WP 4.3 button-link styles, for backwards-compatibility with WP 4.2 and lower */
+		.wp-core-ui .button-link {
+			border: 0 none;
+			background: transparent none repeat scroll 0 0;
+			outline: medium none;
+			cursor: pointer;
+		}
+
 		#qni-introduction {
 			text-align: center;
 		}

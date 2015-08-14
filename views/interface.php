@@ -4,11 +4,11 @@
 	<div class="notification-dialog-background"></div>
 
 	<div id="qni-dialog" class="notification-dialog">
-		<a class="media-modal-close" href="#">
+		<button type="button" class="button-link media-modal-close">
 			<span class="media-modal-icon">
-				<span class="screen-reader-text"><?php _e( 'Close media panel', 'quick-navigation-interface' ); ?></span>
+				<span class="screen-reader-text"><?php _e( 'Close Quick Navigation Interface', 'quick-navigation-interface' ); ?></span>
 			</span>
-		</a>
+		</button>
 
 		<h3 id="qni-introduction"><?php _e( 'Start typing to open any post, menu item, etc', 'quick-navigation-interface' ); ?></h3>
 
