@@ -32,16 +32,29 @@
 		},
 
 		/**
-		 * Collect all the links on the page
+		 * Collect all the links for the interface
 		 *
 		 * @returns {Array}
 		 */
 		getAllLinks : function() {
 			// todo rename it to reflect new contents
+			// todo generate id automatically inside model instead in each get function
 
+			var allLinks = [];
+
+			allLinks = allLinks.concat( app.getCurrentPageLinks(), app.getContentItems() );
+
+			return allLinks;
+		},
+
+		/**
+		 * Get all links on the current page
+		 *
+		 * @returns {Array}
+		 */
+		getCurrentPageLinks : function() {
 			var links = [];
 
-			// Add links on the current page
 			$( 'a' ).each( function() {
 				var parentTitle = '',
 					title       = $( this ).text(),
@@ -61,18 +74,28 @@
 				} ) );
 			} );
 
-			// Add content items
+			return links;
+		},
+
+		/**
+		 * Get content items
+		 *
+		 * @returns {Array}
+		 */
+		getContentItems : function() {
+			var items = [];
+
 			_.each( window.qniContentIndex, function( item ) {
-				links.push( new app.Models.Link( {
+				items.push( new app.Models.Link( {
 					id    : murmurhash3_32_gc( item.title + item.url ),
 					title : item.title,
 					url   : item.url
 				} ) );
 			} );
 
-			window.qniContentIndex = null;    // there's no need to keep this in memory anymore, now that the data is stored in the links collection
+			window.qniContentIndex = null;    // there's no need to keep this in memory anymore, now that the data is stored in the Links collection
 
-			return links;
+			return items;
 		},
 
 		/**
