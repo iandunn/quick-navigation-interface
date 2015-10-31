@@ -4,7 +4,6 @@
 	index if for site A b/c that was first site to load, but then it gets used for site B b/c code isn't aware of changes?
 	need to store index as qni_content_index_{blog_id} ?
 * for content, add post type in parenthesis
-* moveActiveLink() throws an error if you up/down while there are no results present
 
 * use qni-search-results.ul-disc instead of manually setting that style
 * add to hacker1 list, maybe as top target

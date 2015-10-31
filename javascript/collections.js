@@ -46,6 +46,10 @@
 		 * @param {string} direction
 		 */
 		moveActiveLink : function( direction ) {
+			if ( 0 === this.length ) {
+				return;
+			}
+
 			var newIndex,
 				currentActiveLink = this.where( { state : 'active' } ),
 				currentIndex      = this.indexOf( currentActiveLink[0] );
