@@ -14,6 +14,13 @@
 			parentTitle : '',
 			url         : '',
 			state       : 'inactive'
+		},
+
+		/**
+		 * Initialize the model
+		 */
+		initialize : function() {
+			this.set( 'id', murmurhash3_32_gc( this.get( 'title' ) + this.get( 'url' ) ) );
 		}
 	} );
 

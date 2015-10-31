@@ -38,7 +38,6 @@
 		 */
 		getAllLinks : function() {
 			// todo rename it to reflect new contents
-			// todo generate id automatically inside model instead in each get function
 
 			var allLinks = [];
 
@@ -67,7 +66,6 @@
 				}
 
 				links.push( new app.Models.Link( {
-					id          : murmurhash3_32_gc( title + url ),
 					title       : title,
 					parentTitle : parentTitle,
 					url         : url
@@ -87,7 +85,6 @@
 
 			_.each( window.qniContentIndex, function( item ) {
 				items.push( new app.Models.Link( {
-					id    : murmurhash3_32_gc( item.title + item.url ),
 					title : item.title,
 					url   : item.url
 				} ) );
