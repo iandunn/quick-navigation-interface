@@ -1,7 +1,6 @@
 usermeta is global, so what happens in multisite when you store content index there?
 index if for site A b/c that was first site to load, but then it gets used for site B b/c code isn't aware of changes?
 need to store index as qni_content_index_{blog_id} ?
-git ignore source maps and delete from repo, only need locally
 
 
 ### 0.4
