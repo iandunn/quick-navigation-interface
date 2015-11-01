@@ -133,7 +133,7 @@ class Quick_Navigation_Interface {
 		foreach ( $content as $item ) {
 			if ( current_user_can( 'edit_post', $item->ID ) ) {
 				$index[] = array(
-					'title' => get_the_title( $item ),
+					'title' => esc_html( get_the_title( $item ) ),
 					'url'   => get_edit_post_link( $item->ID, 'url' ),
 				);
 			}

@@ -10,6 +10,7 @@
 	app.Models.Link = Backbone.Model.extend( {
 		defaults : {
 			id          : 0,
+			type        : '',
 			title       : '',
 			parentTitle : '',
 			url         : '',

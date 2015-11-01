@@ -66,6 +66,7 @@
 				}
 
 				links.push( new app.Models.Link( {
+					type        : 'link',
 					title       : title,
 					parentTitle : parentTitle,
 					url         : url
@@ -85,6 +86,7 @@
 
 			_.each( window.qniContentIndex, function( item ) {
 				items.push( new app.Models.Link( {
+					type  : 'content',
 					title : item.title,
 					url   : item.url
 				} ) );
@@ -302,6 +304,7 @@
 	app.Models.Link = Backbone.Model.extend( {
 		defaults : {
 			id          : 0,
+			type        : '',
 			title       : '',
 			parentTitle : '',
 			url         : '',
