@@ -3,8 +3,8 @@ Contributors:      iandunn
 Donate link:       https://www.debian.org/donations
 Tags:              keyboard,navigation,shortcuts,wp-admin
 Requires at least: 3.6
-Tested up to:      4.3
-Stable tag:        0.4
+Tested up to:      4.4
+Stable tag:        0.5
 License:           GPLv2
 
 Quickly access screens and content within wp-admin just by typing the first few letters of the name.
@@ -80,6 +80,11 @@ I've done my best to ensure that it is, but just in case I missed anything [I al
 
 == Changelog ==
 
+= v0.5 (2015-11-01) =
+* [FIX] Properly display HTML entities in post titles.
+
+[Full changelog](https://github.com/iandunn/quick-navigation-interface/compare/6c4c1ababe43cc1b41a69d120b5d1ca1e98ad6aa...81b43b78d20bc756112451ed8d14a040cdab0d62)
+
 = v0.4 (2015-08-14) =
 * [UPDATE] Close button markup updated to match WordPress 4.3.
 
@@ -103,6 +108,9 @@ I've done my best to ensure that it is, but just in case I missed anything [I al
 
 
 == Upgrade Notice ==
+
+= 0.5 =
+Version 0.5 contains a few minor bug fixes and minor internal code quality improvements.
 
 = 0.4 =
 Version 0.4 makes a small adjustment to the close button to stay in sync with WordPress 4.3.

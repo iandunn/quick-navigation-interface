@@ -1,4 +1,4 @@
-### 0.4
+### Next minor version
 
 * usermeta is global, so what happens in multisite when you store content index there?
 	index if for site A b/c that was first site to load, but then it gets used for site B b/c code isn't aware of changes?
@@ -57,7 +57,7 @@
 * Add ability to search by additional keywords that are associated w/ each link, not just the title
 	* Can pull the keywords from link title tags, post excerpts, etc
 
-* Listen for new links added by JS?
+* Listen for new links added by asyncronously, like News dashboard widget
 
 * Maybe show most popular links by default, and then track what links they visit and show those as default
 
