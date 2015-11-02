@@ -82,7 +82,39 @@ module.exports = function ( grunt ) {
 			}
 		},
 
+		makepot : {
+			target : {
+				options : {
+					domainPath      : 'languages/',
+					mainFile        : 'bootstrap.php',
+					potComments     : 'Copyright (c) Ian Dunn {year}',
+					potFilename     : 'quick-navigation-interface.pot',
+					type            : 'wp-plugin',
+					updateTimestamp : false,
+					updatePoFiles   : true,
+
+					potHeaders : {
+						poedit                  : true,
+						'x-poedit-keywordslist' : true,
+						'Report-Msgid-Bugs-To'  : 'https://wordpress.org/plugins/quick-navigation-interface/'
+					}
+				}
+			}
+		},
+
+		po2mo : {
+			files : {
+				src    : 'languages/*.po',
+				expand : true
+			}
+		},
+
 		watch : {
+			php : {
+				files : [ '**/*.php' ],
+				tasks : [ 'makepot', 'po2mo' ]
+			},
+
 			js : {
 				files : js_files,
 				tasks : [ 'concat', 'uglify', 'jshint', 'beep:error', 'reset-grunt-error-count' ]
@@ -118,6 +150,8 @@ module.exports = function ( grunt ) {
 	grunt.loadNpmTasks( 'grunt-contrib-uglify' );
 	grunt.loadNpmTasks( 'grunt-contrib-cssmin' );
 	grunt.loadNpmTasks( 'grunt-contrib-jshint' );
+	grunt.loadNpmTasks( 'grunt-wp-i18n'        );
+	grunt.loadNpmTasks( 'grunt-po2mo'          );
 
-	grunt.registerTask( 'default', [ 'concat', 'uglify', 'cssmin', 'jshint' ] );
+	grunt.registerTask( 'default', [ 'concat', 'uglify', 'cssmin', 'jshint', 'makepot', 'po2mo' ] );
 };

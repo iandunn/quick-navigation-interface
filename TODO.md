@@ -11,19 +11,18 @@
 * think about any ally issues
 	* aria active state when up/down through links
 * load the plugin earlier, so can start using it even before page finishes loading?
-
-
+* remove 4.2 back-compat css once WP 4.5 comes out, and update required version to 4.3
+* convert to use REST api, but with cached result. bump min ver to 4.4
 
 ### Future iterations
 
 * check responsiveness once https://core.trac.wordpress.org/ticket/32194 lands
-* Setup qunit tests
+* Setup phpunit and qunit tests
+* Setup travis
 * update grunt task versions to latest available
 * Move concat/minified files to separate folder to so can phpstorm exclude them from code hints etc to avoid collisions?
 * better way to call start() after everything concatenated, so you can remove bootstrap.js?
 * setup csslint, php codesniffer
-* setup grunt task to update pot file? see password-confirm-action and https://developer.wordpress.org/plugins/internationalization/localization/
-* setup grunt-wp-readme-to-markdown
 * Read https://ozkatz.github.io/avoiding-common-backbonejs-pitfalls.html
 * sourcemap xss issues? remove b/c not useful anyway?
 	* users safe b/c not distributed w/ wporg repo version, but still want to look into
