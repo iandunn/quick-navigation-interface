@@ -1,5 +1,14 @@
 ### Next minor version
 
+* convert to use REST api, but with cached result. bump min ver to 4.4
+	* remove 4.2 back-compat css once WP 4.5 comes out, and update required version to 4.3
+
+* Maybe change command to ctrl-/ or alt-/ or something like that
+	probably add it as an additional for back-compat1
+	https://ux.stackexchange.com/questions/76405/what-are-conventions-for-keyboard-shortcuts-in-windows-and-osx
+	http://www.hanselman.com/blog/TheWebIsTheNewTerminalAreYouUsingTheWebsKeyboardShortcutsAndHotkeys.aspx
+	* Maybe use https://github.com/jeresig/jquery.hotkeys if it'd make hotkeys easier.
+
 * usermeta is global, so what happens in multisite when you store content index there?
 	index if for site A b/c that was first site to load, but then it gets used for site B b/c code isn't aware of changes?
 	need to store index as qni_content_index_{blog_id} ?
@@ -11,8 +20,7 @@
 * think about any ally issues
 	* aria active state when up/down through links
 * load the plugin earlier, so can start using it even before page finishes loading?
-* remove 4.2 back-compat css once WP 4.5 comes out, and update required version to 4.3
-* convert to use REST api, but with cached result. bump min ver to 4.4
+
 
 ### Future iterations
 
