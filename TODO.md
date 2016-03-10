@@ -3,11 +3,12 @@
 * convert to use REST api, but with cached result. bump min ver to 4.4
 	* remove 4.2 back-compat css once WP 4.5 comes out, and update required version to 4.3
 
-* Maybe change command to ctrl-/ or alt-/ or something like that
-	probably add it as an additional for back-compat1
+* Maybe change command to `[modifier] /` or just `g`
+	probably add it as an additional for back-compat
+	https://medium.com/@sashika/j-k-or-how-to-choose-keyboard-shortcuts-for-web-applications-a7c3b7b408ee#.cbjvagkdg
 	https://ux.stackexchange.com/questions/76405/what-are-conventions-for-keyboard-shortcuts-in-windows-and-osx
 	http://www.hanselman.com/blog/TheWebIsTheNewTerminalAreYouUsingTheWebsKeyboardShortcutsAndHotkeys.aspx
-	* Maybe use https://github.com/jeresig/jquery.hotkeys if it'd make hotkeys easier.
+	* Maybe use https://github.com/jeresig/jquery.hotkeys if it'd make hotkeys easier. it's already in core
 
 * usermeta is global, so what happens in multisite when you store content index there?
 	index if for site A b/c that was first site to load, but then it gets used for site B b/c code isn't aware of changes?
