@@ -3,8 +3,8 @@ Contributors:      iandunn
 Donate link:       https://www.debian.org/donations
 Tags:              keyboard,navigation,shortcuts,wp-admin
 Requires at least: 3.6
-Tested up to:      4.4
-Stable tag:        0.5
+Tested up to:      4.5
+Stable tag:        0.6
 License:           GPLv2
 
 Quickly access screens and content within wp-admin just by typing the first few letters of the name.
@@ -80,6 +80,11 @@ I've done my best to ensure that it is, but just in case I missed anything [I al
 
 == Changelog ==
 
+= v0.6 (2016-03-10) =
+* [FIX] Add compatibility with WordPress 4.5 / Backbone 1.2.3 by concatenating JavaScript files in order of dependence.
+
+[Full changelog](https://github.com/iandunn/quick-navigation-interface/compare/da6604f3bac46339987eda14a018503752bdd0d1...de511ec1620666d0fb583c74af3776cfc44a40b4)
+
 = v0.5 (2015-11-01) =
 * [FIX] Properly display HTML entities in post titles.
 
@@ -108,6 +113,9 @@ I've done my best to ensure that it is, but just in case I missed anything [I al
 
 
 == Upgrade Notice ==
+
+= 0.6 =
+Version 0.6 adds compatibility with the upcoming WordPress 4.5 release.
 
 = 0.5 =
 Version 0.5 contains a few minor bug fixes and minor internal code quality improvements.
