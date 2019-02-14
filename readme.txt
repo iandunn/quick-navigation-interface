@@ -4,7 +4,7 @@ Donate link:       https://www.debian.org/donations
 Tags:              keyboard,navigation,shortcuts,wp-admin
 Requires at least: 3.6
 Tested up to:      5.0.3
-Stable tag:        0.6
+Stable tag:        0.7
 License:           GPLv2
 
 Quickly access screens and content within wp-admin just by typing the first few letters of the name.
@@ -79,6 +79,9 @@ I've done my best to ensure that it is, but just in case I missed anything [I al
 
 
 == Changelog ==
+
+= v0.7 (2019-02-14) =
+* [SECURITY] Prevent leaking private post titles.
 
 = v0.6 (2016-03-10) =
 * [FIX] Add compatibility with WordPress 4.5 / Backbone 1.2.3 by concatenating JavaScript files in order of dependence.
