@@ -185,6 +185,7 @@ class Quick_Navigation_Interface {
 			array(
 				'action' => 'qni_content_index',
 				'user'   => get_current_user_id(),
+				'nonce'  => wp_create_nonce( 'qni_content_index' ),
 			),
 			admin_url( 'admin-ajax.php' )
 		);
@@ -255,6 +256,10 @@ class Quick_Navigation_Interface {
 	 * it each time is trivial, and no greater than it would be if using wp_localize_script().
 	 */
 	public function output_content_index() {
+		if ( ! wp_verify_nonce( $_GET['nonce'], 'qni_content_index' ) ) {
+			wp_die( 'Invalid nonce.' );
+		}
+
 		header( 'Content-Type: application/x-javascript; charset=' . get_option( 'blog_charset' ) );
 
 		?>

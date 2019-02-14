@@ -3,7 +3,7 @@ Contributors:      iandunn
 Donate link:       https://www.debian.org/donations
 Tags:              keyboard,navigation,shortcuts,wp-admin
 Requires at least: 3.6
-Tested up to:      4.5
+Tested up to:      5.0.3
 Stable tag:        0.6
 License:           GPLv2
 

@@ -1,5 +1,10 @@
 ### Next minor version
 
+* fix gutenberg conflict with backtick
+
+O remove local localizations and load_text_domain etc
+	https://make.wordpress.org/core/2016/07/06/i18n-improvements-in-4-6/
+
 * convert to use REST api, but with cached result. bump min ver to 4.4
 	* remove 4.2 back-compat css once WP 4.5 comes out, and update required version to 4.3
 
@@ -25,6 +30,8 @@
 
 ### Future iterations
 
+* make it discoverable for users who don't already know it exists and how to use it
+	* https://wordpress.org/support/topic/trigger-from-search-iconbutton/
 * check responsiveness once https://core.trac.wordpress.org/ticket/32194 lands
 * Setup phpunit and qunit tests
 * Setup travis
@@ -36,6 +43,10 @@
 * sourcemap xss issues? remove b/c not useful anyway?
 	* users safe b/c not distributed w/ wporg repo version, but still want to look into
 * ie8 doesn't open - might work w/ different keys? can't use "event" as param? https://stackoverflow.com/a/2412501/450127
+
+* when use up/down keys to navigate result links, show the url in the browser status bar
+	* browser api has a way to show it? prob not b/c of security
+	* need to programatically move the mouse to hover the link? that's bad UX though?
 
 * use local storage for client-side data caching?
   	* Or something like it, whatever's best now
