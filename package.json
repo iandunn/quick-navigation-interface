@@ -1,24 +1,26 @@
 {
-	"name"        : "quick-navigation-interface",
-	"version"     : "0.6.0",
-	"description" : "Allows you to quickly access links within wp-admin just by typing the first few letters.",
-	"author"      : "Ian Dunn",
-	"license"     : "GPLv2",
-
-	"repository" : {
-		"type" : "git",
-		"url"  : "git://github.com/iandunn/quick-navigation-interface.git"
+	"name": "quick-navigation-interface",
+	"version": "1.0.0",
+	"description": "Allows you to quickly access links within wp-admin just by typing the first few letters.",
+	"author": "Ian Dunn",
+	"license": "GPL-2.0-or-later",
+	"keywords": [ "wp-admin", "keyboard", "navigation", "shortcuts" ],
+	"homepage": "https://wordpress.org/plugins/quick-navigation-interface/",
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/iandunn/quick-navigation-interface.git"
 	},
-
-	"devDependencies" : {
-		"grunt"                : "^0.4.5",
-		"grunt-contrib-watch"  : "^0.6.1",
-		"grunt-contrib-uglify" : "^0.5.0",
-		"grunt-contrib-concat" : "^0.5.1",
-		"grunt-contrib-cssmin" : "^0.10.0",
-		"grunt-contrib-jshint" : "~0.11.0",
-		"grunt-beep"           : "~0.3.1",
-		"grunt-wp-i18n"        : "^0.5.3",
-		"grunt-po2mo"          : "^0.1.2"
+	"bugs" : { "url" : "https://github.com/iandunn/quick-navigation-interface/issues" },
+	"main": "src/index.js",
+	"dependencies": {},
+	"devDependencies": {
+		"@wordpress/scripts": "^3.1.0"
+	},
+	"scripts": {
+		"start": "wp-scripts start",
+		"build": "wp-scripts build",
+		"lint:css": "wp-scripts lint-style '**/*.css'",
+		"lint:js": "wp-scripts lint-js .",
+		"lint:pkg-json": "wp-scripts lint-pkg-json ."
 	}
 }

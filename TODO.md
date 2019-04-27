@@ -1,12 +1,15 @@
-### Next minor version
+### React conversion
 
-* fix gutenberg conflict with backtick
+* maybe write blog post on how to build react app in wp that isn't a block, but uses G's components and abstraction layer
+* then consider doing a seattle wp dev meetup presentation
+* then consider doing a seattle wordcamp talk
+	* #262-meta would be better example since it's a normal admin screen rather than a modal that appears on all screens
 
-O remove local localizations and load_text_domain etc
-	https://make.wordpress.org/core/2016/07/06/i18n-improvements-in-4-6/
+update screenshots - have to do after pushing stable
+update w.org banner - have to do after pushing stable
+update youtube video - have nicer mic now too. maybe do a quick "hi i'm ian, built this because... but 5 seconds max, then get to the point". set video poster to be the interface not your face.
 
-* convert to use REST api, but with cached result. bump min ver to 4.4
-	* remove 4.2 back-compat css once WP 4.5 comes out, and update required version to 4.3
+### 1.0 stretch goals
 
 * Maybe change command to `[modifier] /` or just `g`
 	probably add it as an additional for back-compat
@@ -14,6 +17,59 @@ O remove local localizations and load_text_domain etc
 	https://ux.stackexchange.com/questions/76405/what-are-conventions-for-keyboard-shortcuts-in-windows-and-osx
 	http://www.hanselman.com/blog/TheWebIsTheNewTerminalAreYouUsingTheWebsKeyboardShortcutsAndHotkeys.aspx
 	* Maybe use https://github.com/jeresig/jquery.hotkeys if it'd make hotkeys easier. it's already in core
+
+	// maybe fix https://github.com/iandunn/quick-navigation-interface/issues/1 now too, by changing key
+	// primary is now `g` or something else instead of `\`` ? still keep that one as backup though?
+		// if in input field, then modifier-g
+			// cmg-g conflicts with search in firefox
+			// https://docs.google.com/spreadsheets/d/1nK1frKawxV7aboWOJbbslbIqBGoLY7gqKvfwqENj2yE/edit#gid=0
+
+	// search web to see what common ones are, also
+		// `/` for search might also fit, but could conflict w/ jetpack/core search in future
+		// https://www.hanselman.com/blog/TheWebIsTheNewTerminalAreYouUsingTheWebsKeyboardShortcutsAndHotkeys.aspx
+		// look for more
+
+O remove local localizations and load_text_domain etc
+	https://make.wordpress.org/core/2016/07/06/i18n-improvements-in-4-6/
+
+
+* maybe store the contentindex in localstorage?
+	* any security/privacy issues with that?
+
+* rest api instead of admin-ajax? related to localstorage
+	use core posts endpoint for posts instead of custom?
+		but want all post types
+		anything else included in content index that would need to be pulled in as well?
+
+	* have to switch to local storage at this point too, because rest api endpoints wouldn't be cached locally? 
+
+* localstorage or something else instead of memory? then don't have to pass around
+	* maybe use service worker like https://codesandbox.io/s/github/haldarmahesh/react-context-demo/tree/master/?from-embed
+	* cant setup service worker until pwa plugin integrated w/ core
+
+
+
+### Next minor version
+
+* css no longer minified b/c not using grunt anymore and wp-scripts doesn't support it
+when it does, scss files inside each component folder, and have wp-scripts build a single minified/concat'd file in `build/`
+https://github.com/WordPress/gutenberg/issues/14801
+
+
+
+### Next-next minor version
+
+* remove duplicates results like `Feedback` from jetpack
+* also remove page links to things that already exist in content index
+
+* links added via js aren't indexed, e.g., events widget
+	need to watch for new ones and add them
+
+modal window shifts positions as this list grows/shrinks, which sucks
+	use CSS to set a fixed height maybe, or maybe just a fixed position
+	
+activeurlpreview - if url is relative, add host
+need to test different scenarios where that might break
 
 * usermeta is global, so what happens in multisite when you store content index there?
 	index if for site A b/c that was first site to load, but then it gets used for site B b/c code isn't aware of changes?
@@ -27,6 +83,7 @@ O remove local localizations and load_text_domain etc
 	* aria active state when up/down through links
 * load the plugin earlier, so can start using it even before page finishes loading?
 
+* maybe add a "new window" icon for external links
 
 ### Future iterations
 

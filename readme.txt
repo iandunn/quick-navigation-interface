@@ -2,8 +2,8 @@
 Contributors:      iandunn
 Donate link:       https://www.debian.org/donations
 Tags:              keyboard,navigation,shortcuts,wp-admin
-Requires at least: 3.6
-Tested up to:      5.0.3
+Requires at least: 5.0
+Tested up to:      5.2
 Stable tag:        0.7
 License:           GPLv2
 
@@ -79,6 +79,24 @@ I've done my best to ensure that it is, but just in case I missed anything [I al
 
 
 == Changelog ==
+
+= v1.0 (2019-??-??) =
+
+* [NEW] Highlighting a link shows a preview of its URL, so you can know where it will take you.
+* [NEW] Links for menu items include their parent menu, if applicable.
+* [NEW] The type of link is now displayed (post, page, menu item, etc).
+* [NEW] Front end rebuilt in React, using Gutenberg's library of UI components.
+* [FIX] Removed duplicate on-page links from the results.
+* [FIX] Fixed conflict with using backtick key within Gutenberg editor.
+
+
+* rest api? local storage?
+
+
+close-interface filter removed b/c using built-in modal now
+
+[Full changelog](https://github.com/iandunn/quick-navigation-interface/compare/?...?)
+
 
 = v0.7 (2019-02-14) =
 * [SECURITY] Prevent leaking private post titles.
