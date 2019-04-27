@@ -180,7 +180,6 @@ class Quick_Navigation_Interface {
 	 * Enqueue scripts and stylesheets
 	 */
 	public function enqueue_scripts() {
-		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 		$content_index_url = add_query_arg(
 			array(
 				'action' => 'qni_content_index',
@@ -189,10 +188,12 @@ class Quick_Navigation_Interface {
 			),
 			admin_url( 'admin-ajax.php' )
 		);
+		// todo replace w/ rest api endpoint, maybe several b/c can reuse core posts endpoint for posts?
 
 		wp_enqueue_style(
 			'quick-navigation-interface',
 			plugins_url( "css/quick-navigation-interface$suffix.css", dirname( __FILE__ ) ),
+			// todo update ^ to sass output
 			array( 'media-views' ),
 			QNI_VERSION,
 			'all'
@@ -208,7 +209,7 @@ class Quick_Navigation_Interface {
 
 		wp_enqueue_script(
 			'quick-navigation-interface',
-			plugins_url( "javascript/quick-navigation-interface$suffix.js", dirname( __FILE__ ) ),
+			plugins_url( 'build/index.js', __DIR__ ),
 			array( 'jquery', 'backbone', 'underscore', 'wp-util', 'qni-content-index' ),
 			QNI_VERSION,
 			true

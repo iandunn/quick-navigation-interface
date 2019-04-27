@@ -1,2 +1,9 @@
+build/
+
+#tmp until don't need for reference anymore
+javascript
+css
+
+# remove these
 javascript/quick-navigation-interface.*
 css/*.min.css

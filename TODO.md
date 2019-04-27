@@ -1,3 +1,11 @@
+### React conversion
+
+keep this scoped to just the react conversion. can still do other things in todo for 1.0 release, but get this done/merged first
+
+* js i18n - probably look at wordcamp.org, b/c gutenberg-examples is outdated
+* look at every file to see what needs to be updated
+
+
 ### Next minor version
 
 * fix gutenberg conflict with backtick

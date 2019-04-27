@@ -15,7 +15,6 @@ If you want to **develop** the plugin, then follow these steps to setup the deve
 * `git clone https://github.com/iandunn/quick-navigation-interface.git`
 * `cd quick-navigation-interface`
 * `npm install`
-* `grunt`
-* `grunt watch`
+* `npm start`
 
-After the initial setup, you only need to run `grunt watch`.
+After the initial setup, you only need to run `npm start`. To build the distributed version, run `npm run build`.

@@ -13,8 +13,9 @@ Domain Path: /languages
 defined( 'WPINC' ) or die;
 
 define( 'QNI_VERSION',              '0.7'   );
-define( 'QNI_REQUIRED_PHP_VERSION', '5.2.4' );  // because of WordPress minimum requirements
-define( 'QNI_REQUIRED_WP_VERSION',  '3.6'   );  // because of wp-util
+define( 'QNI_REQUIRED_PHP_VERSION', '5.6' );  // because of WordPress minimum requirements
+define( 'QNI_REQUIRED_WP_VERSION',  '5.0'   );  // because of Gutenberg components
+// todo ^ may need to be 5.1 or 5.2?
 
 /**
  * Checks if the system requirements are met
