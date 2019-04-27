@@ -216,12 +216,14 @@ class Quick_Navigation_Interface {
 				//'qni-content-index',	// don't need this after use rest api?
 
 				// WordPress
-				 'wp-i18n', 'wp-element',
+				'wp-element',
+				'wp-i18n',
 
 				// todo don't need these anymore?
-				'lodash',
-				'wp-blocks',
 				'wp-components',
+				'lodash',
+
+				'wp-blocks',
 				'wp-editor',
 				'wp-util',
 			),
