@@ -1,0 +1,11 @@
+/* this is being ignored by wp-scripts instead of creating build/style.css, why?
+
+ugh
+https://github.com/WordPress/gutenberg/issues/14801
+https://github.com/WordPress/gutenberg/pull/14590#issuecomment-479367245
+maybe just use vanilla css for now, since already done and don't have intense needs
+*/
+
+#qni-dialog {
+	background-color: red;
+}

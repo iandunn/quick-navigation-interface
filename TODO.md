@@ -2,6 +2,9 @@
 
 keep this scoped to just the react conversion. can still do other things in todo for 1.0 release, but get this done/merged first
 
+* configure livereload, it's running already b/c of wp-scripts
+* 
+
 * js i18n - probably look at wordcamp.org, b/c gutenberg-examples is outdated
 * look at every file to see what needs to be updated
 * test that linters work - shouldn't it be looking for .scss instead of .css?
