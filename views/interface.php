@@ -1,9 +1,16 @@
 <?php defined( 'WPINC' ) or die; ?>
 
 <div id="qni-container" class="notification-dialog-wrap">
+	<?php // class above should change? */ ?>
+
+
+
+
+
 	<div class="notification-dialog-background"></div>
 
 	<div id="qni-dialog" class="notification-dialog">
+		<?php /*
 		<button type="button" class="button-link media-modal-close">
 			<span class="media-modal-icon">
 				<span class="screen-reader-text"><?php _e( 'Close Quick Navigation Interface', 'quick-navigation-interface' ); ?></span>
@@ -24,5 +31,6 @@
 		</p>
 
 		<ul id="qni-search-results"></ul>
+ 		*/ ?>
 	</div> <!-- #qni-dialog-->
 </div>

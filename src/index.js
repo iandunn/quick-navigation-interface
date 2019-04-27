@@ -1,98 +1,194 @@
-const { __, setLocaleData } = wp.i18n;
-const {
-	registerBlockType,
-} = wp.blocks;
-const {
-	RichText,
-	MediaUpload,
-} = wp.editor;
-const { Button } = wp.components;
+/**
+ * WordPress dependencies
+ */
+const { render, Component, createElement } = wp.element;
 
-registerBlockType( 'qni/example-05-recipe-card-esnext', {
-	title: __( 'QNI Recipe Card temp', 'qni' ),
-	icon: 'index-card',
-	category: 'layout',
+/**
+ * Internal dependencies
+ */
+//import * as organizers from './organizers/';
 
-	attributes: {
-		title: {
-			type: 'array',
-			source: 'children',
-			selector: 'h2',
-		},
-		mediaID: {
-			type: 'number',
-		},
-		mediaURL: {
-			type: 'string',
-			source: 'attribute',
-			selector: 'img',
-			attribute: 'src',
-		},
-		ingredients: {
-			type: 'array',
-			source: 'children',
-			selector: '.ingredients',
-		},
-		instructions: {
-			type: 'array',
-			source: 'children',
-			selector: '.steps',
-		},
-	},
 
-	edit: ( props ) => {
-		const {
-			className,
-			attributes: {
-				title,
-				mediaID,
-				mediaURL,
-				ingredients,
-				instructions,
-			},
-			setAttributes,
-		} = props;
-		const onChangeTitle = ( value ) => {
-			setAttributes( { title: value } );
-		};
 
-		const onSelectImage = ( media ) => {
-			setAttributes( {
-				mediaURL: media.url,
-				mediaID: media.id,
-			} );
-		};
-		const onChangeIngredients = ( value ) => {
-			setAttributes( { ingredients: value } );
-		};
+class ProductCategoryRow extends Component {
+  render() {
+    const category = this.props.category;
+    return (
+      <tr>
+        <th colSpan="2">
+          {category}
+        </th>
+      </tr>
+    );
+  }
+}
 
-		const onChangeInstructions = ( value ) => {
-			setAttributes( { instructions: value } );
-		};
+class ProductRow extends Component {
+  render() {
+    const product = this.props.product;
+    const name = product.stocked ?
+      product.name :
+      <span style={{color: 'red'}}>
+        {product.name}
+      </span>;
 
-		return (
-			<div className={ className }>
-				HI THERE!
-				sup!
-			</div>
-		);
-	},
+    return (
+      <tr>
+        <td>{name}</td>
+        <td>{product.price}</td>
+      </tr>
+    );
+  }
+}
 
-	save: ( props ) => {
-		const {
-			className,
-			attributes: {
-				title,
-				mediaURL,
-				ingredients,
-				instructions,
-			},
-		} = props;
+class ProductTable extends Component {
+  render() {
+    const filterText = this.props.filterText;
+    const inStockOnly = this.props.inStockOnly;
 
-		return (
-			<div className={ className }>
-				hey yo!
-			</div>
-		);
-	},
-} );
+    const rows = [];
+    let lastCategory = null;
+
+    this.props.products.forEach((product) => {
+      if (product.name.indexOf(filterText) === -1) {
+        return;
+      }
+      if (inStockOnly && !product.stocked) {
+        return;
+      }
+      if (product.category !== lastCategory) {
+        rows.push(
+          <ProductCategoryRow
+            category={product.category}
+            key={product.category} />
+        );
+      }
+      rows.push(
+        <ProductRow
+          product={product}
+          key={product.name}
+        />
+      );
+      lastCategory = product.category;
+    });
+
+    return (
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>{rows}</tbody>
+      </table>
+    );
+  }
+}
+
+class SearchBar extends Component {
+  constructor(props) {
+    super(props);
+    this.handleFilterTextChange = this.handleFilterTextChange.bind(this);
+    this.handleInStockChange = this.handleInStockChange.bind(this);
+  }
+
+  handleFilterTextChange(e) {
+    this.props.onFilterTextChange(e.target.value);
+  }
+
+  handleInStockChange(e) {
+    this.props.onInStockChange(e.target.checked);
+  }
+
+  render() {
+    return (
+      <form>
+        <input
+          type="text"
+          placeholder="Search..."
+          value={this.props.filterText}
+          onChange={this.handleFilterTextChange}
+        />
+        <p>
+          <input
+            type="checkbox"
+            checked={this.props.inStockOnly}
+            onChange={this.handleInStockChange}
+          />
+          {' '}
+          Only show products in stock
+        </p>
+      </form>
+    );
+  }
+}
+
+class FilterableProductTable extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      filterText: '',
+      inStockOnly: false
+    };
+
+    this.handleFilterTextChange = this.handleFilterTextChange.bind(this);
+    this.handleInStockChange = this.handleInStockChange.bind(this);
+  }
+
+  handleFilterTextChange(filterText) {
+    this.setState({
+      filterText: filterText
+    });
+  }
+
+  handleInStockChange(inStockOnly) {
+    this.setState({
+      inStockOnly: inStockOnly
+    })
+  }
+
+  render() {
+    return (
+      <div>
+        <SearchBar
+          filterText={this.state.filterText}
+          inStockOnly={this.state.inStockOnly}
+          onFilterTextChange={this.handleFilterTextChange}
+          onInStockChange={this.handleInStockChange}
+        />
+        <ProductTable
+          products={this.props.products}
+          filterText={this.state.filterText}
+          inStockOnly={this.state.inStockOnly}
+        />
+      </div>
+    );
+  }
+}
+
+
+const PRODUCTS = [
+  {category: 'Sporting Goods', price: '$49.99', stocked: true, name: 'Football'},
+  {category: 'Sporting Goods', price: '$9.99', stocked: true, name: 'Baseball'},
+  {category: 'Sporting Goods', price: '$29.99', stocked: false, name: 'Basketball'},
+  {category: 'Electronics', price: '$99.99', stocked: true, name: 'iPod Touch'},
+  {category: 'Electronics', price: '$399.99', stocked: false, name: 'iPhone 5'},
+  {category: 'Electronics', price: '$199.99', stocked: true, name: 'Nexus 7'}
+];
+
+render(
+	createElement( FilterableProductTable, { products: PRODUCTS } ),
+	document.getElementById( 'qni-dialog' )
+);
+
+//function Greeting( props ) {
+//    return wp.element.createElement( 'span', null,
+//        'Hello ' + props.toWhom + '!'
+//    );
+//}
+//
+//render(
+//    wp.element.createElement( Greeting, { toWhom: 'World 2' } ),
+//    document.getElementById( 'qni-dialog' )
+//);

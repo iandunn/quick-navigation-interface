@@ -10,10 +10,10 @@ class Quick_Navigation_Interface {
 		$this->options = $this->get_options();
 
 		add_action( 'admin_enqueue_scripts',     array( $this, 'enqueue_scripts'  ) );
-		add_action( 'post_updated',              array( $this, 'update_content_index_expiration_timestamp' ), 10, 3 );
-		add_action( 'transition_post_status',    array( $this, 'update_content_index_expiration_timestamp' ), 10, 3 );
-		add_action( 'wp_ajax_qni_content_index', array( $this, 'output_content_index' ) ); // intentionally only registered for authenticated users, because output is user-specific
-		add_filter( 'nocache_headers',           array( $this, 'set_cache_headers' ) );
+//		add_action( 'post_updated',              array( $this, 'update_content_index_expiration_timestamp' ), 10, 3 );
+//		add_action( 'transition_post_status',    array( $this, 'update_content_index_expiration_timestamp' ), 10, 3 );
+//		add_action( 'wp_ajax_qni_content_index', array( $this, 'output_content_index' ) ); // intentionally only registered for authenticated users, because output is user-specific
+//		add_filter( 'nocache_headers',           array( $this, 'set_cache_headers' ) );
 		add_action( 'admin_footer',              array( $this, 'output_templates' ) );
 	}
 
@@ -192,25 +192,39 @@ class Quick_Navigation_Interface {
 
 		wp_enqueue_style(
 			'quick-navigation-interface',
-			plugins_url( "css/quick-navigation-interface$suffix.css", dirname( __FILE__ ) ),
-			// todo update ^ to sass output
+			plugins_url( "css/quick-navigation-interface.css", dirname( __FILE__ ) ),
+				// todo update ^ to sass output
 			array( 'media-views' ),
+				// ^todo still need?
 			QNI_VERSION,
 			'all'
 		);
 
-		wp_enqueue_script(
-			'qni-content-index',
-			$content_index_url,   // see output_content_index() for an explanation of why we're enqueueing an AJAX handler as if it were a script
-			array(),
-			$this->get_content_index_timestamp(),
-			true
-		);
+//		wp_enqueue_script(
+//			'qni-content-index',
+//			$content_index_url,   // see output_content_index() for an explanation of why we're enqueueing an AJAX handler as if it were a script
+//			array(),
+//			$this->get_content_index_timestamp(),
+//			true
+//		);
 
 		wp_enqueue_script(
 			'quick-navigation-interface',
 			plugins_url( 'build/index.js', __DIR__ ),
-			array( 'jquery', 'backbone', 'underscore', 'wp-util', 'qni-content-index' ),
+			array(
+				// Internal
+				//'qni-content-index',	// don't need this after use rest api?
+
+				// WordPress
+				 'wp-i18n', 'wp-element',
+
+				// todo don't need these anymore?
+				'lodash',
+				'wp-blocks',
+				'wp-components',
+				'wp-editor',
+				'wp-util',
+			),
 			QNI_VERSION,
 			true
 		);
