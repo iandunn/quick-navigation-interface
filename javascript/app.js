@@ -106,8 +106,13 @@
 			try {
 				if ( 'keyup' === event.type ) {
 					if ( event.which === app.options.shortcuts['open-interface'].code ) {
+						// todo this conflicts with gutenberg, which uses ctrl+` to navigate
+							// is it enough to just return if ctrl (or any other modifier) is active? how do you tell that?
+
 						// Don't prevent the open shortcut from being used in input fields
+							// should ^ include "dont"? don't you want it to be prevented? isn't that what's actually happening?
 						if ( 'input' === event.target.tagName.toLowerCase() || 'textarea' === event.target.tagName.toLowerCase() ) {
+							// maybe restrict ^ to input[type=text] ?
 							return;
 						}
 

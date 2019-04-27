@@ -30,6 +30,8 @@ O remove local localizations and load_text_domain etc
 
 ### Future iterations
 
+* Convert to React/REST API
+	* Not because it's necessary, but because it'd be a good learning experience
 * make it discoverable for users who don't already know it exists and how to use it
 	* https://wordpress.org/support/topic/trigger-from-search-iconbutton/
 * check responsiveness once https://core.trac.wordpress.org/ticket/32194 lands
