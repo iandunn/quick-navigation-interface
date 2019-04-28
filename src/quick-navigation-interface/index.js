@@ -40,6 +40,9 @@ class QuickNavigationInterface extends Component {
 		const { interfaceOpen }       = this.state;
 		const { target, type, which } = event;
 
+		// todo huh it's not working anymore
+		debugger;
+
 		if ( interfaceOpen ) {
 			if ( 'keyup' === type && which === shortcuts['close-interface'].code ) {
 				this.setState( { interfaceOpen : false } );
@@ -62,6 +65,7 @@ class QuickNavigationInterface extends Component {
 				const isInput = 'input' === target.tagName.toLowerCase() && target.type === 'text';
 
 				if ( isInput || 'textarea' === target.tagName.toLowerCase() || target.contentEditable === 'true' ) {
+					console.log('early');
 					return;
 				}
 
@@ -87,7 +91,11 @@ class QuickNavigationInterface extends Component {
 				<div className="notification-dialog-background"></div>
 
 				<div id="qni-dialog" className="notification-dialog">
-					<button type="button" className="button-link media-modal-close">
+					<button
+						type="button"
+						className="button-link media-modal-close"
+						onClick={ this.setState( { interfaceOpen: false } ) }
+					>
 						<span className="media-modal-icon">
 							<span className="screen-reader-text">
 								{ __( 'Close Quick Navigation Interface', 'quick-navigation-interface' ) }
