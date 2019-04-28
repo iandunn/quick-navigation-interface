@@ -218,6 +218,7 @@ class Quick_Navigation_Interface {
 				// WordPress
 				'wp-element',
 				'wp-i18n',
+//				'wp-keycodes',
 
 				// todo don't need these anymore?
 				'wp-components',

@@ -3,6 +3,7 @@
  */
 const { Component, Fragment, RawHTML } = wp.element;
 const { __, sprintf }                  = wp.i18n;
+// const { isKeyboardEvent }              = wp.keycodes;
 
 /**
  * Internal dependencies
@@ -13,18 +14,19 @@ class QuickNavigationInterface extends Component {
 	constructor( props ) {
 		super( props );
 
-		try {
-			//const mainContainer = $( '#qni-container' );
-			//
-			//$( window ).keyup( toggleInterface );
-			//mainContainer.click( app.toggleInterface );
+        this.state = {
+			interfaceOpen : false,
+        };
 
-			// shouldn't be using jquery? maybe still need to?
+        this.toggleInterface = this.toggleInterface.bind( this );
+	}
 
-			//app.searchField.keyup( app.showRelevantLinks );
-		} catch ( exception ) {
-			//app.log( exception );
-		}
+	componentDidMount() {
+		window.addEventListener( "keyup", this.toggleInterface );
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener( "keyup", this.toggleInterface );
 	}
 
 	/**
@@ -32,40 +34,51 @@ class QuickNavigationInterface extends Component {
 	 *
 	 * @param {object} event
 	 */
-	//toggleInterface( event ) {
-	//	try {
-	//		if ( 'keyup' === event.type ) {
-	//			if ( event.which === app.options.shortcuts['open-interface'].code ) {
-	//				// todo this conflicts with gutenberg, which uses ctrl+` to navigate
-	//					// is it enough to just return if ctrl (or any other modifier) is active? how do you tell that?
-	//
-	//				// Don't prevent the open shortcut from being used in input fields
-	//					// should ^ include "dont"? don't you want it to be prevented? isn't that what's actually happening?
-	//				if ( 'input' === event.target.tagName.toLowerCase() || 'textarea' === event.target.tagName.toLowerCase() ) {
-	//					// maybe restrict ^ to input[type=text] ?
-	//					return;
-	//				}
-	//
-	//				app.openInterface();
-	//			} else if ( event.which === app.options.shortcuts['close-interface'].code ) {
-	//				app.closeInterface();
-	//			}
-	//		} else if ( 'click' === event.type ) {
-	//			if ( 'notification-dialog-background' === event.target.className || 'button-link media-modal-close' === event.target.className ) {
-	//				app.closeInterface();
-	//			}
-	//		}
-	//	} catch( exception ) {
-	//		app.log( exception );
-	//	}
-	//},
+	toggleInterface( event ) {
+		const { shortcuts }     = this.props;
+		const { interfaceOpen } = this.state;
+
+		if ( interfaceOpen ) {
+			if ( 'keyup' === event.type && event.which === shortcuts['close-interface'].code ) {
+				this.setState( { interfaceOpen : false } );
+			}
+
+
+			// else if ( 'click' === event.type ) {
+			// 	if ( 'notification-dialog-background' === event.target.className || 'button-link media-modal-close' === event.target.className ) {
+			// 		this.setState( { interfaceOpen : false } );
+			// 	}
+			// }
+			// ^ will be done on the button onClick handler i think
+			// if delete all this, then maybe dont' use nested if conditins above, just all one line
+		} else {
+			if ( 'keyup' === event.type && event.which === shortcuts['open-interface'].code ) {
+				// todo this conflicts with gutenberg, which uses ctrl+` to navigate
+				// is it enough to just return if ctrl (or any other modifier) is active? how do you tell that?
+
+				// Don't prevent the open shortcut from being used in input fields
+				// should ^ include "dont"? don't you want it to be prevented? isn't that what's actually happening?
+				if ( 'input' === event.target.tagName.toLowerCase() || 'textarea' === event.target.tagName.toLowerCase() ) {
+					// maybe restrict ^ to input[type=text] ?
+					return;
+				}
+
+				this.setState( { interfaceOpen : true } );
+			}
+		}
+	}
 
 	render() {
-		const { shortcuts } = this.props;
+		const { shortcuts }     = this.props;
+		const { interfaceOpen } = this.state;
 
 		// todo break into smaller components
 		// reuse existing G componenents wherever possible - dialog? buttons, input fields, lists, etc
 		// change design to match gutenberg
+
+		if ( ! interfaceOpen ) {
+			return null;
+		}
 
 		return (
 			<Fragment>
@@ -102,9 +115,9 @@ class QuickNavigationInterface extends Component {
 							  */}
 							{ sprintf(
 								__( 'Use the <code>%1$s</code> and <code>%2$s</code> keys to navigate, and press <code>%3$s</code> to open a link.', 'quick-navigation-interface' ),
-								shortcuts.previousLink.label,
-								shortcuts.nextLink.label,
-								shortcuts.openLink.label
+								shortcuts['previous-link'].label,
+								shortcuts['next-link'].label,
+								shortcuts['open-link'].label
 							) }
 						</RawHTML>
 					</p>

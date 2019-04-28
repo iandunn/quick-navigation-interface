@@ -1,0 +1,68 @@
+/*.qni-active,*/
+/*#qni-container.qni-active,*/
+/*#qni-instructions.qni-active,*/
+/*#qni-search-results.qni-active {*/
+	/*display: block;*/
+/*}*/
+
+#qni-container {
+	/*display: none;*/
+	/* maube still need ^ b/c don't want empty div taking up space or haveing side-effects? test */
+}
+
+	#qni-dialog {
+		padding: 2em;
+	}
+
+		/* WP 4.3 button-link styles, for backwards-compatibility with WP 4.2 and lower */
+		.wp-core-ui .button-link {
+			border: 0 none;
+			background: transparent none repeat scroll 0 0;
+			outline: medium none;
+			cursor: pointer;
+		}
+
+		#qni-introduction {
+			text-align: center;
+		}
+
+		#qni-search-field {
+			width: 100%;
+			padding: 6px 5px 3px 10px;
+		}
+
+		#qni-instructions {
+			/*display: none;  why would this ever be inactive? also not using classes to toggle interface anymore? */
+			font-size: .9em;
+			font-style: italic;
+		}
+
+			#qni-instructions code {
+				font-size: .9em;
+			}
+
+		#qni-search-results {
+			/*display: none;*/
+			margin-bottom: 0;
+		}
+
+			#qni-search-results li {
+				display: list-item;
+				margin-left: 1em;
+				padding: 2px 5px 0 10px;
+				border-radius: 10px;
+				list-style-type: disc;
+				font-size: 1.1em;
+			}
+
+				#qni-search-results li:last-child {
+					margin-bottom: 0;
+				}
+
+				#qni-search-results li.qni-active {
+					background-color: #DFEEFF;
+				}
+
+				#qni-search-results li a {
+					text-decoration: none;
+				}
