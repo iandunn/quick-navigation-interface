@@ -2,6 +2,8 @@
 
 keep this scoped to just the react conversion. can still do other things in todo for 1.0 release, but get this done/merged first
 
+* test in chrome
+
 * configure livereload, it's running already b/c of wp-scripts
 * 
 

@@ -16,6 +16,7 @@ class QuickNavigationInterface extends Component {
 
         this.state = {
 			interfaceOpen : false,
+			// searchQuery   : '',
         };
 
         this.toggleInterface = this.toggleInterface.bind( this );
@@ -35,14 +36,14 @@ class QuickNavigationInterface extends Component {
 	 * @param {object} event
 	 */
 	toggleInterface( event ) {
-		const { shortcuts }     = this.props;
-		const { interfaceOpen } = this.state;
+		const { shortcuts }           = this.props;
+		const { interfaceOpen }       = this.state;
+		const { target, type, which } = event;
 
 		if ( interfaceOpen ) {
-			if ( 'keyup' === event.type && event.which === shortcuts['close-interface'].code ) {
+			if ( 'keyup' === type && which === shortcuts['close-interface'].code ) {
 				this.setState( { interfaceOpen : false } );
 			}
-
 
 			// else if ( 'click' === event.type ) {
 			// 	if ( 'notification-dialog-background' === event.target.className || 'button-link media-modal-close' === event.target.className ) {
@@ -52,14 +53,15 @@ class QuickNavigationInterface extends Component {
 			// ^ will be done on the button onClick handler i think
 			// if delete all this, then maybe dont' use nested if conditins above, just all one line
 		} else {
-			if ( 'keyup' === event.type && event.which === shortcuts['open-interface'].code ) {
+			if ( 'keyup' === type && which === shortcuts['open-interface'].code ) {
 				// todo this conflicts with gutenberg, which uses ctrl+` to navigate
 				// is it enough to just return if ctrl (or any other modifier) is active? how do you tell that?
+					// need to use keycodes b/c modifier different on diff platforms
 
-				// Don't prevent the open shortcut from being used in input fields
-				// should ^ include "dont"? don't you want it to be prevented? isn't that what's actually happening?
-				if ( 'input' === event.target.tagName.toLowerCase() || 'textarea' === event.target.tagName.toLowerCase() ) {
-					// maybe restrict ^ to input[type=text] ?
+				// Prevent the open shortcut from being used in input fields
+				const isInput = 'input' === target.tagName.toLowerCase() && target.type === 'text';
+
+				if ( isInput || 'textarea' === target.tagName.toLowerCase() || target.contentEditable === 'true' ) {
 					return;
 				}
 
