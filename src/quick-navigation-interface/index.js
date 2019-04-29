@@ -1,16 +1,14 @@
 /**
  * WordPress dependencies
  */
-const { Modal, TextControl }  = wp.components;
+const { Modal, TextControl } = wp.components;
 const { Component, RawHTML } = wp.element;
 const { __, sprintf }        = wp.i18n;
-// const { isKeyboardEvent }              = wp.keycodes;
-
 
 /**
  * Internal dependencies
  */
-//import Dialog from './dialog/';
+import SearchResults from '../search-results/';
 
 class QuickNavigationInterface extends Component {
 	constructor( props ) {
@@ -87,22 +85,6 @@ class QuickNavigationInterface extends Component {
 		// reuse existing G componenents wherever possible - dialog? buttons, input fields, lists, etc
 		// change design to match gutenberg
 
-
-		//return (
-		//	<Fragment>
-		//		<Button isDefault onClick={ () => this.setState( { interfaceOpen: true } ) }>Open Modal</Button>
-		//
-		//		{ interfaceOpen && (
-		//			<Modal
-		//				title="This is my modal"
-		//				onRequestClose={ () => this.setState( { interfaceOpen: false } ) }
-		//			>
-		//				<Button isDefault onClick={ () => this.setState( { interfaceOpen: false } ) }> My custom close button </Button>
-		//			</Modal>
-		//		) }
-		//	</Fragment>
-		//);
-
 		if ( ! interfaceOpen ) {
 			return null;
 		}
@@ -113,22 +95,32 @@ class QuickNavigationInterface extends Component {
 				onRequestClose={ () => this.setState( { interfaceOpen: false } ) }
 				contentLabel="what should this be?"
 				isDismissable={ true }
+
+				focusOnMount={ false }  // might not be needed
 			>
 				{/* use Modal component - can get rid of close dialog code then? but have to update state when modal closes? maybe change how setting it up
 				 maybe just need to pass in prop
 				 add aria attributes?
+
+				 hovering on close button creates scroll bars
 				 */}
 
 				<TextControl
 					//label={ __( 'Search:', 'quick-navigation-interface' ) }
-					// this is pretty cluttered. maybe use aria-labelled-by={ modal title } instead?
+					// ^ this is pretty cluttered. maybe use aria-labelled-by={ modal title } instead?
 					placeholder={ __( 'e.g., Posts, Settings, Plugins, Comments, etc', 'quick-navigation-interface' ) }
 					value={ searchQuery }
 					onChange={ newQuery => this.setState( { searchQuery: newQuery } ) }
+
+					autofocus // this isn't working. the component isn't passing it through to the final <input> because it's not safelisted?
 				/>
-					{/* need aria labels to go with using ^ ? */}
+					{/* need aria labels to go with using ^ ?
+
+					maybe use withFocusReturn so that, when modal closes, focus returns to previously focused element
+					*/}
 
 				<p id="qni-instructions">
+					{/* the old version didn't show these all the time? see when/why and maybe bring that back here. maybe only show when input field empty or something */}
 					<RawHTML>
 						{/*
 						  *
@@ -147,23 +139,10 @@ class QuickNavigationInterface extends Component {
 					</RawHTML>
 				</p>
 
-				<ul id="qni-search-results">
-					{/* maybe use a FormTokenField here instead of something custom? limit of 100 suggestions though so would need to extend that?
-					that's similar, but definitely not hte same. maybe reuse some of the same things, though, like the way it stores and searches for data?
-					*/}
-
-					<li>
-						<a href="foo">
-							Parent &rarr;
-							Title
-						</a>
-					</li>
-				</ul>
+				<SearchResults query={ searchQuery } />
 			</Modal>
 		);
 	}
 }
-
-
 
 export default QuickNavigationInterface;
