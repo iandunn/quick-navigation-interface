@@ -5,6 +5,8 @@
 	/*display: block;*/
 /*}*/
 
+/* a lot of this can be removed b/c no longer needed, need to audit line by line and only keep what's needed */
+
 #qni-container {
 	/*display: none;*/
 	/* maube still need ^ b/c don't want empty div taking up space or haveing side-effects? test */

@@ -7,11 +7,17 @@ keep this scoped to just the react conversion. can still do other things in todo
 * configure livereload, it's running already b/c of wp-scripts
 * 
 
+* maybe store the contentindex in localstorage?
+	* any security/privacy issues with that?
+
+
 * js i18n - probably look at wordcamp.org, b/c gutenberg-examples is outdated
 * look at every file to see what needs to be updated
 * test that linters work - shouldn't it be looking for .scss instead of .css?
 
 * maybe write blog post on how to build react app in wp that isn't a block, but uses G's components and abstraction layer
+	"Building React apps inside wp-admin that aren't blocks"
+	"Building standalone apps inside wp-admin but outside the editor"
 
 
 ### Next minor version

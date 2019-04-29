@@ -13,4 +13,5 @@ import QuickNavigationInterface from './quick-navigation-interface/';
 render(
 	createElement( QuickNavigationInterface, { ...qniOptions } ),
 	document.getElementById( 'qni-container' )
+	// the Modal doesn't even render inside ^ though, so... do i even need that?
 );

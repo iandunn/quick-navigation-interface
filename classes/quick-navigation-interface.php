@@ -193,9 +193,7 @@ class Quick_Navigation_Interface {
 		wp_enqueue_style(
 			'quick-navigation-interface',
 			plugins_url( "css/quick-navigation-interface.css", dirname( __FILE__ ) ),
-				// todo update ^ to sass output
-			array( 'media-views' ),
-				// ^todo still need?
+			array( 'wp-components' ),
 			QNI_VERSION,
 			'all'
 		);
@@ -216,6 +214,7 @@ class Quick_Navigation_Interface {
 				//'qni-content-index',	// don't need this after use rest api?
 
 				// WordPress
+				'wp-components',
 				'wp-element',
 				'wp-i18n',
 //				'wp-keycodes',
