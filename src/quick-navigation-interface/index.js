@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-const { Modal }  = wp.components;
+const { Modal, TextControl }  = wp.components;
 const { Component, RawHTML } = wp.element;
 const { __, sprintf }        = wp.i18n;
 // const { isKeyboardEvent }              = wp.keycodes;
@@ -22,8 +22,7 @@ class QuickNavigationInterface extends Component {
 			searchQuery   : '',
         };
 
-		this.toggleInterface         = this.toggleInterface.bind( this );
-		this.handleSearchQueryChange = this.handleSearchQueryChange.bind( this );
+		this.toggleInterface = this.toggleInterface.bind( this );
 	}
 
 	componentDidMount() {
@@ -46,6 +45,7 @@ class QuickNavigationInterface extends Component {
 		const { target, type, which } = event;
 
 		// should use KeyboardShortcuts here instead? feels a bit odd, like overcomplicating things b/c of unnecessary abstraction
+			// also only listens to self and children, so can't use for this purpose?
 			// maybe use mousetrap directly though, since it's already available? maybe adds to page load unnecessarily though, if not already loaded
 
 		/*
@@ -78,10 +78,6 @@ class QuickNavigationInterface extends Component {
 			// https://docs.google.com/spreadsheets/d/1nK1frKawxV7aboWOJbbslbIqBGoLY7gqKvfwqENj2yE/edit#gid=0
 	// search web to see what common ones are, also
 		// `/` for search might also fit, but could conflict w/ jetpack/core search in future
-
-	handleSearchQueryChange( event ) {
-		this.setState( { searchQuery : event.target.value } );
-	}
 
 	render() {
 		const { interfaceOpen, searchQuery } = this.state;
@@ -123,17 +119,12 @@ class QuickNavigationInterface extends Component {
 				 add aria attributes?
 				 */}
 
-				<h3 id="qni-introduction">
-
-				</h3>
-
-				<input
-					id="qni-search-field"
-					name=""
-					type="text"
+				<TextControl
+					//label={ __( 'Search:', 'quick-navigation-interface' ) }
+					// this is pretty cluttered. maybe use aria-labelled-by={ modal title } instead?
 					placeholder={ __( 'e.g., Posts, Settings, Plugins, Comments, etc', 'quick-navigation-interface' ) }
 					value={ searchQuery }
-					onChange={ this.handleSearchQueryChange }
+					onChange={ newQuery => this.setState( { searchQuery: newQuery } ) }
 				/>
 					{/* need aria labels to go with using ^ ? */}
 
