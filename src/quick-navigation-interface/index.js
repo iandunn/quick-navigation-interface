@@ -40,9 +40,9 @@ class QuickNavigationInterface extends Component {
 	 * @param {object} event
 	 */
 	toggleInterface( event ) {
-		const { shortcuts }           = this.props;
-		const { interfaceOpen }       = this.state;
-		const { target, type, which } = event;
+		const { shortcuts }     = this.props;
+		const { interfaceOpen } = this.state;
+		const { target, which } = event;
 
 		// should use KeyboardShortcuts here instead? feels a bit odd, like overcomplicating things b/c of unnecessary abstraction
 			// also only listens to self and children, so can't use for this purpose?
@@ -56,7 +56,7 @@ class QuickNavigationInterface extends Component {
 			return;
 		}
 
-		if ( 'keyup' === type && which === shortcuts['open-interface'].code ) {
+		if ( which === shortcuts['open-interface'].code ) {
 			// todo this conflicts with gutenberg, which uses ctrl+` to navigate
 			// is it enough to just return if ctrl (or any other modifier) is active? how do you tell that?
 				// need to use keycodes b/c modifier different on diff platforms
@@ -133,7 +133,7 @@ class QuickNavigationInterface extends Component {
 						  *
 						  */}
 						{ sprintf(
-							__( 'Use the <code>%1$s</code> and <code>%2$s</code> keys to navigate, and press <code>%3$s</code> to open a link. Press <code>%4$s</code> to close this interface.', 'quick-navigation-interface' ),
+							__( 'Use <code>%1$s</code> and <code>%2$s</code> to navigate links, <code>%3$s</code> to open one, and <code>%4$s</code> to quit.', 'quick-navigation-interface' ),
 							shortcuts['previous-link'].label,
 							shortcuts['next-link'].label,
 							shortcuts['open-link'].label,
@@ -146,8 +146,10 @@ class QuickNavigationInterface extends Component {
 					links={ links }
 					limit={ 4 }
 					query={ searchQuery }
+					shortcuts={ shortcuts }
 				/>
 				{/* limit should be taken from qniOptions */}
+				{/* shortcuts is kind of global options, so feels a bit weird to pass it down like this instead of it being globally available. maybe think about Context API, but yuck */}
 			</Modal>
 		);
 	}
