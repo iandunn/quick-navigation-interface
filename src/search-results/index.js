@@ -58,6 +58,10 @@ class SearchResults extends Component {
 		let newLinkIndex        = null;
 		let counter             = 0;
 
+		if ( allLinkElements.length < 1 ) {
+			return;
+		}
+
 		for ( const element of allLinkElements ) {
 			if ( element.className === 'qni-active' ) {
 				activeLinkIndex = counter;
@@ -111,12 +115,11 @@ class SearchResults extends Component {
 		if ( undefined === activeLinkElements || activeLinkElements.length < 1 ) {
 			return;
 		}
-		console.log(activeLinkElements);
 
 		const activeLinkElement = activeLinkElements[0].getElementsByTagName( 'a' )[0];
 
 		activeLinkElement.click();
-		//app.closeInterface(); why needed to do this? maybe because if clicking on # links? test. what's an exmaple?
+		//app.closeInterface(); why needed to do this? maybe because if clicking on # links? test. what's an exmaple? "skip to main content"`
 	}
 
 	render() {

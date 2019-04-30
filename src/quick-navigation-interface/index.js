@@ -84,7 +84,7 @@ class QuickNavigationInterface extends Component {
 
 	render() {
 		const { interfaceOpen, searchQuery } = this.state;
-		const { shortcuts, links, }          = this.props;
+		const { shortcuts, links }           = this.props;
 
 		if ( ! interfaceOpen ) {
 			return null;
