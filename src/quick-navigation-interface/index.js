@@ -52,24 +52,23 @@ class QuickNavigationInterface extends Component {
 		 * The Modal component handles closing itself via `Escape` and clicking on the `x` icon, so we only need
 		 * to handle opening the Modal.
 		 */
-		if ( interfaceOpen ) {
+		if ( interfaceOpen || which !== shortcuts['open-interface'].code) {
 			return;
 		}
 
-		if ( which === shortcuts['open-interface'].code ) {
-			// todo this conflicts with gutenberg, which uses ctrl+` to navigate
-			// is it enough to just return if ctrl (or any other modifier) is active? how do you tell that?
-				// need to use keycodes b/c modifier different on diff platforms
 
-			// Prevent the open shortcut from being used in input fields
-			const isInput = 'input' === target.tagName.toLowerCase() && target.type === 'text';
+		// todo this conflicts with gutenberg, which uses ctrl+` to navigate
+		// is it enough to just return if ctrl (or any other modifier) is active? how do you tell that?
+			// need to use keycodes b/c modifier different on diff platforms
 
-			if ( isInput || 'textarea' === target.tagName.toLowerCase() || target.contentEditable === 'true' ) {
-				return;
-			}
+		// Prevent the open shortcut from being used in input fields
+		const isInput = 'input' === target.tagName.toLowerCase() && target.type === 'text';
 
-			this.setState( { interfaceOpen : true } );
+		if ( isInput || 'textarea' === target.tagName.toLowerCase() || target.contentEditable === 'true' ) {
+			return;
 		}
+
+		this.setState( { interfaceOpen : true } );
 	}
 	// maybe fix https://github.com/iandunn/quick-navigation-interface/issues/1 now too, by changing key
 	// primary is now `g` or something else instead of `\`` ? still keep that one as backup though?
@@ -85,7 +84,7 @@ class QuickNavigationInterface extends Component {
 
 	render() {
 		const { interfaceOpen, searchQuery } = this.state;
-		const { shortcuts, links        }    = this.props;
+		const { shortcuts, links, }          = this.props;
 
 		if ( ! interfaceOpen ) {
 			return null;
@@ -114,7 +113,7 @@ class QuickNavigationInterface extends Component {
 					value={ searchQuery }
 					onChange={ newQuery => this.setState( { searchQuery: newQuery } ) }
 
-					autofocus // this isn't working. the component isn't passing it through to the final <input> because it's not safelisted?
+					autoFocus="true"
 				/>
 					{/* need aria labels to go with using ^ ?
 
@@ -144,11 +143,10 @@ class QuickNavigationInterface extends Component {
 
 				<SearchResults
 					links={ links }
-					limit={ 4 }
+					limit={ this.props['search-results-limit'] }
 					query={ searchQuery }
 					shortcuts={ shortcuts }
 				/>
-				{/* limit should be taken from qniOptions */}
 				{/* shortcuts is kind of global options, so feels a bit weird to pass it down like this instead of it being globally available. maybe think about Context API, but yuck */}
 			</Modal>
 		);

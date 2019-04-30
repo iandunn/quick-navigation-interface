@@ -102,6 +102,23 @@ class SearchResults extends Component {
 		}
 	}
 
+	/**
+	 * Open the active link
+	 */
+	static openActiveLink() {
+		const activeLinkElements = document.getElementById( 'qni-search-results' ).getElementsByClassName( 'qni-active' );
+
+		if ( undefined === activeLinkElements || activeLinkElements.length < 1 ) {
+			return;
+		}
+		console.log(activeLinkElements);
+
+		const activeLinkElement = activeLinkElements[0].getElementsByTagName( 'a' )[0];
+
+		activeLinkElement.click();
+		//app.closeInterface(); why needed to do this? maybe because if clicking on # links? test. what's an exmaple?
+	}
+
 	render() {
 		const { links, query, limit } = this.props;
 		const { activeLink }          = this.state;
