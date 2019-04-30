@@ -10,6 +10,8 @@ const { __, sprintf }        = wp.i18n;
  */
 import SearchResults from '../search-results/';
 
+// go through old code line by line to make sure didn't miss anything that should be implemented here
+
 class QuickNavigationInterface extends Component {
 	constructor( props ) {
 		super( props );
@@ -74,16 +76,16 @@ class QuickNavigationInterface extends Component {
 		// if in input field, then modifier-g
 			// cmg-g conflicts with search in firefox
 			// https://docs.google.com/spreadsheets/d/1nK1frKawxV7aboWOJbbslbIqBGoLY7gqKvfwqENj2yE/edit#gid=0
+
 	// search web to see what common ones are, also
 		// `/` for search might also fit, but could conflict w/ jetpack/core search in future
+		// https://www.hanselman.com/blog/TheWebIsTheNewTerminalAreYouUsingTheWebsKeyboardShortcutsAndHotkeys.aspx
+		// look for more
+
 
 	render() {
 		const { interfaceOpen, searchQuery } = this.state;
-		const { shortcuts }                  = this.props;
-
-		// todo break into smaller components
-		// reuse existing G componenents wherever possible - dialog? buttons, input fields, lists, etc
-		// change design to match gutenberg
+		const { shortcuts, links        }    = this.props;
 
 		if ( ! interfaceOpen ) {
 			return null;
@@ -127,6 +129,7 @@ class QuickNavigationInterface extends Component {
 						  * TODO THIS IS NOT SAFE!
 						  * need to find a better way. maybe dompurify?
 						  * https://github.com/WordPress/gutenberg/issues/13156
+						  * related: https://github.com/WordPress/wordcamp.org/issues/101#issuecomment-487409620
 						  *
 						  */}
 						{ sprintf(
@@ -139,7 +142,12 @@ class QuickNavigationInterface extends Component {
 					</RawHTML>
 				</p>
 
-				<SearchResults query={ searchQuery } />
+				<SearchResults
+					links={ links }
+					limit={ 4 }
+					query={ searchQuery }
+				/>
+				{/* limit should be taken from qniOptions */}
 			</Modal>
 		);
 	}
