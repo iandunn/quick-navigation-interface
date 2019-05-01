@@ -46,6 +46,7 @@ class Quick_Navigation_Interface {
 				'close-interface' => array(
 					'code'  => 27,
 					'label' => __( 'Escape', 'quick-navigation-interface' )
+					// not used anymore, so deprecate?
 				),
 			),
 		);
