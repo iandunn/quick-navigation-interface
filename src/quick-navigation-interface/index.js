@@ -18,9 +18,16 @@ class QuickNavigationInterface extends Component {
 
         this.state = {
 	        activeResultIndex : '',
+	            // should ^ be state? maybe not. not passed as props, does change over time.
+	            // can it be derived? the _initial_ value can be, but what about after that? maybe this one should remain as state?
+	            // might depend on whether we always reset activelink to results[0] when query changes, or if we maintain the current selected link as long as it's still in the list
+
 	        //interfaceOpen  : false,
 	        interfaceOpen     : true, // temp for convenience while develop
-	        results           : [],
+	        results           : [], // todo maybe this and activeResultsIndex shouldn't be in state, since they can be derived from searchQuery and a function? would that just re-create the problems that caused me to move them up to here, though?
+	                                // seems like "thikning in react" says it should not be state, but how to implement that correctly?
+	                                // maybe they should remain in this component, but calculated on the fly when passed to other components, rather than being updated at the same time that searchQuery is
+	                                // seems wasteful to re-caclulate it all the time, but that probably wouldn't be an issue if it were memoized
 	        searchQuery       : '',
         };
 
@@ -52,7 +59,7 @@ class QuickNavigationInterface extends Component {
 				break;
 
 			case shortcuts['open-link'].code:
-				this.openActiveLink();
+				this.openActiveResult();
 				break;
 		}
 	}
@@ -69,7 +76,7 @@ class QuickNavigationInterface extends Component {
 		const { interfaceOpen } = this.state;
 		const { target }        = event;
 
-		// should use KeyboardShortcuts here instead? feels a bit odd, like overcomplicating things b/c of unnecessary abstraction
+		// should use KeyboarResultdShortcuts here instead? feels a bit odd, like overcomplicating things b/c of unnecessary abstraction
 			// also only listens to self and children, so can't use for this purpose?
 			// maybe use mousetrap directly though, since it's already available? maybe adds to page load unnecessarily though, if not already loaded
 
@@ -122,6 +129,11 @@ class QuickNavigationInterface extends Component {
 				}
 			}
 		}
+		// modularize ^
+		// maybe ^ should happen in SearchReults, especially if `results` isn't going to be state anymore
+			// but wouldn't that just re-create the problems from before?
+			// maybe can solve that by still tracking keyboard stuff up here, and then passing in a prop that gets called to handle the event?
+			// maybe still need to track activelinkindex up here, but not results?
 
 		this.setState( {
 			activeResultIndex : newResults.length ? 0 : null,   // maybe only set to 0 when going from '' to something, and from something to '', but not when refining existing? probably have to make sure that value isn't greater than length though if do that
@@ -135,7 +147,7 @@ class QuickNavigationInterface extends Component {
 		const { shortcuts }                  = this.props;
 		const { activeResultIndex, results } = this.state;
 		const { which }                      = event;
-		let newLinkIndex                     = null;
+		let newLinkIndex                     = null;    // rename this and others to "result"
 
 		// Don't move the input field's caret to home/end.
 		//event.preventDefault(); // todo isn't working
@@ -160,9 +172,9 @@ class QuickNavigationInterface extends Component {
 	}
 
 	/**
-	 * Open the active link
+	 * Open the active result.
 	 */
-	openActiveLink() {
+	openActiveResult() {
 		const { activeResultIndex } = this.state;
 
 		if ( null === activeResultIndex ) {
@@ -170,13 +182,7 @@ class QuickNavigationInterface extends Component {
 		}
 
 		const activeResultElements = document.getElementById( 'qni-search-results' ).getElementsByTagName( 'li' );
-
-		//if ( undefined === activeResultElements || activeResultElements.length < 1 ) {
-		//	return;
-		//}
-console.log( activeResultIndex );
-console.log(activeResultElements);
-		const activeResultElement = activeResultElements[ activeResultIndex ].getElementsByTagName( 'a' )[0];
+		const activeResultElement  = activeResultElements[ activeResultIndex ].getElementsByTagName( 'a' )[ 0 ];
 
 		activeResultElement.click();
 
@@ -184,12 +190,18 @@ console.log(activeResultElements);
 		//const{ activeResultIndex, results } = this.state;
 		//
 		//window.open( results[ activeResultIndex ].url );
-		// ^ glocked by popup
+		// ^ blocked as popup
 
 		//app.closeInterface(); why needed to do this? maybe because if clicking on # links? test. what's an exmaple? "skip to main content"`
 	}
 
 	render() {
+		// add console.log to all the renders and test things out, so you can get a better udnerstanding of when components are re-rendered
+			// specifically, want to make sure that they're not getting rerendered unnecessarily
+			// i think react tries to minimize that as much as it can, but there may be situations where you can do it it manually via componentShouldUpdate or something
+			// or using some memoizaition HoC to declare which prop/state changes should trigger a re-render
+			// do web search to learn more
+
 		const { activeResultIndex, interfaceOpen, results, searchQuery } = this.state;
 		const { shortcuts }                                       = this.props;
 
