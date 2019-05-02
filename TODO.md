@@ -16,6 +16,8 @@ keep this scoped to just the react conversion. can still do other things in todo
 	* 
 	* cant setup service worker until pwa plugin integrated w/ core
 
+post to stack exchange code review to get feedback on react stuff
+
 * js i18n - probably look at wordcamp.org, b/c gutenberg-examples is outdated
 * look at every file to see what needs to be updated
 * test that linters work - shouldn't it be looking for .scss instead of .css?
@@ -36,7 +38,7 @@ keep this scoped to just the react conversion. can still do other things in todo
 	https://ux.stackexchange.com/questions/76405/what-are-conventions-for-keyboard-shortcuts-in-windows-and-osx
 	http://www.hanselman.com/blog/TheWebIsTheNewTerminalAreYouUsingTheWebsKeyboardShortcutsAndHotkeys.aspx
 	* Maybe use https://github.com/jeresig/jquery.hotkeys if it'd make hotkeys easier. it's already in core
-	
+
 	// maybe fix https://github.com/iandunn/quick-navigation-interface/issues/1 now too, by changing key
 	// primary is now `g` or something else instead of `\`` ? still keep that one as backup though?
 		// if in input field, then modifier-g
@@ -56,6 +58,9 @@ O remove local localizations and load_text_domain etc
 ### Next-next minor version
 
 move to scss inside components when wp-scripts supports compiling it
+	https://github.com/WordPress/gutenberg/issues/14801
+	https://github.com/WordPress/gutenberg/pull/14590#issuecomment-479367245
+
 
 * remove duplicates results like `Feedback` from jetpack
 * also remove page links to things that already exist in content index
@@ -76,6 +81,7 @@ modal window shifts positions as this list grows/shrinks, which sucks
 	* aria active state when up/down through links
 * load the plugin earlier, so can start using it even before page finishes loading?
 
+* maybe add a "new window" icon for external links
 
 ### Future iterations
 

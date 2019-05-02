@@ -10,10 +10,6 @@ const { __, sprintf }        = wp.i18n;
  */
 import SearchResults from '../search-results/';
 
-
-// todo post to stack exchange code review to get feedback on react stuff
-
-
 class QuickNavigationInterface extends Component {
 	constructor( props ) {
 		super( props );
@@ -82,7 +78,7 @@ class QuickNavigationInterface extends Component {
 				break;
 
 			case shortcuts['open-link'].code:
-				QuickNavigationInterface.openActiveResult();
+				this.openActiveResult();
 				break;
 		}
 	}
@@ -115,20 +111,19 @@ class QuickNavigationInterface extends Component {
 		this.setState( { interfaceOpen : true } );
 	}
 
-	//
+	/**
+	 * Respond to changes in the search query.
+	 *
+	 * @param {string} newQuery
+	 */
 	handleNewQuery( newQuery ) {
 		const newResults = this.getFilteredLinks( newQuery );
 
 		this.setState( {
 			activeResultIndex : newResults.length ? 0 : null,
-				// maybe only set to 0 when going from '' to something, and from something to '', but not when refining existing?
-				// probably have to make sure that value isn't greater than length though if do that
 			searchQuery       : newQuery,
 			results           : newResults,
 		} );
-
-		// modal window shifts positions as this list grows/shrinks, which sucks
-		// use CSS to set a fixed height maybe, or maybe just a fixed position
 	}
 
 	/**
@@ -179,7 +174,9 @@ class QuickNavigationInterface extends Component {
 		let newResultIndex                   = null;
 
 		// Don't move the input field's caret to home/end.
-		event.preventDefault(); // todo isn't working. maybe because it's a OS action rather than a browser action?
+		event.preventDefault();
+		// todo isn't working. maybe because it's a OS action rather than a browser action?
+		// try https://stackoverflow.com/a/1081114/450127, then search for more "javascript prevent up down keys from moving cursor on input text field"
 
 		if ( which === shortcuts['next-link'].code ) {
 			newResultIndex = activeResultIndex + 1;
@@ -197,12 +194,6 @@ class QuickNavigationInterface extends Component {
 
 		if ( null !== newResultIndex ) {
 			this.setState( { activeResultIndex: newResultIndex } );
-			// todo feels like there's a slight delay between when press the up/down key, and when the new result is highlighted
-				// shouldn't be that slow on such a fast machine, and with such a small plugin
-				// test to see if it happens when links array is 50 items instead of 500+
-				// if that solves it, then look at some more efficient data structure, like a B-tree
-				// er, wait, we're working with `state.results` here, not `props.links`, so only 4 to deal with.
-				// so then why is it so slow?
 		}
 	}
 
@@ -213,14 +204,14 @@ class QuickNavigationInterface extends Component {
 	 * would be blocked by the browser's popup blocker, even though it's the result of direct user action. Maybe there's
 	 * a way around that?
 	 */
-	static openActiveResult() {
-		const activeResult = document.querySelector( '#qni-search-results li.qni-active-result a' );
-			// todo ^ might be faster to do the first one for qni-search-results, then a second for the li...a bit?
-			// same reason as doing it in jquery, search parsed left to right, so it'll grab all the links on the page, then narrow by li, then narrow by #qni-search-res
+	openActiveResult() {
+		const activeResult = document.querySelector( '#qni-search-results' ).querySelector( 'li.qni-active-result a' );
 
 		if ( 'object' === typeof activeResult ) {
 			activeResult.click();
-			//app.closeInterface(); why needed to do this? maybe because if clicking on # links? test. what's an exmaple? "skip to main content"`
+
+			// Anchor links like "skip to main content" wouldn't close the interface otherwise.
+			this.setState( { interfaceOpen : false } );
 		}
 	}
 
@@ -232,7 +223,7 @@ class QuickNavigationInterface extends Component {
 			// do web search to learn more
 
 		const { activeResultIndex, interfaceOpen, results, searchQuery } = this.state;
-		const { shortcuts }                                       = this.props;
+		const { shortcuts }                                              = this.props;
 
 		if ( ! interfaceOpen ) {
 			return null;
@@ -271,9 +262,6 @@ class QuickNavigationInterface extends Component {
 					*/}
 
 				<p id="qni-instructions">
-					{/* the old version didn't show these all the time? see when/why and maybe bring that back here. maybe only show when input field empty or something
-					but still need to know about all those keys once started typing, but need to know about some before typing too, so should probably just always show
-					*/}
 					<RawHTML>
 						{ sprintf(
 							/*
@@ -288,6 +276,7 @@ class QuickNavigationInterface extends Component {
 							shortcuts['open-link'].label,
 							shortcuts['close-interface'].label,
 							// ^ needs to be hard-coded? changing it via filter won't change the key that <Modal> is using to close.
+							// can add a deprecation warning if php detects that it changed from the default
 						) }
 					</RawHTML>
 				</p>
