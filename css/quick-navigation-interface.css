@@ -70,3 +70,9 @@
 				#qni-search-results li a {
 					text-decoration: none;
 				}
+
+				.qni-link-type {
+					position: absolute;
+					right: 25px;
+					/* todo use Grid or Flex instead, otherwise long titles will overlap this */
+				}
