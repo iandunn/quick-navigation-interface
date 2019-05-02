@@ -8,8 +8,6 @@ const { render, createElement } = wp.element;
  */
 import QuickNavigationInterface from './quick-navigation-interface/';
 
-// todo create container inside #wpwrap, prob don't' need to fetch getelementbyid then since will have reference to it?
-
 ( function() {
 	/**
 	 * Get all links on the current page
@@ -45,9 +43,6 @@ import QuickNavigationInterface from './quick-navigation-interface/';
 			} );
 		}
 
-		// todo remove duplicates like `Feedback`
-		// should also remove links to things that already exist in content index
-
 		return links;
 	}
 
@@ -56,7 +51,7 @@ import QuickNavigationInterface from './quick-navigation-interface/';
 
 	const props = {
 		...qniOptions,
-		links: window.qniContentIndex
+		links : window.qniContentIndex
 	};
 
 	/*
@@ -64,7 +59,8 @@ import QuickNavigationInterface from './quick-navigation-interface/';
 	 * have to give render() something.
 	 */
 	const container = document.createElement( 'div' );
-	container.id = 'qni-container';
+	container.id    = 'qni-container';
+
 	document.getElementById( 'wpwrap' ).appendChild( container );
 
 	render(

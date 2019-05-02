@@ -4,6 +4,9 @@ keep this scoped to just the react conversion. can still do other things in todo
 
 * test in chrome
 
+* need to replace grunt minify css task, but wp-scripts doesn't yet?
+	maybe just ship unminified for now, and add a todo item to switch to scss when wp-scripts will compile and minify it
+
 * maybe store the contentindex in localstorage?
 	* any security/privacy issues with that?
 
@@ -49,10 +52,17 @@ keep this scoped to just the react conversion. can still do other things in todo
 O remove local localizations and load_text_domain etc
 	https://make.wordpress.org/core/2016/07/06/i18n-improvements-in-4-6/
 
-* remove 4.2 back-compat css once WP 4.5 comes out, and update required version to 4.3
-
 
 ### Next-next minor version
+
+move to scss inside components when wp-scripts supports compiling it
+
+* remove duplicates results like `Feedback` from jetpack
+* also remove page links to things that already exist in content index
+
+
+modal window shifts positions as this list grows/shrinks, which sucks
+	use CSS to set a fixed height maybe, or maybe just a fixed position
 
 * usermeta is global, so what happens in multisite when you store content index there?
 	index if for site A b/c that was first site to load, but then it gets used for site B b/c code isn't aware of changes?

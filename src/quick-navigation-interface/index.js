@@ -31,7 +31,7 @@ class QuickNavigationInterface extends Component {
 		 * probably want to use Context or maybe even MobX.
 		 */
         this.state = {
-	        activeResultIndex : '',
+	        activeResultIndex : null,
 	        //interfaceOpen     : false,
 	        results           : [],
 	        //searchQuery       : '',

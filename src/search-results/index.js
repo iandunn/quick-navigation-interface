@@ -1,4 +1,10 @@
-//
+/**
+ * Render an individual search result item.
+ *
+ * @param {Array} props
+ *
+ * @return {Element}
+ */
 function Result( props ) {
 	const { active, link }     = props;
 	const { parentTitle, title, type, url } = link;
@@ -18,15 +24,42 @@ function Result( props ) {
 	);
 }
 
-//
+/**
+ * Render a preview of the active result.
+ *
+ * Otherwise, the user would have to use their mouse and hover over the link in order to see where it would take
+ * them.
+ *
+ * @param {Array} props
+ *
+ * @return {Element}
+ */
+function ActiveUrlPreview( props ) {
+	const { url } = props;
+
+	// todo if url is relative, add host
+		// need to test different scenarios where that might break
+
+	return (
+		<div className="qni-result-preview">
+			{ url }
+		</div>
+	);
+}
+
+/**
+ * Render the list of search results.
+ *
+ * @param {Array} props
+ *
+ * @return {Element}
+ */
 function SearchResults( props ) {
 	const { activeResultIndex, results } = props;
 
-	// modal window shifts positions as this list grows/shrinks, which sucks
-	// use CSS to set a fixed height maybe, or maybe just a fixed position
-	//
-	//console.log( activeResult );
-	//console.log( results );
+	if ( null !== activeResultIndex ) {
+		console.log( results[ activeResultIndex ] );
+	}
 
 	return (
 		<ul id="qni-search-results">
@@ -38,6 +71,10 @@ function SearchResults( props ) {
 					/>
 				);
 			} ) }
+
+			{ null !== activeResultIndex &&
+				<ActiveUrlPreview url={ results[ activeResultIndex ].url } />
+			}
 		</ul>
 	);
 }

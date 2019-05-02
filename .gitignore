@@ -1,9 +1,2 @@
 build/
-
-#tmp until don't need for reference anymore
-javascript
-
-
-# remove these
-javascript/quick-navigation-interface.*
 css/*.min.css

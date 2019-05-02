@@ -1,78 +1,42 @@
-/* todo move to scss inside components when wp-scripts supports compiling it */
+/* todo a lot of this can be removed b/c no longer needed, need to audit line by line and only keep what's needed */
 
-/*.qni-active,*/
-/*#qni-container.qni-active,*/
-/*#qni-instructions.qni-active,*/
-/*#qni-search-results.qni-active {*/
-	/*display: block;*/
-/*}*/
-
-/* a lot of this can be removed b/c no longer needed, need to audit line by line and only keep what's needed */
-
-#qni-container {
-	/*display: none;*/
-	/* maube still need ^ b/c don't want empty div taking up space or haveing side-effects? test */
+#qni-instructions {
+	font-style: italic;
 }
 
-	#qni-dialog {
-		padding: 2em;
+#qni-search-results {
+	margin-top: 20px;
+	margin-bottom: 0;
+}
+
+	#qni-search-results li {
+		display: list-item;
+		margin-left: 1em;
+		padding: 2px 5px 0 10px;
+		border-radius: 10px;
+		list-style-type: disc;
+		font-size: 1.1em;
 	}
 
-		/* WP 4.3 button-link styles, for backwards-compatibility with WP 4.2 and lower */
-		.wp-core-ui .button-link {
-			border: 0 none;
-			background: transparent none repeat scroll 0 0;
-			outline: medium none;
-			cursor: pointer;
-		}
-
-		#qni-introduction {
-			text-align: center;
-		}
-
-		#qni-search-field {
-			width: 100%;
-			padding: 6px 5px 3px 10px;
-		}
-
-		#qni-instructions {
-			/*display: none;  why would this ever be inactive? also not using classes to toggle interface anymore? */
-			font-size: .9em;
-			font-style: italic;
-		}
-
-			#qni-instructions code {
-				font-size: .9em;
-			}
-
-		#qni-search-results {
-			/*display: none;*/
+		#qni-search-results li:last-child {
 			margin-bottom: 0;
 		}
 
-			#qni-search-results li {
-				display: list-item;
-				margin-left: 1em;
-				padding: 2px 5px 0 10px;
-				border-radius: 10px;
-				list-style-type: disc;
-				font-size: 1.1em;
-			}
+		#qni-search-results li.qni-active-result {
+			background-color: #DFEEFF;
+		}
 
-				#qni-search-results li:last-child {
-					margin-bottom: 0;
-				}
+		#qni-search-results li a {
+			text-decoration: none;
+		}
 
-				#qni-search-results li.qni-active-result {
-					background-color: #DFEEFF;
-				}
+		.qni-link-type {
+			position: absolute;
+			right: 25px;
+			/* todo use Grid or Flex instead, otherwise long titles will overlap this */
+		}
 
-				#qni-search-results li a {
-					text-decoration: none;
-				}
-
-				.qni-link-type {
-					position: absolute;
-					right: 25px;
-					/* todo use Grid or Flex instead, otherwise long titles will overlap this */
-				}
+		.qni-result-preview {
+			margin-top: 20px;
+			font-style: italic;
+		}
