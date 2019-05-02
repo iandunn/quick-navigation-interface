@@ -4,9 +4,6 @@ keep this scoped to just the react conversion. can still do other things in todo
 
 * test in chrome
 
-* configure livereload, it's running already b/c of wp-scripts
-* 
-
 * maybe store the contentindex in localstorage?
 	* any security/privacy issues with that?
 
@@ -30,20 +27,32 @@ keep this scoped to just the react conversion. can still do other things in todo
 
 ### Next minor version
 
-* fix gutenberg conflict with backtick
-
-O remove local localizations and load_text_domain etc
-	https://make.wordpress.org/core/2016/07/06/i18n-improvements-in-4-6/
-
-* convert to use REST api, but with cached result. bump min ver to 4.4
-	* remove 4.2 back-compat css once WP 4.5 comes out, and update required version to 4.3
-
 * Maybe change command to `[modifier] /` or just `g`
 	probably add it as an additional for back-compat
 	https://medium.com/@sashika/j-k-or-how-to-choose-keyboard-shortcuts-for-web-applications-a7c3b7b408ee#.cbjvagkdg
 	https://ux.stackexchange.com/questions/76405/what-are-conventions-for-keyboard-shortcuts-in-windows-and-osx
 	http://www.hanselman.com/blog/TheWebIsTheNewTerminalAreYouUsingTheWebsKeyboardShortcutsAndHotkeys.aspx
 	* Maybe use https://github.com/jeresig/jquery.hotkeys if it'd make hotkeys easier. it's already in core
+	
+	// maybe fix https://github.com/iandunn/quick-navigation-interface/issues/1 now too, by changing key
+	// primary is now `g` or something else instead of `\`` ? still keep that one as backup though?
+		// if in input field, then modifier-g
+			// cmg-g conflicts with search in firefox
+			// https://docs.google.com/spreadsheets/d/1nK1frKawxV7aboWOJbbslbIqBGoLY7gqKvfwqENj2yE/edit#gid=0
+
+	// search web to see what common ones are, also
+		// `/` for search might also fit, but could conflict w/ jetpack/core search in future
+		// https://www.hanselman.com/blog/TheWebIsTheNewTerminalAreYouUsingTheWebsKeyboardShortcutsAndHotkeys.aspx
+		// look for more
+
+
+O remove local localizations and load_text_domain etc
+	https://make.wordpress.org/core/2016/07/06/i18n-improvements-in-4-6/
+
+* remove 4.2 back-compat css once WP 4.5 comes out, and update required version to 4.3
+
+
+### Next-next minor version
 
 * usermeta is global, so what happens in multisite when you store content index there?
 	index if for site A b/c that was first site to load, but then it gets used for site B b/c code isn't aware of changes?

@@ -20,15 +20,11 @@ import QuickNavigationInterface from './quick-navigation-interface/';
 		let links = [];
 		let parentTitle, type, title, url;
 
-		// can use queryselctor instead of jquery here, then get rid of all mentions of jquery?
-
 		for ( const link of document.getElementsByTagName( 'a' ) ) {
 			parentTitle = '';
 		    type        = 'link';
 			title       = link.textContent;
 			url         = link.getAttribute( 'href' );
-
-			// watch out for xss execution sinks when using
 
 			// This can be simplified if JS ever provides an alternative to jQuery.closest().
 			if ( link.parentNode.parentNode.classList.contains( 'wp-submenu' ) ) {
@@ -58,16 +54,21 @@ import QuickNavigationInterface from './quick-navigation-interface/';
 	// Append page links to existing content index, to avoid creating a new array, which would double memory usage.
 	Array.prototype.push.apply( window.qniContentIndex, getCurrentPageLinks() );
 
+	const props = {
+		...qniOptions,
+		links: window.qniContentIndex
+	};
+
+	/*
+	 * This won't actually be used for anything, since the <Modal> creates its own root-level element, but we still
+	 * have to give render() something.
+	 */
+	const container = document.createElement( 'div' );
+	container.id = 'qni-container';
+	document.getElementById( 'wpwrap' ).appendChild( container );
+
 	render(
-		createElement(
-			QuickNavigationInterface,
-			{
-				...qniOptions,
-				links: window.qniContentIndex
-			}
-		),
+		createElement( QuickNavigationInterface, props ),
 		document.getElementById( 'qni-container' )
-		// the Modal doesn't even render inside ^ though, so... do i even need that?
-		// maybe need it just so react doesn't clobber some other element?
 	);
 } )();

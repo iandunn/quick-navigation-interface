@@ -46,10 +46,16 @@ class QuickNavigationInterface extends Component {
 	}
 
 	componentDidMount() {
+		/*
+		 * This (and its counterpart in `componentWillUnmount`) need to listen on `window` instead of just within
+		 * this component in order to catch the backtick and open the interface. If it weren't for that, we could
+		 * use the KeyboardShortcuts component to do all this. Since we're already doing it for the backtick,
+		 * though, it's simpler to just use this to catch the other keys too.
+		 *
+		 * There might be some benefit to using Mousetrap (a dependency of KeyboardShortcuts) directly, but this
+		 * is simple enough that it doesn't seem worth looking into.
+		 */
 		window.addEventListener( 'keyup', this.handleKeyboardEvents );
-		// probably can't use KeyboardShortcuts for this, since want to monitor window, but maybe worth another look
-		// if that's the case, document that could use KeyboardShortcuts for set/open link, but not for openinterface, so might as well just use this for everything
-		// see note in openInterface too
 	}
 
 	componentWillUnmount() {
@@ -94,11 +100,6 @@ class QuickNavigationInterface extends Component {
 		const { altKey, ctrlKey, metaKey, shiftKey, target } = event;
 		const usingModifier                                  = altKey || ctrlKey || metaKey || shiftKey;
 
-		// should use KeyboarResultdShortcuts here instead? feels a bit odd, like overcomplicating things b/c of unnecessary abstraction
-			// also only listens to self and children, so can't use for this purpose?
-			// maybe use mousetrap directly though, since it's already available? maybe adds to page load unnecessarily though, if not already loaded
-			// see note in CopmDidMount too
-
 		// Gutenberg uses `control+backtick` to navigate through the editor, so ignore those events (and similar cases).
 		if ( interfaceOpen || usingModifier ) {
 			return;
@@ -113,16 +114,6 @@ class QuickNavigationInterface extends Component {
 
 		this.setState( { interfaceOpen : true } );
 	}
-	// maybe fix https://github.com/iandunn/quick-navigation-interface/issues/1 now too, by changing key
-	// primary is now `g` or something else instead of `\`` ? still keep that one as backup though?
-		// if in input field, then modifier-g
-			// cmg-g conflicts with search in firefox
-			// https://docs.google.com/spreadsheets/d/1nK1frKawxV7aboWOJbbslbIqBGoLY7gqKvfwqENj2yE/edit#gid=0
-
-	// search web to see what common ones are, also
-		// `/` for search might also fit, but could conflict w/ jetpack/core search in future
-		// https://www.hanselman.com/blog/TheWebIsTheNewTerminalAreYouUsingTheWebsKeyboardShortcutsAndHotkeys.aspx
-		// look for more
 
 	//
 	handleNewQuery( newQuery ) {
