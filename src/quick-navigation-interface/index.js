@@ -10,25 +10,36 @@ const { __, sprintf }        = wp.i18n;
  */
 import SearchResults from '../search-results/';
 
-// go through old code line by line to make sure didn't miss anything that should be implemented here
+
+// todo post to stack exchange code review to get feedback on react stuff
+
 
 class QuickNavigationInterface extends Component {
 	constructor( props ) {
 		super( props );
 
+		/*
+		 * It may be incorrect for `results` and possibly `activeResultIndex` to be state, since `results` can be
+		 * derived from `props.links` and `state.searchQuery`, but I tried that and it turned into a huge mess, so
+		 * I'm choosing to follow the "do whatever is less awkward" guideline.
+		 *
+		 * https://reactjs.org/docs/thinking-in-react.html#step-3-identify-the-minimal-but-complete-representation-of-ui-state
+		 * https://github.com/reduxjs/redux/issues/1287#issuecomment-175351978 (stated in another context, but still applicable here)
+		 *
+		 * Somewhat related, this may be a situation where a state management API would be beneficial, but it still
+		 * feels like overkill for a small app like this. Redux is awful, though, so if I did set that up then I'd
+		 * probably want to use Context or maybe even MobX.
+		 */
         this.state = {
 	        activeResultIndex : '',
-	            // should ^ be state? maybe not. not passed as props, does change over time.
-	            // can it be derived? the _initial_ value can be, but what about after that? maybe this one should remain as state?
-	            // might depend on whether we always reset activelink to results[0] when query changes, or if we maintain the current selected link as long as it's still in the list
+	        //interfaceOpen     : false,
+	        results           : [],
+	        //searchQuery       : '',
 
-	        //interfaceOpen  : false,
-	        interfaceOpen     : true, // temp for convenience while develop
-	        results           : [], // todo maybe this and activeResultsIndex shouldn't be in state, since they can be derived from searchQuery and a function? would that just re-create the problems that caused me to move them up to here, though?
-	                                // seems like "thikning in react" says it should not be state, but how to implement that correctly?
-	                                // maybe they should remain in this component, but calculated on the fly when passed to other components, rather than being updated at the same time that searchQuery is
-	                                // seems wasteful to re-caclulate it all the time, but that probably wouldn't be an issue if it were memoized
-	        searchQuery       : '',
+	        // temp for convenience while develop
+	        interfaceOpen : true,
+	        //results       : this.getFilteredLinks( 'plug' ),  // breaks up/down nav for some reason
+	        searchQuery   : 'plug',
         };
 
 		this.handleKeyboardEvents = this.handleKeyboardEvents.bind( this );
@@ -37,13 +48,19 @@ class QuickNavigationInterface extends Component {
 	componentDidMount() {
 		window.addEventListener( 'keyup', this.handleKeyboardEvents );
 		// probably can't use KeyboardShortcuts for this, since want to monitor window, but maybe worth another look
+		// if that's the case, document that could use KeyboardShortcuts for set/open link, but not for openinterface, so might as well just use this for everything
+		// see note in openInterface too
 	}
 
 	componentWillUnmount() {
 		window.removeEventListener( 'keyup', this.handleKeyboardEvents );
 	}
 
-	//
+	/**
+	 * Catch key presses and pass them to the appropriate handler.
+	 *
+	 * @param {Object} event
+	 */
 	handleKeyboardEvents( event ) {
 		const { shortcuts } = this.props;
 		const { which }     = event;
@@ -59,7 +76,7 @@ class QuickNavigationInterface extends Component {
 				break;
 
 			case shortcuts['open-link'].code:
-				this.openActiveResult();
+				QuickNavigationInterface.openActiveResult();
 				break;
 		}
 	}
@@ -73,20 +90,19 @@ class QuickNavigationInterface extends Component {
 	 * @param {object} event
 	 */
 	openInterface( event ) {
-		const { interfaceOpen } = this.state;
-		const { target }        = event;
+		const { interfaceOpen }                              = this.state;
+		const { altKey, ctrlKey, metaKey, shiftKey, target } = event;
+		const usingModifier                                  = altKey || ctrlKey || metaKey || shiftKey;
 
 		// should use KeyboarResultdShortcuts here instead? feels a bit odd, like overcomplicating things b/c of unnecessary abstraction
 			// also only listens to self and children, so can't use for this purpose?
 			// maybe use mousetrap directly though, since it's already available? maybe adds to page load unnecessarily though, if not already loaded
+			// see note in CopmDidMount too
 
-		if ( interfaceOpen ) {
+		// Gutenberg uses `control+backtick` to navigate through the editor, so ignore those events (and similar cases).
+		if ( interfaceOpen || usingModifier ) {
 			return;
 		}
-
-		// todo this conflicts with gutenberg, which uses ctrl+` to navigate
-		// is it enough to just return if ctrl (or any other modifier) is active? how do you tell that?
-			// need to use keycodes b/c modifier different on diff platforms
 
 		// Prevent the open shortcut from being used in input fields
 		const isInput = 'input' === target.tagName.toLowerCase() && target.type === 'text';
@@ -110,89 +126,111 @@ class QuickNavigationInterface extends Component {
 
 	//
 	handleNewQuery( newQuery ) {
-		const { links } = this.props;
-		let newResults  = [];
-
-		/*
-		 * This only finds the _first_ X matches before the limit is reached, rather than the _best_ X matches,
-		 * but in this context they can just keep typing to further narrow the results, so that's probably good
-		 * enough for now.
-		 */
-		if ( newQuery ) {
-			for ( const link of links ) {
-				if ( link.title.toLowerCase().indexOf( newQuery.toLowerCase() ) >= 0 ) {
-					newResults.push( link );
-				}
-
-				if ( newResults.length > this.props['search-results-limit'] ) {
-					break;
-				}
-			}
-		}
-		// modularize ^
-		// maybe ^ should happen in SearchReults, especially if `results` isn't going to be state anymore
-			// but wouldn't that just re-create the problems from before?
-			// maybe can solve that by still tracking keyboard stuff up here, and then passing in a prop that gets called to handle the event?
-			// maybe still need to track activelinkindex up here, but not results?
+		const newResults = this.getFilteredLinks( newQuery );
 
 		this.setState( {
-			activeResultIndex : newResults.length ? 0 : null,   // maybe only set to 0 when going from '' to something, and from something to '', but not when refining existing? probably have to make sure that value isn't greater than length though if do that
+			activeResultIndex : newResults.length ? 0 : null,
+				// maybe only set to 0 when going from '' to something, and from something to '', but not when refining existing?
+				// probably have to make sure that value isn't greater than length though if do that
 			searchQuery       : newQuery,
 			results           : newResults,
 		} );
+
+		// modal window shifts positions as this list grows/shrinks, which sucks
+		// use CSS to set a fixed height maybe, or maybe just a fixed position
 	}
 
-	//
+	/**
+	 * Get the links that match the given search query.
+	 *
+	 * This only finds the _first_ X matches before the limit is reached, rather than the _best_ X matches,
+	 * but in this context they can just keep typing to further narrow the results, so that's probably good
+	 * enough for now.
+	 *
+	 * @param {string} query
+	 *
+	 * @return {Array}
+	 */
+	getFilteredLinks( query ) {
+		const { links } = this.props;
+		let results     = [];
+
+		if ( ! query ) {
+			return results;
+		}
+
+		for ( const link of links ) {
+			if ( link.title.toLowerCase().indexOf( query.toLowerCase() ) >= 0 ) {
+				results.push( link );
+			}
+
+			if ( results.length > this.props['search-results-limit'] ) {
+				break;
+			}
+		}
+
+		// todo memoize this function to avoid performance issues?
+			// or not needed because never called with the same thing twice in succession?
+			// maybe it is during unintended re-renders? see comment in render() about reducing/removing those
+
+		return results;
+	}
+
+	/**
+	 * Change the active result when the user navigates through the list.
+	 *
+	 * @param {Object} event
+	 */
 	setActiveResult( event ) {
 		const { shortcuts }                  = this.props;
 		const { activeResultIndex, results } = this.state;
 		const { which }                      = event;
-		let newLinkIndex                     = null;    // rename this and others to "result"
+		let newResultIndex                   = null;
 
 		// Don't move the input field's caret to home/end.
-		//event.preventDefault(); // todo isn't working
+		event.preventDefault(); // todo isn't working. maybe because it's a OS action rather than a browser action?
 
 		if ( which === shortcuts['next-link'].code ) {
-			newLinkIndex = activeResultIndex + 1;
+			newResultIndex = activeResultIndex + 1;
 
-			if ( results.length === newLinkIndex ) {
-				newLinkIndex = 0;
+			if ( results.length === newResultIndex ) {
+				newResultIndex = 0;
 			}
 		} else {
-			newLinkIndex = activeResultIndex - 1;
+			newResultIndex = activeResultIndex - 1;
 
-			if ( -1 === newLinkIndex ) {
-				newLinkIndex = results.length - 1;
+			if ( -1 === newResultIndex ) {
+				newResultIndex = results.length - 1;
 			}
 		}
 
-		if ( null !== newLinkIndex ) {
-			this.setState( { activeResultIndex: newLinkIndex } );
+		if ( null !== newResultIndex ) {
+			this.setState( { activeResultIndex: newResultIndex } );
+			// todo feels like there's a slight delay between when press the up/down key, and when the new result is highlighted
+				// shouldn't be that slow on such a fast machine, and with such a small plugin
+				// test to see if it happens when links array is 50 items instead of 500+
+				// if that solves it, then look at some more efficient data structure, like a B-tree
+				// er, wait, we're working with `state.results` here, not `props.links`, so only 4 to deal with.
+				// so then why is it so slow?
 		}
 	}
 
 	/**
 	 * Open the active result.
+	 *
+	 * It feels like a smell to be accessing the DOM directly here, but `window.open( results[ activeResultIndex ].url )`
+	 * would be blocked by the browser's popup blocker, even though it's the result of direct user action. Maybe there's
+	 * a way around that?
 	 */
-	openActiveResult() {
-		const { activeResultIndex } = this.state;
+	static openActiveResult() {
+		const activeResult = document.querySelector( '#qni-search-results li.qni-active-result a' );
+			// todo ^ might be faster to do the first one for qni-search-results, then a second for the li...a bit?
+			// same reason as doing it in jquery, search parsed left to right, so it'll grab all the links on the page, then narrow by li, then narrow by #qni-search-res
 
-		if ( null === activeResultIndex ) {
-			return;
+		if ( 'object' === typeof activeResult ) {
+			activeResult.click();
+			//app.closeInterface(); why needed to do this? maybe because if clicking on # links? test. what's an exmaple? "skip to main content"`
 		}
-
-		const activeResultElements = document.getElementById( 'qni-search-results' ).getElementsByTagName( 'li' );
-		const activeResultElement  = activeResultElements[ activeResultIndex ].getElementsByTagName( 'a' )[ 0 ];
-
-		activeResultElement.click();
-
-
-		//const{ activeResultIndex, results } = this.state;
-		//
-		//window.open( results[ activeResultIndex ].url );
-		// ^ blocked as popup
-
-		//app.closeInterface(); why needed to do this? maybe because if clicking on # links? test. what's an exmaple? "skip to main content"`
 	}
 
 	render() {
@@ -218,8 +256,7 @@ class QuickNavigationInterface extends Component {
 
 				focusOnMount={ false }  // might not be needed
 			>
-				{/* use Modal component - can get rid of close dialog code then? but have to update state when modal closes? maybe change how setting it up
-				 maybe just need to pass in prop
+				{/*
 				 add aria attributes?
 
 				 hovering on close button creates scroll bars
@@ -234,6 +271,8 @@ class QuickNavigationInterface extends Component {
 
 					autoFocus="true"
 					// ugh not working again ^
+					// maybe just because of initial state opening interface and refreshing? try under normal user conditions
+					// or maybe it's because dev console is open? test with it closed
 				/>
 					{/* need aria labels to go with using ^ ?
 
@@ -241,22 +280,23 @@ class QuickNavigationInterface extends Component {
 					*/}
 
 				<p id="qni-instructions">
-					{/* the old version didn't show these all the time? see when/why and maybe bring that back here. maybe only show when input field empty or something */}
+					{/* the old version didn't show these all the time? see when/why and maybe bring that back here. maybe only show when input field empty or something
+					but still need to know about all those keys once started typing, but need to know about some before typing too, so should probably just always show
+					*/}
 					<RawHTML>
-						{/*
-						  *
-						  * TODO THIS IS NOT SAFE!
-						  * need to find a better way. maybe dompurify?
-						  * https://github.com/WordPress/gutenberg/issues/13156
-						  * related: https://github.com/WordPress/wordcamp.org/issues/101#issuecomment-487409620
-						  *
-						  */}
 						{ sprintf(
-							__( 'Use <code>%1$s</code> and <code>%2$s</code> to navigate links, <code>%3$s</code> to open one, and <code>%4$s</code> to quit.', 'quick-navigation-interface' ),
+							/*
+							 * SECURITY WARNING: This string is intentionally not internationalized, because there
+						     * isn't a secure way to do that yet.
+						     *
+							 * https://github.com/WordPress/gutenberg/issues/13156
+							 */
+							'Use <code>%1$s</code> and <code>%2$s</code> to navigate links, <code>%3$s</code> to open one, and <code>%4$s</code> to quit.',
 							shortcuts['previous-link'].label,
 							shortcuts['next-link'].label,
 							shortcuts['open-link'].label,
 							shortcuts['close-interface'].label,
+							// ^ needs to be hard-coded? changing it via filter won't change the key that <Modal> is using to close.
 						) }
 					</RawHTML>
 				</p>
@@ -265,7 +305,6 @@ class QuickNavigationInterface extends Component {
 					activeResultIndex={ activeResultIndex }
 					results={ results }
 				/>
-				{/* shortcuts is kind of global options, so feels a bit weird to pass it down like this instead of it being globally available. maybe think about Context API, but yuck */}
 			</Modal>
 		);
 	}

@@ -10,6 +10,11 @@ keep this scoped to just the react conversion. can still do other things in todo
 * maybe store the contentindex in localstorage?
 	* any security/privacy issues with that?
 
+* rest api instead of admin-ajax? related to localstorage
+	* have to switch to local storage at this point too, because rest api endpoints wouldn't be cached locally? 
+* localstorage or something else instead of memory?
+	* 
+	* cant setup service worker until pwa plugin integrated w/ core
 
 * js i18n - probably look at wordcamp.org, b/c gutenberg-examples is outdated
 * look at every file to see what needs to be updated
@@ -18,6 +23,9 @@ keep this scoped to just the react conversion. can still do other things in todo
 * maybe write blog post on how to build react app in wp that isn't a block, but uses G's components and abstraction layer
 	"Building React apps inside wp-admin that aren't blocks"
 	"Building standalone apps inside wp-admin but outside the editor"
+* then consider doing a seattle wp dev meetup presentation
+* then consider doing a seattle wordcamp talk
+	* #262-meta would be better example since it's a normal admin screen rather than a modal that appears on all screens
 
 
 ### Next minor version

@@ -1,13 +1,15 @@
 //
 function Result( props ) {
-	const { active, link } = props;
-	const { title, url }   = link;
+	const { active, link }     = props;
+	const { title, type, url } = link;
 
 	return (
-		<li className={ active ? 'qni-active' : '' }>
+		<li className={ active ? 'qni-active-result' : '' }>
 			<a href={ url }>
 				{ title }
-			</a>
+			</a> {' '}
+
+			[{type}]
 		</li>
 	);
 }

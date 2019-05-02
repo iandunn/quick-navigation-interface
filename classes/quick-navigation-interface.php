@@ -135,6 +135,7 @@ class Quick_Navigation_Interface {
 			if ( current_user_can( 'edit_post', $item->ID ) ) {
 				$index[] = array(
 					'title' => esc_html( get_the_title( $item ) ),
+					'type'  => $item->post_type,
 					'url'   => get_edit_post_link( $item->ID, 'url' ),
 				);
 			}

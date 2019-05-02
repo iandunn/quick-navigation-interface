@@ -1,3 +1,5 @@
+/* todo move to scss inside components when wp-scripts supports compiling it */
+
 /*.qni-active,*/
 /*#qni-container.qni-active,*/
 /*#qni-instructions.qni-active,*/
@@ -61,7 +63,7 @@
 					margin-bottom: 0;
 				}
 
-				#qni-search-results li.qni-active {
+				#qni-search-results li.qni-active-result {
 					background-color: #DFEEFF;
 				}
 

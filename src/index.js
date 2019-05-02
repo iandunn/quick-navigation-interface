@@ -19,29 +19,35 @@ import QuickNavigationInterface from './quick-navigation-interface/';
 	function getCurrentPageLinks() {
 		var links = [];
 
+		// can use queryselctor instead of jquery here, then get rid of all mentions of jquery?
+
 		$( 'a' ).each( function() {
 			var parentTitle = '',
+			    type        = 'link',
 				title       = $( this ).text(),
 				url         = $( this ).attr( 'href' );
 
 			if ( $( this ).parent().parent().hasClass( 'wp-submenu' ) ) {
 				parentTitle = $( this ).parent().parent().parent().find( '.wp-menu-name' ).text();
+				type = 'menu item';
 			} else if ( 'wp-admin-bar-new-content-default' === $( this ).parent().parent().attr( 'id' ) ) {
 				title = $( '#wp-admin-bar-new-content' ).find( '.ab-label' ).text() + ' ' + title;
+				type = 'menu item';
 			}
 
 			links.push( {
-				type        : 'link',
+				type        : type,
 				title       : title,
 				parentTitle : parentTitle,
 				url         : url
 			} );
 		} );
 
+		// todo remove duplicates like `Feedback`
+		// should also remove links to things that already exist in content index
+
 		return links;
 	}
-	// call ^ and add to window.qniContentIndex before passing it to below
-	// but maybe use Context instead of this
 
 	// Append page links to existing content index, to avoid creating a new array, which would double memory usage.
 	Array.prototype.push.apply( window.qniContentIndex, getCurrentPageLinks() );
@@ -52,7 +58,6 @@ import QuickNavigationInterface from './quick-navigation-interface/';
 			{
 				...qniOptions,
 				links: window.qniContentIndex
-				// rename ^ to somehting more generic, rename in passed down places too
 			}
 		),
 		document.getElementById( 'qni-container' )
