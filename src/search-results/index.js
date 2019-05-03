@@ -6,7 +6,7 @@
  * @return {Element}
  */
 function Result( props ) {
-	const { active, link }     = props;
+	const { active, link }                  = props;
 	const { parentTitle, title, type, url } = link;
 
 	return (
@@ -15,10 +15,10 @@ function Result( props ) {
 
 			<a href={ url }>
 				{ title }
-			</a> {' '}
+			</a> { ' ' }
 
 			<span className="qni-link-type">
-				[{type}]
+				[{ type }]
 			</span>
 		</li>
 	);
@@ -38,7 +38,7 @@ function ActiveUrlPreview( props ) {
 	const { url } = props;
 
 	// todo if url is relative, add host
-		// need to test different scenarios where that might break
+	// need to test different scenarios where that might break
 
 	return (
 		<div className="qni-result-preview">
@@ -57,15 +57,12 @@ function ActiveUrlPreview( props ) {
 function SearchResults( props ) {
 	const { activeResultIndex, results } = props;
 
-	if ( null !== activeResultIndex ) {
-		console.log( results[ activeResultIndex ] );
-	}
-
 	return (
 		<ul id="qni-search-results">
 			{ results.map( ( link, index ) => {
 				return (
 					<Result
+						key={ link.url } // todo not always unique, might need to hash title+url, and remove duplicates
 						link={ link }
 						active={ index === activeResultIndex }
 					/>
@@ -74,6 +71,7 @@ function SearchResults( props ) {
 
 			{ null !== activeResultIndex &&
 				<ActiveUrlPreview url={ results[ activeResultIndex ].url } />
+				// todo instead of this, programatically do link.hover() so the browser's default preview shows instead
 			}
 		</ul>
 	);

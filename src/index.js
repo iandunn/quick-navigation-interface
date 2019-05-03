@@ -15,12 +15,12 @@ import QuickNavigationInterface from './quick-navigation-interface/';
 	 * @returns {Array}
 	 */
 	function getCurrentPageLinks() {
-		let links = [];
+		const links = [];
 		let parentTitle, type, title, url;
 
 		for ( const link of document.getElementsByTagName( 'a' ) ) {
 			parentTitle = '';
-		    type        = 'link';
+			type        = 'link';
 			title       = link.textContent;
 			url         = link.getAttribute( 'href' );
 
@@ -35,12 +35,7 @@ import QuickNavigationInterface from './quick-navigation-interface/';
 				type = 'menu item';
 			}
 
-			links.push( {
-				type        : type,
-				title       : title,
-				parentTitle : parentTitle,
-				url         : url
-			} );
+			links.push( { type, title, parentTitle, url } );
 		}
 
 		return links;
@@ -51,7 +46,7 @@ import QuickNavigationInterface from './quick-navigation-interface/';
 
 	const props = {
 		...qniOptions,
-		links : window.qniContentIndex
+		links : window.qniContentIndex,
 	};
 
 	/*
@@ -67,4 +62,4 @@ import QuickNavigationInterface from './quick-navigation-interface/';
 		createElement( QuickNavigationInterface, props ),
 		document.getElementById( 'qni-container' )
 	);
-} )();
+}() );

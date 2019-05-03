@@ -26,17 +26,17 @@ class QuickNavigationInterface extends Component {
 		 * feels like overkill for a small app like this. Redux is awful, though, so if I did set that up then I'd
 		 * probably want to use Context or maybe even MobX.
 		 */
-        this.state = {
-	        activeResultIndex : null,
-	        //interfaceOpen     : false,
-	        results           : [],
-	        //searchQuery       : '',
+		this.state = {
+			activeResultIndex : null,
+			//interfaceOpen     : false,
+			results           : [],
+			//searchQuery       : '',
 
-	        // temp for convenience while develop
-	        interfaceOpen : true,
-	        //results       : this.getFilteredLinks( 'plug' ),  // breaks up/down nav for some reason
-	        searchQuery   : 'plug',
-        };
+			// temp for convenience while develop
+			interfaceOpen : true,
+			//results       : this.getFilteredLinks( 'plug' ),  // breaks up/down nav for some reason
+			searchQuery   : 'plug',
+		};
 
 		this.handleKeyboardEvents = this.handleKeyboardEvents.bind( this );
 	}
@@ -67,17 +67,18 @@ class QuickNavigationInterface extends Component {
 		const { shortcuts } = this.props;
 		const { which }     = event;
 
-		switch( which ) {
-			case shortcuts['open-interface'].code:
+		switch ( which ) {
+			case shortcuts[ 'open-interface' ].code:
 				this.openInterface( event );
 				break;
 
-			case shortcuts['previous-link'].code:
-			case shortcuts['next-link'].code:
-				this.setActiveResult( event );
+			case shortcuts[ 'next-link' ].code:
+			case shortcuts[ 'previous-link' ].code:
+				const direction = shortcuts[ 'next-link' ].code === which ? 'next' : 'previous';
+				this.setActiveResult( event, direction );
 				break;
 
-			case shortcuts['open-link'].code:
+			case shortcuts[ 'open-link' ].code:
 				this.openActiveResult();
 				break;
 		}
@@ -139,7 +140,7 @@ class QuickNavigationInterface extends Component {
 	 */
 	getFilteredLinks( query ) {
 		const { links } = this.props;
-		let results     = [];
+		const results   = [];
 
 		if ( ! query ) {
 			return results;
@@ -150,14 +151,14 @@ class QuickNavigationInterface extends Component {
 				results.push( link );
 			}
 
-			if ( results.length > this.props['search-results-limit'] ) {
+			if ( results.length > this.props[ 'search-results-limit' ] ) {
 				break;
 			}
 		}
 
 		// todo memoize this function to avoid performance issues?
-			// or not needed because never called with the same thing twice in succession?
-			// maybe it is during unintended re-renders? see comment in render() about reducing/removing those
+		// or not needed because never called with the same thing twice in succession?
+		// maybe it is during unintended re-renders? see comment in render() about reducing/removing those
 
 		return results;
 	}
@@ -165,12 +166,11 @@ class QuickNavigationInterface extends Component {
 	/**
 	 * Change the active result when the user navigates through the list.
 	 *
-	 * @param {Object} event
+	 * @param {object} event
+	 * @param {string} direction
 	 */
-	setActiveResult( event ) {
-		const { shortcuts }                  = this.props;
+	setActiveResult( event, direction ) {
 		const { activeResultIndex, results } = this.state;
-		const { which }                      = event;
 		let newResultIndex                   = null;
 
 		// Don't move the input field's caret to home/end.
@@ -178,7 +178,7 @@ class QuickNavigationInterface extends Component {
 		// todo isn't working. maybe because it's a OS action rather than a browser action?
 		// try https://stackoverflow.com/a/1081114/450127, then search for more "javascript prevent up down keys from moving cursor on input text field"
 
-		if ( which === shortcuts['next-link'].code ) {
+		if ( 'next' === direction ) {
 			newResultIndex = activeResultIndex + 1;
 
 			if ( results.length === newResultIndex ) {
@@ -217,10 +217,10 @@ class QuickNavigationInterface extends Component {
 
 	render() {
 		// add console.log to all the renders and test things out, so you can get a better udnerstanding of when components are re-rendered
-			// specifically, want to make sure that they're not getting rerendered unnecessarily
-			// i think react tries to minimize that as much as it can, but there may be situations where you can do it it manually via componentShouldUpdate or something
-			// or using some memoizaition HoC to declare which prop/state changes should trigger a re-render
-			// do web search to learn more
+		// specifically, want to make sure that they're not getting rerendered unnecessarily
+		// i think react tries to minimize that as much as it can, but there may be situations where you can do it it manually via componentShouldUpdate or something
+		// or using some memoizaition HoC to declare which prop/state changes should trigger a re-render
+		// do web search to learn more
 
 		const { activeResultIndex, interfaceOpen, results, searchQuery } = this.state;
 		const { shortcuts }                                              = this.props;
@@ -238,11 +238,11 @@ class QuickNavigationInterface extends Component {
 
 				focusOnMount={ false }  // might not be needed
 			>
-				{/*
+				{ /*
 				 add aria attributes?
 
 				 hovering on close button creates scroll bars
-				 */}
+				 */ }
 
 				<TextControl
 					//label={ __( 'Search:', 'quick-navigation-interface' ) }
@@ -255,11 +255,15 @@ class QuickNavigationInterface extends Component {
 					// ugh not working again ^
 					// maybe just because of initial state opening interface and refreshing? try under normal user conditions
 					// or maybe it's because dev console is open? test with it closed
-				/>
-					{/* need aria labels to go with using ^ ?
 
-					maybe use withFocusReturn so that, when modal closes, focus returns to previously focused element
-					*/}
+					// "The autoFocus prop should not be used, as it can reduce usability and accessibility for users" -- jsx-a11y/no-autofocus
+					// https://w3c.github.io/html/sec-forms.html#autofocusing-a-form-control-the-autofocus-attribute
+					// sounds like a11y tools should just ignore it then, right? rather than nobody being able to use it
+
+					//need aria labels to go with using ^ ?
+
+					// maybe use withFocusReturn so that, when modal closes, focus returns to previously focused element
+				/>
 
 				<p id="qni-instructions">
 					<RawHTML>
@@ -271,10 +275,10 @@ class QuickNavigationInterface extends Component {
 							 * https://github.com/WordPress/gutenberg/issues/13156
 							 */
 							'Use <code>%1$s</code> and <code>%2$s</code> to navigate links, <code>%3$s</code> to open one, and <code>%4$s</code> to quit.',
-							shortcuts['previous-link'].label,
-							shortcuts['next-link'].label,
-							shortcuts['open-link'].label,
-							shortcuts['close-interface'].label,
+							shortcuts[ 'previous-link' ].label,
+							shortcuts[ 'next-link' ].label,
+							shortcuts[ 'open-link' ].label,
+							shortcuts[ 'close-interface' ].label,
 							// ^ needs to be hard-coded? changing it via filter won't change the key that <Modal> is using to close.
 							// can add a deprecation warning if php detects that it changed from the default
 						) }
