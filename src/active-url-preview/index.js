@@ -12,9 +12,6 @@
 function ActiveUrlPreview( props ) {
 	const { url } = props;
 
-	// todo if url is relative, add host
-	// need to test different scenarios where that might break
-
 	return (
 		<div id="qni-result-preview">
 			{ url }

@@ -40,8 +40,9 @@ class MainContainer extends Component {
 			searchQuery   : 'plug',
 		};
 
-		this.handleKeyboardEvents = this.handleKeyboardEvents.bind( this );
-		this.handleNewQuery       = this.handleNewQuery.bind( this );
+		this.handleKeyboardEvents        = this.handleKeyboardEvents.bind( this );
+		this.handleNewQuery              = this.handleNewQuery.bind( this );
+		MainContainer.handleQueryKeyDown = MainContainer.handleQueryKeyDown.bind( this );
 	}
 
 	componentDidMount() {
@@ -131,6 +132,21 @@ class MainContainer extends Component {
 	}
 
 	/**
+	 * Prevent link navigation from moving input field cursor.
+	 *
+	 * See https://stackoverflow.com/a/26082502/450127.
+	 *
+	 * @param {object} event
+	 */
+	static handleQueryKeyDown( event ) {
+		const { keyCode } = event;
+
+		if ( keyCode === 38 || keyCode === 40 ) {
+			event.preventDefault();
+		}
+	}
+
+	/**
 	 * Get the links that match the given search query.
 	 *
 	 * This only finds the _first_ X matches before the limit is reached, rather than the _best_ X matches,
@@ -159,10 +175,6 @@ class MainContainer extends Component {
 			}
 		}
 
-		// todo memoize this function to avoid performance issues?
-		// or not needed because never called with the same thing twice in succession?
-		// maybe it is during unintended re-renders? see comment in render() about reducing/removing those
-
 		return results;
 	}
 
@@ -175,11 +187,6 @@ class MainContainer extends Component {
 	setActiveResult( event, direction ) {
 		const { activeResultIndex, results } = this.state;
 		let newResultIndex                   = null;
-
-		// Don't move the input field's caret to home/end.
-		event.preventDefault();
-		// todo isn't working. maybe because it's a OS action rather than a browser action?
-		// try https://stackoverflow.com/a/1081114/450127, then search for more "javascript prevent up down keys from moving cursor on input text field"
 
 		if ( 'next' === direction ) {
 			newResultIndex = activeResultIndex + 1;
@@ -219,12 +226,6 @@ class MainContainer extends Component {
 	}
 
 	render() {
-		// add console.log to all the renders and test things out, so you can get a better udnerstanding of when components are re-rendered
-		// specifically, want to make sure that they're not getting rerendered unnecessarily
-		// i think react tries to minimize that as much as it can, but there may be situations where you can do it it manually via componentShouldUpdate or something
-		// or using some memoizaition HoC to declare which prop/state changes should trigger a re-render
-		// do web search to learn more
-
 		const { activeResultIndex, interfaceOpen, results, searchQuery } = this.state;
 		const { shortcuts }                                              = this.props;
 
@@ -232,6 +233,7 @@ class MainContainer extends Component {
 			<MainView
 				activeResultIndex={ activeResultIndex }
 				handleNewQuery={ this.handleNewQuery }
+				handleQueryKeyDown={ MainContainer.handleQueryKeyDown }
 				handleModalClose={ () => this.setState( { interfaceOpen: false } ) }
 				interfaceOpen={ interfaceOpen }
 				results={ results }

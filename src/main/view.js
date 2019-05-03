@@ -20,15 +20,9 @@ import SearchResults    from '../search-results/';
  * @return {Element}
  */
 function MainView( props ) {
-	// add console.log to all the renders and test things out, so you can get a better udnerstanding of when components are re-rendered
-	// specifically, want to make sure that they're not getting rerendered unnecessarily
-	// i think react tries to minimize that as much as it can, but there may be situations where you can do it it manually via componentShouldUpdate or something
-	// or using some memoizaition HoC to declare which prop/state changes should trigger a re-render
-	// do web search to learn more
-
 	const {
-		activeResultIndex, handleModalClose, handleNewQuery, interfaceOpen,
-		results, searchQuery, shortcuts
+		activeResultIndex, handleModalClose, handleNewQuery, handleQueryKeyDown,
+		interfaceOpen, results, searchQuery, shortcuts
 	} = props;
 
 	if ( ! interfaceOpen ) {
@@ -56,7 +50,8 @@ function MainView( props ) {
 					// ^ this is pretty cluttered. maybe use aria-labelled-by={ modal title } instead?
 					placeholder={ __( 'e.g., Posts, Settings, Plugins, Comments, etc', 'quick-navigation-interface' ) }
 					value={ searchQuery }
-					onChange={ newQuery => handleNewQuery( newQuery ) }
+					onChange={ handleNewQuery }
+					onKeyDown={ handleQueryKeyDown }
 
 					autoFocus="true"
 					// ugh not working again ^
@@ -83,12 +78,6 @@ function MainView( props ) {
 			{ null !== activeResultIndex &&
 				<ActiveUrlPreview url={ results[ activeResultIndex ].url } />
 			}
-			{ /*
-			// todo instead of this, programatically do link.hover() so the browser's default preview shows instead
-			// probably not possible https://stackoverflow.com/questions/55962496/programmatically-trigger-browsers-link-url-preview
-			// if not, style this so that it's absolutely positioned in bottom left corner similar to chrome/ff native
-			// probably have to create new element at root so can position abs relative to the window instead of parent
-			*/ }
 		</Fragment>
 	);
 }

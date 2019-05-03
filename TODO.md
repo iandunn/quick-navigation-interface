@@ -64,6 +64,9 @@ move to scss inside components when wp-scripts supports compiling it
 
 modal window shifts positions as this list grows/shrinks, which sucks
 	use CSS to set a fixed height maybe, or maybe just a fixed position
+	
+activeurlpreview - if url is relative, add host
+need to test different scenarios where that might break
 
 * usermeta is global, so what happens in multisite when you store content index there?
 	index if for site A b/c that was first site to load, but then it gets used for site B b/c code isn't aware of changes?
