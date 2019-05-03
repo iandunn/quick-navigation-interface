@@ -1,25 +1,23 @@
 {
-	"name"        : "quick-navigation-interface",
-	"version"     : "1.0.0",
-	"description" : "Allows you to quickly access links within wp-admin just by typing the first few letters.",
-	"author"      : "Ian Dunn",
-	"license"     : "GPLv2",
-	"main"        : "src/index.js",
-
-	"repository" : {
-		"type" : "git",
-		"url"  : "git://github.com/iandunn/quick-navigation-interface.git"
+	"name": "quick-navigation-interface",
+	"version": "1.0.0",
+	"description": "Allows you to quickly access links within wp-admin just by typing the first few letters.",
+	"author": "Ian Dunn",
+	"license": "GPLv2",
+	"main": "src/index.js",
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/iandunn/quick-navigation-interface.git"
 	},
-
-	"devDependencies" : {
-		"@wordpress/scripts" : "^3.1.0"
+	"dependencies": {},
+	"devDependencies": {
+		"@wordpress/scripts": "^3.1.0"
 	},
-
-	"scripts" : {
-		"start" : "wp-scripts start",
-		"build" : "wp-scripts build",
+	"scripts": {
+		"start": "wp-scripts start",
+		"build": "wp-scripts build",
 		"lint:css": "wp-scripts lint-style '**/*.css'",
-        "lint:js": "wp-scripts lint-js .",
-        "lint:pkg-json": "wp-scripts lint-pkg-json ."
+		"lint:js": "wp-scripts lint-js .",
+		"lint:pkg-json": "wp-scripts lint-pkg-json ."
 	}
 }
