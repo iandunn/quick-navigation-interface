@@ -31,8 +31,6 @@ function MainView( props ) {
 		results, searchQuery, shortcuts
 	} = props;
 
-	console.log( results );
-
 	if ( ! interfaceOpen ) {
 		return null;
 	}

@@ -154,21 +154,10 @@ class MainContainer extends Component {
 				results.push( link );
 			}
 
-			if ( results.length > this.props[ 'search-results-limit' ] ) {
+			if ( results.length >= this.props[ 'search-results-limit' ] ) {
 				break;
 			}
 		}
-
-		// todo 6 results showing up for "p", instead of 4
-		// todo 2 links highlighted for `s` query
-			// er, no, seems like `links` is growing sometimes, or `results` isn't getting cleared
-				// links isn't growning, always 640
-			// need to type something, clear it, type it again, etc trying different queries, not sure exact steps to reproduce yet
-			// maybe involves up/down keys too and maybe crossing top/end boundaries
-			// maybe results is a reference, so always pushing, so grows by 1 each time
-
-		// also contains duplicates
-			// i think this is related to above bug, but confirm
 
 		// todo memoize this function to avoid performance issues?
 		// or not needed because never called with the same thing twice in succession?

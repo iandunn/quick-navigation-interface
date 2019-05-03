@@ -39,7 +39,7 @@ function SearchResults( props ) {
 			{ results.map( ( link, index ) => {
 				return (
 					<Result
-						key={ link.url } // todo not always unique, might need to hash title+url, and remove duplicates
+						key={ JSON.stringify( link ) }
 						link={ link }
 						active={ index === activeResultIndex }
 					/>
