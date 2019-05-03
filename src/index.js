@@ -6,7 +6,7 @@ const { render, createElement } = wp.element;
 /**
  * Internal dependencies
  */
-import QuickNavigationInterface from './quick-navigation-interface/';
+import QuickNavigationInterface from './main/controller';
 
 ( function() {
 	/**

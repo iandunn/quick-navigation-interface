@@ -7,12 +7,6 @@ keep this scoped to just the react conversion. can still do other things in todo
 post to stack exchange code review to get feedback on react stuff
 
 * maybe write blog post on how to build react app in wp that isn't a block, but uses G's components and abstraction layer
-	"Building React apps inside wp-admin that aren't blocks"
-	"Building standalone apps inside wp-admin but outside the editor"
-	"the new way to build single-page applications inside wp-admin"
-	"the new way to build javascript-powered screens inside wp-admin"
-	why: future proof, component library, compatibility, already bundled
-	how: pretty similar to building standalone react app. use `wp-scripts` instead of `create-react-app`. show minimal example w/ comments to explain. import components
 * then consider doing a seattle wp dev meetup presentation
 * then consider doing a seattle wordcamp talk
 	* #262-meta would be better example since it's a normal admin screen rather than a modal that appears on all screens
