@@ -45,14 +45,10 @@ import QuickNavigationInterface from './quick-navigation-interface/';
 	Array.prototype.push.apply( window.qniContentIndex, getCurrentPageLinks() );
 
 	const props = {
-		...qniOptions,
 		links : window.qniContentIndex,
+		...qniOptions,
 	};
 
-	/*
-	 * This won't actually be used for anything, since the <Modal> creates its own root-level element, but we still
-	 * have to give render() something.
-	 */
 	const container = document.createElement( 'div' );
 	container.id    = 'qni-container';
 

@@ -1,14 +1,16 @@
 /**
  * WordPress dependencies
  */
-const { Modal, TextControl } = wp.components;
-const { Component, RawHTML } = wp.element;
-const { __, sprintf }        = wp.i18n;
+const { Modal, TextControl }  = wp.components;
+const { Component, Fragment } = wp.element;
+const { __ }                  = wp.i18n;
 
 /**
  * Internal dependencies
  */
-import SearchResults from '../search-results/';
+import ActiveUrlPreview from '../active-url-preview';
+import Instructions     from '../instructions';
+import SearchResults    from '../search-results/';
 
 class QuickNavigationInterface extends Component {
 	constructor( props ) {
@@ -156,6 +158,9 @@ class QuickNavigationInterface extends Component {
 			}
 		}
 
+		// todo 6 results showing up for "p", instead of 4
+		// also contains duplicates
+
 		// todo memoize this function to avoid performance issues?
 		// or not needed because never called with the same thing twice in succession?
 		// maybe it is during unintended re-renders? see comment in render() about reducing/removing those
@@ -230,66 +235,60 @@ class QuickNavigationInterface extends Component {
 		}
 
 		return (
-			<Modal
-				title={ __( 'Start typing to open any post, menu item, etc', 'quick-navigation-interface' ) }
-				onRequestClose={ () => this.setState( { interfaceOpen: false } ) }
-				contentLabel="what should this be?"
-				isDismissable={ true }
+			<Fragment>
+				<Modal
+					title={ __( 'Start typing to open any post, menu item, etc', 'quick-navigation-interface' ) }
+					onRequestClose={ () => this.setState( { interfaceOpen: false } ) }
+					contentLabel="what should this be?"
+					isDismissable={ true }
 
-				focusOnMount={ false }  // might not be needed
-			>
+					focusOnMount={ false }  // might not be needed
+				>
+					{ /*
+					 add aria attributes?
+
+					 hovering on close button creates scroll bars
+					 */ }
+
+					<TextControl
+						//label={ __( 'Search:', 'quick-navigation-interface' ) }
+						// ^ this is pretty cluttered. maybe use aria-labelled-by={ modal title } instead?
+						placeholder={ __( 'e.g., Posts, Settings, Plugins, Comments, etc', 'quick-navigation-interface' ) }
+						value={ searchQuery }
+						onChange={ newQuery => this.handleNewQuery( newQuery ) }
+
+						autoFocus="true"
+						// ugh not working again ^
+						// maybe just because of initial state opening interface and refreshing? try under normal user conditions
+						// or maybe it's because dev console is open? test with it closed
+
+						// "The autoFocus prop should not be used, as it can reduce usability and accessibility for users" -- jsx-a11y/no-autofocus
+						// https://w3c.github.io/html/sec-forms.html#autofocusing-a-form-control-the-autofocus-attribute
+						// sounds like a11y tools should just ignore it then, right? rather than nobody being able to use it
+
+						//need aria labels to go with using ^ ?
+
+						// maybe use withFocusReturn so that, when modal closes, focus returns to previously focused element
+					/>
+
+					<Instructions shortcuts={ shortcuts } />
+
+					<SearchResults
+						activeResultIndex={ activeResultIndex }
+						results={ results }
+					/>
+				</Modal>
+
+				{ null !== activeResultIndex &&
+					<ActiveUrlPreview url={ results[ activeResultIndex ].url } />
+				}
 				{ /*
-				 add aria attributes?
-
-				 hovering on close button creates scroll bars
-				 */ }
-
-				<TextControl
-					//label={ __( 'Search:', 'quick-navigation-interface' ) }
-					// ^ this is pretty cluttered. maybe use aria-labelled-by={ modal title } instead?
-					placeholder={ __( 'e.g., Posts, Settings, Plugins, Comments, etc', 'quick-navigation-interface' ) }
-					value={ searchQuery }
-					onChange={ newQuery => this.handleNewQuery( newQuery ) }
-
-					autoFocus="true"
-					// ugh not working again ^
-					// maybe just because of initial state opening interface and refreshing? try under normal user conditions
-					// or maybe it's because dev console is open? test with it closed
-
-					// "The autoFocus prop should not be used, as it can reduce usability and accessibility for users" -- jsx-a11y/no-autofocus
-					// https://w3c.github.io/html/sec-forms.html#autofocusing-a-form-control-the-autofocus-attribute
-					// sounds like a11y tools should just ignore it then, right? rather than nobody being able to use it
-
-					//need aria labels to go with using ^ ?
-
-					// maybe use withFocusReturn so that, when modal closes, focus returns to previously focused element
-				/>
-
-				<p id="qni-instructions">
-					<RawHTML>
-						{ sprintf(
-							/*
-							 * SECURITY WARNING: This string is intentionally not internationalized, because there
-						     * isn't a secure way to do that yet.
-						     *
-							 * https://github.com/WordPress/gutenberg/issues/13156
-							 */
-							'Use <code>%1$s</code> and <code>%2$s</code> to navigate links, <code>%3$s</code> to open one, and <code>%4$s</code> to quit.',
-							shortcuts[ 'previous-link' ].label,
-							shortcuts[ 'next-link' ].label,
-							shortcuts[ 'open-link' ].label,
-							shortcuts[ 'close-interface' ].label,
-							// ^ needs to be hard-coded? changing it via filter won't change the key that <Modal> is using to close.
-							// can add a deprecation warning if php detects that it changed from the default
-						) }
-					</RawHTML>
-				</p>
-
-				<SearchResults
-					activeResultIndex={ activeResultIndex }
-					results={ results }
-				/>
-			</Modal>
+				// todo instead of this, programatically do link.hover() so the browser's default preview shows instead
+				// probably not possible https://stackoverflow.com/questions/55962496/programmatically-trigger-browsers-link-url-preview
+				// if not, style this so that it's absolutely positioned in bottom left corner similar to chrome/ff native
+				// probably have to create new element at root so can position abs relative to the window instead of parent
+				*/ }
+			</Fragment>
 		);
 	}
 }

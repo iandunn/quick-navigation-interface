@@ -1,4 +1,12 @@
-/* todo a lot of this can be removed b/c no longer needed, need to audit line by line and only keep what's needed */
+/*
+ * The Modal that contains most of the markup creates its own div at the root of the DOM, so this container only
+ * stores the ActiveUrlPreview.
+ */
+#qni-container {
+	position: fixed;
+	bottom: 0;
+	z-index: 999999
+}
 
 #qni-instructions {
 	font-style: italic;
@@ -36,7 +44,11 @@
 			/* todo use Grid or Flex instead, otherwise long titles will overlap this */
 		}
 
-		.qni-result-preview {
-			margin-top: 20px;
-			font-style: italic;
-		}
+#qni-result-preview {
+	margin-top: 20px;
+	padding: 6px 12px;
+	border-radius: 7px;
+	font-style: italic;
+	background-color: #D7E1EC;
+	color: #424242;
+}

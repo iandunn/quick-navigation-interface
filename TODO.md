@@ -4,8 +4,21 @@ keep this scoped to just the react conversion. can still do other things in todo
 
 * test in chrome
 
-* need to replace grunt minify css task, but wp-scripts doesn't yet?
-	maybe just ship unminified for now, and add a todo item to switch to scss when wp-scripts will compile and minify it
+post to stack exchange code review to get feedback on react stuff
+
+* maybe write blog post on how to build react app in wp that isn't a block, but uses G's components and abstraction layer
+	"Building React apps inside wp-admin that aren't blocks"
+	"Building standalone apps inside wp-admin but outside the editor"
+	"the new way to build single-page applications inside wp-admin"
+	"the new way to build javascript-powered screens inside wp-admin"
+	why: future proof, component library, compatibility, already bundled
+	how: pretty similar to building standalone react app. use `wp-scripts` instead of `create-react-app`. show minimal example w/ comments to explain. import components
+* then consider doing a seattle wp dev meetup presentation
+* then consider doing a seattle wordcamp talk
+	* #262-meta would be better example since it's a normal admin screen rather than a modal that appears on all screens
+
+
+### Next minor version
 
 * maybe store the contentindex in localstorage?
 	* any security/privacy issues with that?
@@ -16,23 +29,10 @@ keep this scoped to just the react conversion. can still do other things in todo
 	* 
 	* cant setup service worker until pwa plugin integrated w/ core
 
-post to stack exchange code review to get feedback on react stuff
 
-* js i18n - probably look at wordcamp.org, b/c gutenberg-examples is outdated
-* look at every file to see what needs to be updated
-* test that linters work - shouldn't it be looking for .scss instead of .css?
-
-* maybe write blog post on how to build react app in wp that isn't a block, but uses G's components and abstraction layer
-	"Building React apps inside wp-admin that aren't blocks"
-	"Building standalone apps inside wp-admin but outside the editor"
-	"the new way to build single-page applications inside wp-admin"
-	"the new way to build javascript-powered screens inside wp-admin"
-* then consider doing a seattle wp dev meetup presentation
-* then consider doing a seattle wordcamp talk
-	* #262-meta would be better example since it's a normal admin screen rather than a modal that appears on all screens
-
-
-### Next minor version
+* css no longer minified b/c not using grunt anymore and wp-scripts doesn't support it
+when it does, scss files inside each component folder, and have wp-scripts build a single minified/concat'd file in `build/`
+https://github.com/WordPress/gutenberg/issues/14801
 
 * Maybe change command to `[modifier] /` or just `g`
 	probably add it as an additional for back-compat
