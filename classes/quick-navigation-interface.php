@@ -193,7 +193,7 @@ class Quick_Navigation_Interface {
 
 		wp_enqueue_style(
 			'quick-navigation-interface',
-			plugins_url( "css/quick-navigation-interface.css", dirname( __FILE__ ) ),
+			plugins_url( "css/quick-navigation-interface.css", __DIR__ ),
 			array( 'wp-components' ),
 			QNI_VERSION,
 			'all'
@@ -211,22 +211,10 @@ class Quick_Navigation_Interface {
 			'quick-navigation-interface',
 			plugins_url( 'build/index.js', __DIR__ ),
 			array(
-				// Internal
-				//'qni-content-index',	// don't need this after use rest api?
-
-				// WordPress
+				'qni-content-index',
 				'wp-components',
 				'wp-element',
 				'wp-i18n',
-//				'wp-keycodes',
-
-				// todo don't need these anymore?
-				'wp-components',
-				'lodash',
-
-				'wp-blocks',
-				'wp-editor',
-				'wp-util',
 			),
 			QNI_VERSION,
 			true

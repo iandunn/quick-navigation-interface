@@ -12,7 +12,7 @@ import MainView from './view';
 /**
  * Manage the state for the main interface.
  */
-class MainContainer extends Component {
+class MainController extends Component {
 	constructor( props ) {
 		super( props );
 
@@ -40,9 +40,9 @@ class MainContainer extends Component {
 			searchQuery   : 'plug',
 		};
 
-		this.handleKeyboardEvents        = this.handleKeyboardEvents.bind( this );
-		this.handleNewQuery              = this.handleNewQuery.bind( this );
-		MainContainer.handleQueryKeyDown = MainContainer.handleQueryKeyDown.bind( this );
+		this.handleKeyboardEvents         = this.handleKeyboardEvents.bind( this );
+		this.handleNewQuery               = this.handleNewQuery.bind( this );
+		MainController.handleQueryKeyDown = MainController.handleQueryKeyDown.bind( this );
 	}
 
 	componentDidMount() {
@@ -68,8 +68,14 @@ class MainContainer extends Component {
 	 * @param {Object} event
 	 */
 	handleKeyboardEvents( event ) {
-		const { shortcuts } = this.props;
-		const { which }     = event;
+		const { interfaceOpen } = this.state;
+		const { shortcuts }     = this.props;
+		const { which }         = event;
+
+		// Ignore events when the interface is closed, except to open the interface.
+		if ( ! interfaceOpen && which !== shortcuts[ 'open-interface' ].code ) {
+			return;
+		}
 
 		switch ( which ) {
 			case shortcuts[ 'open-interface' ].code:
@@ -141,6 +147,10 @@ class MainContainer extends Component {
 	static handleQueryKeyDown( event ) {
 		const { keyCode } = event;
 
+		// todo maybe use labels from wp.component.keycodes here, or from state.shortcuts
+			// probably latter
+			// er, maybe need to be hardcoded to these, b/c what happens if someone changes via filter?
+
 		if ( keyCode === 38 || keyCode === 40 ) {
 			event.preventDefault();
 		}
@@ -188,6 +198,10 @@ class MainContainer extends Component {
 		const { activeResultIndex, results } = this.state;
 		let newResultIndex                   = null;
 
+		if ( null === activeResultIndex ) {
+			return newResultIndex;
+		}
+
 		if ( 'next' === direction ) {
 			newResultIndex = activeResultIndex + 1;
 
@@ -233,8 +247,8 @@ class MainContainer extends Component {
 			<MainView
 				activeResultIndex={ activeResultIndex }
 				handleNewQuery={ this.handleNewQuery }
-				handleQueryKeyDown={ MainContainer.handleQueryKeyDown }
-				handleModalClose={ () => this.setState( { interfaceOpen: false } ) }
+				handleQueryKeyDown={ MainController.handleQueryKeyDown }
+				handleModalClose={ () => this.setState( { interfaceOpen : false } ) }
 				interfaceOpen={ interfaceOpen }
 				results={ results }
 				searchQuery={ searchQuery }
@@ -244,4 +258,4 @@ class MainContainer extends Component {
 	}
 }
 
-export default MainContainer;
+export default MainController;

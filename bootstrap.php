@@ -5,7 +5,7 @@ Plugin URI:  http://wordpress.org/plugins/quick-navigation-interface
 Description: Quickly access screens and content within wp-admin just by typing the first few letters of the name.
 Version:     0.7
 Author:      Ian Dunn
-Author URI:  http://iandunn.name
+Author URI:  https://iandunn.name
 Text Domain: quick-navigation-interface
 Domain Path: /languages
 */

@@ -50,6 +50,8 @@ https://github.com/WordPress/gutenberg/issues/14801
 O remove local localizations and load_text_domain etc
 	https://make.wordpress.org/core/2016/07/06/i18n-improvements-in-4-6/
 
+test to make sure fine after https://github.com/WordPress/gutenberg/issues/15429 is fixed upstream
+
 
 ### Next-next minor version
 

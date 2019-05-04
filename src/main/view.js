@@ -75,7 +75,7 @@ function MainView( props ) {
 				/>
 			</Modal>
 
-			{ null !== activeResultIndex &&
+			{ results.hasOwnProperty( activeResultIndex ) &&
 				<ActiveUrlPreview url={ results[ activeResultIndex ].url } />
 			}
 		</Fragment>
