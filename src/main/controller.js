@@ -41,6 +41,7 @@ class MainController extends Component {
 		};
 
 		this.handleKeyboardEvents         = this.handleKeyboardEvents.bind( this );
+		this.closeInterface               = this.closeInterface.bind( this );
 		this.handleNewQuery               = this.handleNewQuery.bind( this );
 		MainController.handleQueryKeyDown = MainController.handleQueryKeyDown.bind( this );
 	}
@@ -120,6 +121,21 @@ class MainController extends Component {
 		}
 
 		this.setState( { interfaceOpen : true } );
+	}
+
+	/**
+	 * Close the interface and reset state to the initial values.
+	 *
+	 * We could leave the query/results/etc alone and just hide the modal, but it seems like users will also want
+	 * to reset the state in most use cases.
+	 */
+	closeInterface() {
+		this.setState( {
+			activeResultIndex : null,
+			interfaceOpen     : false,
+			results           : [],
+			searchQuery       : '',
+		} );
 	}
 
 	/**
@@ -234,8 +250,8 @@ class MainController extends Component {
 		if ( 'object' === typeof activeResult ) {
 			activeResult.click();
 
-			// Anchor links like "skip to main content" wouldn't close the interface otherwise.
-			this.setState( { interfaceOpen : false } );
+			// Without this, anchor links like "skip to main content" wouldn't close the interface.
+			this.closeInterface();
 		}
 	}
 
@@ -248,7 +264,7 @@ class MainController extends Component {
 				activeResultIndex={ activeResultIndex }
 				handleNewQuery={ this.handleNewQuery }
 				handleQueryKeyDown={ MainController.handleQueryKeyDown }
-				handleModalClose={ () => this.setState( { interfaceOpen : false } ) }
+				handleModalClose={ this.closeInterface }
 				interfaceOpen={ interfaceOpen }
 				results={ results }
 				searchQuery={ searchQuery }

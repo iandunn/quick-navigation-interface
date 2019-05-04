@@ -3,8 +3,9 @@
 keep this scoped to just the react conversion. can still do other things in todo for 1.0 release, but get this done/merged first
 
 * test in chrome
+* test in ie11, esp non-grid css
 
-post to stack exchange code review to get feedback on react stuff
+maybe rest api / local storage stuff now too, if have energy
 
 * maybe write blog post on how to build react app in wp that isn't a block, but uses G's components and abstraction layer
 * then consider doing a seattle wp dev meetup presentation
@@ -50,19 +51,15 @@ https://github.com/WordPress/gutenberg/issues/14801
 O remove local localizations and load_text_domain etc
 	https://make.wordpress.org/core/2016/07/06/i18n-improvements-in-4-6/
 
-test to make sure fine after https://github.com/WordPress/gutenberg/issues/15429 is fixed upstream
 
 
 ### Next-next minor version
 
-move to scss inside components when wp-scripts supports compiling it
-	https://github.com/WordPress/gutenberg/issues/14801
-	https://github.com/WordPress/gutenberg/pull/14590#issuecomment-479367245
-
-
 * remove duplicates results like `Feedback` from jetpack
 * also remove page links to things that already exist in content index
 
+* links added via js aren't indexed, e.g., events widget
+	need to watch for new ones and add them
 
 modal window shifts positions as this list grows/shrinks, which sucks
 	use CSS to set a fixed height maybe, or maybe just a fixed position

@@ -34,37 +34,28 @@ function MainView( props ) {
 			<Modal
 				title={ __( 'Start typing to open any post, menu item, etc', 'quick-navigation-interface' ) }
 				onRequestClose={ handleModalClose }
-				contentLabel="what should this be?"
+
+				// Focusing on close button creates scrollbars -- https://github.com/WordPress/gutenberg/issues/15434.
+				// Down key broken after hitting escape --  https://github.com/WordPress/gutenberg/issues/15429.
 				isDismissable={ true }
-
-				focusOnMount={ false }  // might not be needed
 			>
-				{ /*
-				 add aria attributes?
-
-				 hovering on close button creates scroll bars
-				 */ }
-
 				<TextControl
-					//label={ __( 'Search:', 'quick-navigation-interface' ) }
-					// ^ this is pretty cluttered. maybe use aria-labelled-by={ modal title } instead?
+					/*
+					 * We should grab the label ID programmatically, but I'm not sure that's possible. This should
+					 * always work in practice, though, unless there's another modal on the page. If that happens,
+					 * we have bigger problems :)
+					 */
+					aria-labelledby="components-modal-header-0"
+
+					/*
+					 * This triggers the `jsx-a11y/no-autofocus` lint rule, but seems appropriate.
+					 * See https://ux.stackexchange.com/a/60027/13828.
+					 */
+					autoFocus="true"
 					placeholder={ __( 'e.g., Posts, Settings, Plugins, Comments, etc', 'quick-navigation-interface' ) }
 					value={ searchQuery }
 					onChange={ handleNewQuery }
 					onKeyDown={ handleQueryKeyDown }
-
-					autoFocus="true"
-					// ugh not working again ^
-					// maybe just because of initial state opening interface and refreshing? try under normal user conditions
-					// or maybe it's because dev console is open? test with it closed
-
-					// "The autoFocus prop should not be used, as it can reduce usability and accessibility for users" -- jsx-a11y/no-autofocus
-					// https://w3c.github.io/html/sec-forms.html#autofocusing-a-form-control-the-autofocus-attribute
-					// sounds like a11y tools should just ignore it then, right? rather than nobody being able to use it
-
-					//need aria labels to go with using ^ ?
-
-					// maybe use withFocusReturn so that, when modal closes, focus returns to previously focused element
 				/>
 
 				<Instructions shortcuts={ shortcuts } />
