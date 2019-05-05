@@ -2,7 +2,6 @@
  * WordPress dependencies
  */
 const { Component } = wp.element;
-const { __ }        = wp.i18n;
 
 /**
  * Internal dependencies
@@ -164,8 +163,8 @@ class MainController extends Component {
 		const { keyCode } = event;
 
 		// todo maybe use labels from wp.component.keycodes here, or from state.shortcuts
-			// probably latter
-			// er, maybe need to be hardcoded to these, b/c what happens if someone changes via filter?
+		// probably latter
+		// er, maybe need to be hardcoded to these, b/c what happens if someone changes via filter?
 
 		if ( keyCode === 38 || keyCode === 40 ) {
 			event.preventDefault();
@@ -202,10 +201,10 @@ class MainController extends Component {
 		}
 
 		// todo there's some situation where something a 5th item gets stuck in there again
-			// it was "undo" not sure how to reproduce yet
-			// ah, it's because they're exact duplicates, so the json.stringify produces the same hash
-			// wanna remove duplicates anyway
-			// might be easier/more efficient to do that in this function than w/ the list of 600
+		// it was "undo" not sure how to reproduce yet
+		// ah, it's because they're exact duplicates, so the json.stringify produces the same hash
+		// wanna remove duplicates anyway
+		// might be easier/more efficient to do that in this function than w/ the list of 600
 
 		return results;
 	}
@@ -219,10 +218,6 @@ class MainController extends Component {
 	setActiveResult( event, direction ) {
 		const { activeResultIndex, results } = this.state;
 		let newResultIndex                   = null;
-
-		if ( null === activeResultIndex ) {
-			return newResultIndex;
-		}
 
 		if ( 'next' === direction ) {
 			newResultIndex = activeResultIndex + 1;

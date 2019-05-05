@@ -5,7 +5,7 @@
 #qni-container {
 	position: fixed;
 	bottom: 0;
-	z-index: 999999
+	z-index: 999999;
 }
 
 #qni-instructions {
@@ -17,35 +17,35 @@
 	margin-bottom: 0;
 }
 
-	#qni-search-results li {
-		/*display: list-item; todo lost the disc */
-		display: flex;
-		padding: 3px 10px;
-		border-radius: 10px;
-		list-style-type: disc;
-		font-size: 1.1em;
-	}
+#qni-search-results li {
+	/* display: list-item; todo lost the disc */
+	display: flex;
+	padding: 3px 10px;
+	border-radius: 10px;
+	list-style-type: disc;
+	font-size: 1.1em;
+}
 
-		#qni-search-results li:last-child {
-			margin-bottom: 0;
-		}
+#qni-search-results li:last-child {
+	margin-bottom: 0;
+}
 
-		#qni-search-results li.qni-active-result {
-			background-color: #DFEEFF;
-		}
+#qni-search-results li.qni-active-result {
+	background-color: #DFEEFF;
+}
 
-		.qni-result-title {
-			flex-basis: 100%;
-		}
+.qni-result-title {
+	flex-basis: 100%;
+}
 
-		#qni-search-results li a {
-			text-decoration: none;
-		}
+#qni-search-results li a {
+	text-decoration: none;
+}
 
-		.qni-link-type {
-			flex-basis: 100px;
-			text-align: right;
-		}
+.qni-link-type {
+	flex-basis: 100px;
+	text-align: right;
+}
 
 #qni-result-preview {
 	margin-top: 20px;
