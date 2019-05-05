@@ -22,7 +22,7 @@ import SearchResults    from '../search-results/';
 function MainView( props ) {
 	const {
 		activeResultIndex, handleModalClose, handleNewQuery, handleQueryKeyDown,
-		interfaceOpen, results, searchQuery, shortcuts
+		interfaceOpen, results, searchQuery, shortcuts,
 	} = props;
 
 	if ( ! interfaceOpen ) {
@@ -38,6 +38,9 @@ function MainView( props ) {
 				// Focusing on close button creates scrollbars -- https://github.com/WordPress/gutenberg/issues/15434.
 				// Down key broken after hitting escape --  https://github.com/WordPress/gutenberg/issues/15429.
 				isDismissable={ true }
+
+				// Without this, the modal would get the focus, preventing the TextControl.autofocus from working.
+				focusOnMount={ false }
 			>
 				<TextControl
 					/*
@@ -48,9 +51,10 @@ function MainView( props ) {
 					aria-labelledby="components-modal-header-0"
 
 					/*
-					 * This triggers the `jsx-a11y/no-autofocus` lint rule, but seems appropriate.
+					 * Autofocus is appropriate in this situation.
 					 * See https://ux.stackexchange.com/a/60027/13828.
 					 */
+					// eslint-disable-next-line jsx-a11y/no-autofocus
 					autoFocus="true"
 					placeholder={ __( 'e.g., Posts, Settings, Plugins, Comments, etc', 'quick-navigation-interface' ) }
 					value={ searchQuery }

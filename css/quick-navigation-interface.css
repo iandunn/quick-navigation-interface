@@ -18,9 +18,9 @@
 }
 
 	#qni-search-results li {
-		display: list-item;
-		margin-left: 1em;
-		padding: 2px 5px 0 10px;
+		/*display: list-item; todo lost the disc */
+		display: flex;
+		padding: 3px 10px;
 		border-radius: 10px;
 		list-style-type: disc;
 		font-size: 1.1em;
@@ -34,14 +34,17 @@
 			background-color: #DFEEFF;
 		}
 
+		.qni-result-title {
+			flex-basis: 100%;
+		}
+
 		#qni-search-results li a {
 			text-decoration: none;
 		}
 
 		.qni-link-type {
-			position: absolute;
-			right: 25px;
-			/* todo use Grid or Flex instead, otherwise long titles will overlap this */
+			flex-basis: 100px;
+			text-align: right;
 		}
 
 #qni-result-preview {

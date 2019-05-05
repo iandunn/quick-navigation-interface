@@ -11,11 +11,12 @@ function Result( props ) {
 
 	return (
 		<li className={ active ? 'qni-active-result' : '' }>
-			{ parentTitle && parentTitle + ' > ' }
-
-			<a href={ url }>
-				{ title }
-			</a> { ' ' }
+			<span className="qni-result-title">
+				{ parentTitle && parentTitle + ' > ' }
+				<a href={ url }>
+					{ title }
+				</a>
+			</span>
 
 			<span className="qni-link-type">
 				[{ type }]
