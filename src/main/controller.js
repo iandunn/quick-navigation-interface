@@ -200,12 +200,6 @@ class MainController extends Component {
 			}
 		}
 
-		// todo there's some situation where something a 5th item gets stuck in there again
-		// it was "undo" not sure how to reproduce yet
-		// ah, it's because they're exact duplicates, so the json.stringify produces the same hash
-		// wanna remove duplicates anyway
-		// might be easier/more efficient to do that in this function than w/ the list of 600
-
 		return results;
 	}
 

@@ -190,6 +190,7 @@ class Quick_Navigation_Interface {
 			admin_url( 'admin-ajax.php' )
 		);
 		// todo replace w/ rest api endpoint, maybe several b/c can reuse core posts endpoint for posts?
+		// but want all post types.
 
 		wp_enqueue_style(
 			'quick-navigation-interface',

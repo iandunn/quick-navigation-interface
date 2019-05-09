@@ -35,10 +35,14 @@ import QuickNavigationInterface from './main/controller';
 				type = 'menu item';
 			}
 
-			links.push( { type, title, parentTitle, url } );
+			// Overwrite duplicate items to create a unique list.
+			const item  = { type, title, parentTitle, url };
+			const id    = JSON.stringify( Object.values( item ) ).replace( /[^\w]/g, '' );
+			links[ id ] = item;
 		}
 
-		return links;
+		// Return a simple array so it's smaller and easier to work with.
+		return Object.values( links );
 	}
 
 	// Append page links to existing content index, to avoid creating a new array, which would double memory usage.
