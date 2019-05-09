@@ -80,6 +80,14 @@ I've done my best to ensure that it is, but just in case I missed anything [I al
 
 == Changelog ==
 
+= v1.0 (2019-??-??) =
+* [NEW] react/api/local storage
+also new features/fixes like parent title, url preview, removing duplicates, fixing ` conflict in gutenberg, what else?
+close-interface filter removed b/c using built-in modal now
+
+[Full changelog](https://github.com/iandunn/quick-navigation-interface/compare/?...?)
+
+
 = v0.7 (2019-02-14) =
 * [SECURITY] Prevent leaking private post titles.
 

@@ -1,6 +1,6 @@
 /*
  * The Modal that contains most of the markup creates its own div at the root of the DOM, so this container only
- * stores the ActiveUrlPreview.
+ * stores the result preview.
  */
 #qni-container {
 	position: fixed;
@@ -8,6 +8,19 @@
 	z-index: 999999;
 }
 
+#qni-result-preview {
+	margin-top: 20px;
+	padding: 6px 12px;
+	border-radius: 7px;
+	font-style: italic;
+	background-color: #D7E1EC;
+	color: #424242;
+}
+
+
+/*
+ * The rest of these elements are contained within the modal.
+ */
 #qni-instructions {
 	font-style: italic;
 }
@@ -34,24 +47,15 @@
 	background-color: #DFEEFF;
 }
 
-.qni-result-title {
-	flex-basis: 100%;
-}
-
 #qni-search-results li a {
 	text-decoration: none;
+}
+
+.qni-result-title {
+	flex-basis: 100%;
 }
 
 .qni-link-type {
 	flex-basis: 100px;
 	text-align: right;
-}
-
-#qni-result-preview {
-	margin-top: 20px;
-	padding: 6px 12px;
-	border-radius: 7px;
-	font-style: italic;
-	background-color: #D7E1EC;
-	color: #424242;
 }

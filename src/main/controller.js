@@ -2,6 +2,7 @@
  * WordPress dependencies
  */
 const { Component } = wp.element;
+const { UP, DOWN }  = wp.keycodes;
 
 /**
  * Internal dependencies
@@ -21,7 +22,8 @@ class MainController extends Component {
 		 * I'm choosing to follow the "do whatever is less awkward" guideline.
 		 *
 		 * https://reactjs.org/docs/thinking-in-react.html#step-3-identify-the-minimal-but-complete-representation-of-ui-state
-		 * https://github.com/reduxjs/redux/issues/1287#issuecomment-175351978 (stated in another context, but still applicable here)
+		 * https://github.com/reduxjs/redux/issues/1287#issuecomment-175351978 (written in another context, but
+		 * still applicable here)
 		 *
 		 * Somewhat related, this may be a situation where a state management API would be beneficial, but it still
 		 * feels like overkill for a small app like this. Redux is awful, though, so if I did set that up then I'd
@@ -32,11 +34,6 @@ class MainController extends Component {
 			interfaceOpen     : false,
 			results           : [],
 			searchQuery       : '',
-
-			// temp for convenience while develop
-			//interfaceOpen : true,
-			//results       : this.getFilteredLinks( 'plug' ),  // breaks up/down nav for some reason
-			//searchQuery   : 'opt',
 		};
 
 		this.handleKeyboardEvents         = this.handleKeyboardEvents.bind( this );
@@ -162,11 +159,12 @@ class MainController extends Component {
 	static handleQueryKeyDown( event ) {
 		const { keyCode } = event;
 
-		// todo maybe use labels from wp.component.keycodes here, or from state.shortcuts
-		// probably latter
-		// er, maybe need to be hardcoded to these, b/c what happens if someone changes via filter?
-
-		if ( keyCode === 38 || keyCode === 40 ) {
+		/*
+		 * The keycodes are hardcoded here, instead of using `props.shortcuts`, because this specifically needs to
+		 * prevent browser's default behavior for `up` and `down`, but `props.shortcuts` could be changed by the
+		 * user to other keys.
+		 */
+		if ( keyCode === UP || keyCode === DOWN ) {
 			event.preventDefault();
 		}
 	}

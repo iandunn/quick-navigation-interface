@@ -1,5 +1,7 @@
 ### React conversion
 
+lint before merge to master (then rename master because ugh)
+
 keep this scoped to just the react conversion. can still do other things in todo for 1.0 release, but get this done/merged first
 
 * test in chrome
@@ -19,11 +21,15 @@ maybe rest api / local storage stuff now too, if have energy
 	* any security/privacy issues with that?
 
 * rest api instead of admin-ajax? related to localstorage
-	* have to switch to local storage at this point too, because rest api endpoints wouldn't be cached locally? 
-* localstorage or something else instead of memory?
-	* 
-	* cant setup service worker until pwa plugin integrated w/ core
+	use core posts endpoint for posts instead of custom?
+		but want all post types
+		anything else included in content index that would need to be pulled in as well?
 
+	* have to switch to local storage at this point too, because rest api endpoints wouldn't be cached locally? 
+
+* localstorage or something else instead of memory? then don't have to pass around
+	* maybe use service worker like https://codesandbox.io/s/github/haldarmahesh/react-context-demo/tree/master/?from-embed
+	* cant setup service worker until pwa plugin integrated w/ core
 
 * css no longer minified b/c not using grunt anymore and wp-scripts doesn't support it
 when it does, scss files inside each component folder, and have wp-scripts build a single minified/concat'd file in `build/`

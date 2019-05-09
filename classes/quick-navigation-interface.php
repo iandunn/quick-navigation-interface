@@ -42,11 +42,6 @@ class Quick_Navigation_Interface {
 					'code'  => 13,
 					'label' => __( 'Enter',  'quick-navigation-interface' )
 				),
-				'close-interface' => array(
-					'code'  => 27,
-					'label' => __( 'Escape', 'quick-navigation-interface' )
-					// not used anymore, so deprecate?
-				),
 			),
 		);
 
@@ -189,8 +184,6 @@ class Quick_Navigation_Interface {
 			),
 			admin_url( 'admin-ajax.php' )
 		);
-		// todo replace w/ rest api endpoint, maybe several b/c can reuse core posts endpoint for posts?
-		// but want all post types.
 
 		wp_enqueue_style(
 			'quick-navigation-interface',
@@ -272,8 +265,6 @@ class Quick_Navigation_Interface {
 		?>
 
 		window.qniContentIndex = <?php echo wp_json_encode( $this->get_content_index() ); ?>;
-		// maybe put into localstorage instead of window? then don't have to pass around
-		// maybe use service worker like https://codesandbox.io/s/github/haldarmahesh/react-context-demo/tree/master/?from-embed
 
 		<?php
 
