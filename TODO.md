@@ -6,8 +6,11 @@
 	* #262-meta would be better example since it's a normal admin screen rather than a modal that appears on all screens
 
 update screenshots - have to do after pushing stable
+	on w.org and in readme.md
 update w.org banner - have to do after pushing stable
 update youtube video - have nicer mic now too. maybe do a quick "hi i'm ian, built this because... but 5 seconds max, then get to the point". set video poster to be the interface not your face.
+
+rename master branch to develop or anything else
 
 ### 1.0 stretch goals
 
@@ -31,6 +34,8 @@ update youtube video - have nicer mic now too. maybe do a quick "hi i'm ian, bui
 
 * maybe store the contentindex in localstorage?
 	* any security/privacy issues with that?
+	* Can double/triple limit or eliminate it?
+	* But still need to store in db so limit there
 
 * rest api instead of admin-ajax? related to localstorage
 	use core posts endpoint for posts instead of custom?
@@ -52,18 +57,16 @@ when it does, scss files inside each component folder, and have wp-scripts build
 https://github.com/WordPress/gutenberg/issues/14801
 
 
+* Listen for new links added by asyncronously, like News dashboard widget
 
 ### Next-next minor version
 
-* remove duplicates results like `Feedback` from jetpack
-* also remove page links to things that already exist in content index
-
-* links added via js aren't indexed, e.g., events widget
-	need to watch for new ones and add them
+* remove page links to things that already exist in content index
+	e.g., when on All Posts screen
 
 modal window shifts positions as this list grows/shrinks, which sucks
 	use CSS to set a fixed height maybe, or maybe just a fixed position
-	
+
 activeurlpreview - if url is relative, add host
 need to test different scenarios where that might break
 
@@ -80,33 +83,23 @@ need to test different scenarios where that might break
 * load the plugin earlier, so can start using it even before page finishes loading?
 
 * maybe add a "new window" icon for external links
+	- probably one in dashicons
+
 
 ### Future iterations
 
-* Convert to React/REST API
-	* Not because it's necessary, but because it'd be a good learning experience
 * make it discoverable for users who don't already know it exists and how to use it
 	* https://wordpress.org/support/topic/trigger-from-search-iconbutton/
-* check responsiveness once https://core.trac.wordpress.org/ticket/32194 lands
-* Setup phpunit and qunit tests
+	* integrate into core's list of keyboard shortcuts?
+* Setup phpunit and jest tests
 * Setup travis
-* update grunt task versions to latest available
-* Move concat/minified files to separate folder to so can phpstorm exclude them from code hints etc to avoid collisions?
-* better way to call start() after everything concatenated, so you can remove bootstrap.js?
-* setup csslint, php codesniffer
-* Read https://ozkatz.github.io/avoiding-common-backbonejs-pitfalls.html
+* setup php codesniffer
 * sourcemap xss issues? remove b/c not useful anyway?
 	* users safe b/c not distributed w/ wporg repo version, but still want to look into
-* ie8 doesn't open - might work w/ different keys? can't use "event" as param? https://stackoverflow.com/a/2412501/450127
 
 * when use up/down keys to navigate result links, show the url in the browser status bar
 	* browser api has a way to show it? prob not b/c of security
 	* need to programatically move the mouse to hover the link? that's bad UX though?
-
-* use local storage for client-side data caching?
-  	* Or something like it, whatever's best now
-  	* Can double/triple limit or eliminate it?
-  	* But still need to store in db so limit there
 
 * Improve search results if current method is not good enough
 	* Log each title/url to console, then browse through screens to get a feel for where the biggest problems are
@@ -130,8 +123,6 @@ need to test different scenarios where that might break
 
 * Add ability to search by additional keywords that are associated w/ each link, not just the title
 	* Can pull the keywords from link title tags, post excerpts, etc
-
-* Listen for new links added by asyncronously, like News dashboard widget
 
 * Maybe show most popular links by default, and then track what links they visit and show those as default
 

@@ -21,13 +21,6 @@ https://www.youtube.com/watch?v=60iVn94hEIE
 This was inspired by Ubuntu's Dash and [HUD](http://www.markshuttleworth.com/archives/939), and is also similar to the Spotlight feature in OS X.
 
 
-== Installation ==
-
-For help installing this (or any other) WordPress plugin, please read the [Managing Plugins](http://codex.wordpress.org/Managing_Plugins) article on the Codex.
-
-Once the plugin is installed and activated, you don't need to do anything else. See [the Description page](https://wordpress.org/plugins/quick-navigation-interface/) and [FAQ](https://wordpress.org/plugins/quick-navigation-interface/faq/) for details on using the plugin.
-
-
 == Frequently Asked Questions ==
 
 = I'm pressing the ` key, but nothing happens =
@@ -54,18 +47,6 @@ There are a few reasons why you may not see all content.
 There isn't a settings page, but all of the internal options can be modified via the `qni_options` filter. If you're not familiar with using filters, you can [learn more about them](https://developer.wordpress.org/plugins/hooks/filters/) from the WordPress Plugin Developer's Handbook, and then implement them in [a functionality plugin](http://wpcandy.com/teaches/how-to-create-a-functionality-plugin) that you write, or via a plugin like [Functionality](https://wordpress.org/plugins/functionality/).
 
 The values of the keys must correspond to [jQuery's standardized key codes](http://jquerypp.com/release/latest/docs/key.html), and the plugin doesn't currently support using combinations.
-
-
-= How can I override or customize the UI templates? =
-
-There are several methods:
-
-1. Use the `qni_template_path` filter to provide an arbitrary path for any template file.
-1. Copy the file you want to replace into your theme's root file, and add `qni-` to the beginning of the filename. For example, copy `interface.php` in the plugin's views folder to `qni-interface.php` in your theme's folder.
-1. Use the `qni_template_content` filter to provide the content as a string.
-1. If you just want to add content to the beginning and/or end of a template, you can hook into the `qni_render_template_pre` and `qni_render_template_post` actions and echo whatever you want.
-
-Regardless of the method you choose, all of the variables used to build the original template will be available to you. Read the `render_template()` function for details.
 
 
 = Is this plugin secure? =
