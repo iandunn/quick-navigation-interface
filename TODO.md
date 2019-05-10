@@ -1,21 +1,12 @@
 ### React conversion
 
-lint before merge to master (then rename master because ugh)
-
-keep this scoped to just the react conversion. can still do other things in todo for 1.0 release, but get this done/merged first
-
-* test in chrome
-* test in ie11, esp non-grid css
-
-maybe rest api / local storage stuff now too, if have energy
-
 * maybe write blog post on how to build react app in wp that isn't a block, but uses G's components and abstraction layer
 * then consider doing a seattle wp dev meetup presentation
 * then consider doing a seattle wordcamp talk
 	* #262-meta would be better example since it's a normal admin screen rather than a modal that appears on all screens
 
 
-### Next minor version
+### 1.0 stretch goals
 
 * maybe store the contentindex in localstorage?
 	* any security/privacy issues with that?
@@ -31,9 +22,6 @@ maybe rest api / local storage stuff now too, if have energy
 	* maybe use service worker like https://codesandbox.io/s/github/haldarmahesh/react-context-demo/tree/master/?from-embed
 	* cant setup service worker until pwa plugin integrated w/ core
 
-* css no longer minified b/c not using grunt anymore and wp-scripts doesn't support it
-when it does, scss files inside each component folder, and have wp-scripts build a single minified/concat'd file in `build/`
-https://github.com/WordPress/gutenberg/issues/14801
 
 * Maybe change command to `[modifier] /` or just `g`
 	probably add it as an additional for back-compat
@@ -56,6 +44,13 @@ https://github.com/WordPress/gutenberg/issues/14801
 
 O remove local localizations and load_text_domain etc
 	https://make.wordpress.org/core/2016/07/06/i18n-improvements-in-4-6/
+
+
+### Next minor version
+
+* css no longer minified b/c not using grunt anymore and wp-scripts doesn't support it
+when it does, scss files inside each component folder, and have wp-scripts build a single minified/concat'd file in `build/`
+https://github.com/WordPress/gutenberg/issues/14801
 
 
 
