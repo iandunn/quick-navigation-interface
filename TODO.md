@@ -29,10 +29,6 @@ update youtube video - have nicer mic now too. maybe do a quick "hi i'm ian, bui
 		// https://www.hanselman.com/blog/TheWebIsTheNewTerminalAreYouUsingTheWebsKeyboardShortcutsAndHotkeys.aspx
 		// look for more
 
-O remove local localizations and load_text_domain etc
-	https://make.wordpress.org/core/2016/07/06/i18n-improvements-in-4-6/
-
-
 * maybe store the contentindex in localstorage?
 	* any security/privacy issues with that?
 

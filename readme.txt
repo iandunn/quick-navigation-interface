@@ -86,6 +86,7 @@ I've done my best to ensure that it is, but just in case I missed anything [I al
 * [NEW] Links for menu items include their parent menu, if applicable.
 * [NEW] The type of link is now displayed (post, page, menu item, etc).
 * [NEW] Front end rebuilt in React, using Gutenberg's library of UI components.
+* [NEW] The plugin can now be [translated on WordPress.org](https://translate.wordpress.org/projects/wp-plugins/quick-navigation-interface/).
 * [FIX] Removed duplicate on-page links from the results.
 * [FIX] Fixed conflict with using backtick key within Gutenberg editor.
 

@@ -7,8 +7,6 @@ Description: Quickly access screens and content within wp-admin just by typing t
 Version:     1.0
 Author:      Ian Dunn
 Author URI:  https://iandunn.name
-Text Domain: quick-navigation-interface
-Domain Path: /languages
 */
 
 defined( 'WPINC' ) or die;
@@ -44,8 +42,6 @@ function qni_requirements_error() {
 
 	require_once( dirname( __FILE__ ) . '/views/requirements-error.php' );
 }
-
-load_plugin_textdomain( 'quick-navigation-interface', false, basename( dirname( __FILE__ ) ) . '/languages/' );
 
 /*
  * Check requirements and load the main class
