@@ -3,6 +3,7 @@ Contributors:      iandunn
 Donate link:       https://www.debian.org/donations
 Tags:              keyboard,navigation,shortcuts,wp-admin
 Requires at least: 5.0
+Requires PHP:      5.6
 Tested up to:      5.2
 Stable tag:        0.7
 License:           GPLv2
@@ -46,8 +47,7 @@ There are a few reasons why you may not see all content.
 = Can I customize the keyboard shortcuts and other options? =
 There isn't a settings page, but all of the internal options can be modified via the `qni_options` filter. If you're not familiar with using filters, you can [learn more about them](https://developer.wordpress.org/plugins/hooks/filters/) from the WordPress Plugin Developer's Handbook, and then implement them in [a functionality plugin](http://wpcandy.com/teaches/how-to-create-a-functionality-plugin) that you write, or via a plugin like [Functionality](https://wordpress.org/plugins/functionality/).
 
-The values of the keys must correspond to [jQuery's standardized key codes](http://jquerypp.com/release/latest/docs/key.html), and the plugin doesn't currently support using combinations.
-
+The values of the keys must correspond to [JavaScript `keyCode`s](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode#Value_of_keyCode), and the plugin doesn't currently support using combinations. Be careful to choose `keyCode`s which are consistent across browsers.
 
 = Is this plugin secure? =
 I've done my best to ensure that it is, but just in case I missed anything [I also offer a security bounty](https://hackerone.com/iandunn-projects/) for any vulnerabilities that can be found and privately disclosed in any of my plugins.
@@ -71,11 +71,11 @@ I've done my best to ensure that it is, but just in case I missed anything [I al
 * [FIX] Removed duplicate on-page links from the results.
 * [FIX] Fixed conflict with using backtick key within Gutenberg editor.
 
+### Breaking Changes:
 
-* rest api? local storage?
+* [REMOVED] The `['shortcuts']['close-interface']` item in the array passed to the `qni_options` filter has been removed. QNI now uses the `Modal` component provided by Gutenberg, which only uses the `Escape` key to close it.
+* [REMOVED] The `qni_template_path` and `qni_template_content` filters have been removed, and files like `qni-interface.php` in your theme will no longer be used. This is because the plugin now declares the templates in React. There aren't currently any plans to make them customizable.
 
-
-close-interface filter removed b/c using built-in modal now
 
 [Full changelog](https://github.com/iandunn/quick-navigation-interface/compare/?...?)
 

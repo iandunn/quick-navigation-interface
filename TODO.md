@@ -1,5 +1,7 @@
 ### React conversion
 
+finish readme
+
 * maybe write blog post on how to build react app in wp that isn't a block, but uses G's components and abstraction layer
 * then consider doing a seattle wp dev meetup presentation
 * then consider doing a seattle wordcamp talk
@@ -13,6 +15,8 @@ update youtube video - have nicer mic now too. maybe do a quick "hi i'm ian, bui
 rename master branch to develop or anything else
 
 ### 1.0 stretch goals
+
+add to changelog in readme.txt if do any of these
 
 * Maybe change command to `[modifier] /` or just `g`
 	probably add it as an additional for back-compat
@@ -97,9 +101,13 @@ need to test different scenarios where that might break
 * sourcemap xss issues? remove b/c not useful anyway?
 	* users safe b/c not distributed w/ wporg repo version, but still want to look into
 
-* when use up/down keys to navigate result links, show the url in the browser status bar
-	* browser api has a way to show it? prob not b/c of security
-	* need to programatically move the mouse to hover the link? that's bad UX though?
+* when pressing down key and holding, nothing happens until release
+	but if move from keyup to keypress or keydown, that might have side-effects that introduce bigger problems
+	https://stackoverflow.com/questions/3396754/onkeypress-vs-onkeyup-and-onkeydown
+
+* dont need bootstrap now that wp supports checking php version via `Requires PHP: 5.6` header in readme?
+	* are there edge cases where it's still useful, though?
+	* can't remove b/c that'd disbale plugin, but could make it just `require classes/quick-nav.php` unconditionally, with a note that it's only there for back-compat
 
 * Improve search results if current method is not good enough
 	* Log each title/url to console, then browse through screens to get a feel for where the biggest problems are

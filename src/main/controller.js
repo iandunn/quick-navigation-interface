@@ -51,11 +51,19 @@ class MainController extends Component {
 		 *
 		 * There might be some benefit to using Mousetrap (a dependency of KeyboardShortcuts) directly, but this
 		 * is simple enough that it doesn't seem worth looking into.
+		 *
+		 * `keydown` is potentially better here, to allow for holding down up/down keys, but also has some
+		 * side-effects, like how pressing the backtick opens the interface and then adds a backtick character to
+		 * the text input field.
+		 *
+		 * See https://stackoverflow.com/questions/3396754/onkeypress-vs-onkeyup-and-onkeydown for more
+		 * considerations.
 		 */
 		window.addEventListener( 'keyup', this.handleKeyboardEvents );
 	}
 
 	componentWillUnmount() {
+		// See notes in corresponding `addEventListener() call`.
 		window.removeEventListener( 'keyup', this.handleKeyboardEvents );
 	}
 
@@ -67,7 +75,21 @@ class MainController extends Component {
 	handleKeyboardEvents( event ) {
 		const { interfaceOpen } = this.state;
 		const { shortcuts }     = this.props;
-		const { which }         = event;
+
+		/*
+		 * This property is deprecated, but `event.key` is still not a viable alternative, because IE11 and Edge18
+		 * don't consistently implement the standard.
+		 *
+		 * See https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/which.
+		 * See https://stackoverflow.com/a/43418287/450127.
+		 * See https://caniuse.com/#feat=keyboardevent-key.
+		 *
+		 * Changing to `event.key` will require mapping the `keyCode`s provided by the `qni_options` filter to
+		 * their corresponding `code` values, or breaking back-compat.
+		 *
+		 * See https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode.
+		 */
+		const { which } = event;
 
 		// Ignore events when the interface is closed, except to open the interface.
 		if ( ! interfaceOpen && which !== shortcuts[ 'open-interface' ].code ) {
@@ -162,6 +184,7 @@ class MainController extends Component {
 	 * @param {object} event
 	 */
 	static handleQueryKeyDown( event ) {
+		// This property is deprecated, but the alternatives are not yet viable. See `handleKeyboardEvents()`.
 		const { keyCode } = event;
 
 		/*
