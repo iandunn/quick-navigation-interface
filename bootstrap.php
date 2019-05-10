@@ -1,9 +1,10 @@
 <?php
+
 /*
 Plugin Name: Quick Navigation Interface
-Plugin URI:  http://wordpress.org/plugins/quick-navigation-interface
+Plugin URI:  https://wordpress.org/plugins/quick-navigation-interface
 Description: Quickly access screens and content within wp-admin just by typing the first few letters of the name.
-Version:     0.7
+Version:     1.0
 Author:      Ian Dunn
 Author URI:  https://iandunn.name
 Text Domain: quick-navigation-interface
@@ -12,10 +13,9 @@ Domain Path: /languages
 
 defined( 'WPINC' ) or die;
 
-define( 'QNI_VERSION',              '0.7'   );
-define( 'QNI_REQUIRED_PHP_VERSION', '5.6' );  // because of WordPress minimum requirements
-define( 'QNI_REQUIRED_WP_VERSION',  '5.0'   );  // because of Gutenberg components
-// todo ^ may need to be 5.1 or 5.2?
+define( 'QNI_VERSION',              '1.0' );
+define( 'QNI_REQUIRED_PHP_VERSION', '5.6' );  // Because of WordPress minimum requirements.
+define( 'QNI_REQUIRED_WP_VERSION',  '5.0' );  // Because of Gutenberg components.
 
 /**
  * Checks if the system requirements are met

@@ -104,13 +104,18 @@ class MainController extends Component {
 		const { altKey, ctrlKey, metaKey, shiftKey, target } = event;
 		const usingModifier                                  = altKey || ctrlKey || metaKey || shiftKey;
 
+		const textInputTypes = [
+			'text', 'color', 'date', 'datetime', 'datetime-local', 'email', 'month',
+			'number', 'password', 'search', 'tel', 'time', 'url', 'week'
+		];
+
 		// Gutenberg uses `control+backtick` to navigate through the editor, so ignore those events (and similar cases).
 		if ( interfaceOpen || usingModifier ) {
 			return;
 		}
 
-		// Prevent the open shortcut from being used in input fields
-		const isInput = 'input' === target.tagName.toLowerCase() && target.type === 'text';
+		// Prevent the open shortcut from being used in input fields.
+		const isInput = 'input' === target.tagName.toLowerCase() && -1 !== textInputTypes.indexOf( target.type );
 
 		if ( isInput || 'textarea' === target.tagName.toLowerCase() || target.contentEditable === 'true' ) {
 			return;
