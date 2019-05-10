@@ -3,12 +3,15 @@
 	"version": "1.0.0",
 	"description": "Allows you to quickly access links within wp-admin just by typing the first few letters.",
 	"author": "Ian Dunn",
-	"license": "GPLv2",
-	"main": "src/index.js",
+	"license": "GPL-2.0-or-later",
+	"keywords": [ "wp-admin", "keyboard", "navigation", "shortcuts" ],
+	"homepage": "https://wordpress.org/plugins/quick-navigation-interface/",
 	"repository": {
 		"type": "git",
 		"url": "git://github.com/iandunn/quick-navigation-interface.git"
 	},
+	"bugs" : { "url" : "https://github.com/iandunn/quick-navigation-interface/issues" },
+	"main": "src/index.js",
 	"dependencies": {},
 	"devDependencies": {
 		"@wordpress/scripts": "^3.1.0"

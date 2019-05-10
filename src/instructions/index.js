@@ -21,8 +21,8 @@ function Instructions( props ) {
 				{ sprintf(
 					/*
 					 * SECURITY WARNING: This string is intentionally not internationalized, because there
-				     * isn't a secure way to do that yet.
-				     *
+					 * isn't a secure way to do that yet.
+					 *
 					 * See https://github.com/WordPress/gutenberg/issues/13156.
 					 */
 					'Use <code>%1$s</code> and <code>%2$s</code> to navigate links, <code>%3$s</code> to open one, and <code>%4$s</code> to quit.',
