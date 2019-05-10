@@ -31,12 +31,18 @@
 }
 
 #qni-search-results li {
-	/* display: list-item; todo lost the disc */
 	display: flex;
 	padding: 3px 10px;
 	border-radius: 10px;
-	list-style-type: disc;
 	font-size: 1.1em;
+}
+
+/* Simulate `list-style: disc` because that property can't apply to a `display: flex` list item. */
+#qni-search-results li::before {
+	position: relative;
+	left: -1px;
+	margin-right: 5px;
+	content: '\2022';
 }
 
 #qni-search-results li:last-child {
