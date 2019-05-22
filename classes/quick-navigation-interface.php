@@ -10,10 +10,33 @@ class Quick_Navigation_Interface {
 		$this->options = $this->get_options();
 
 		add_action( 'admin_enqueue_scripts',     array( $this, 'enqueue_scripts'  ) );
+		add_action( 'rest_api_init',             array( $this, 'register_endpoints' ) );
 		add_action( 'post_updated',              array( $this, 'update_content_index_expiration_timestamp' ), 10, 3 );
 		add_action( 'transition_post_status',    array( $this, 'update_content_index_expiration_timestamp' ), 10, 3 );
-		add_action( 'wp_ajax_qni_content_index', array( $this, 'output_content_index' ) ); // intentionally only registered for authenticated users, because output is user-specific
-		add_filter( 'nocache_headers',           array( $this, 'set_cache_headers' ) );
+//		add_action( 'wp_ajax_qni_content_index', array( $this, 'output_content_index' ) ); // intentionally only registered for authenticated users, because output is user-specific
+//		add_filter( 'nocache_headers',           array( $this, 'set_cache_headers' ) );
+	}
+
+	//
+	public function register_endpoints() {
+		register_rest_route(
+			'quick-navigation-interface/v1',
+			'/content-index/',
+			array(
+				'methods'  => 'GET',
+				'callback' => array( $this, 'get_content_index' ),
+
+				/*
+				 * Allow any user who can read posts to access the endpoint. `serve_content_index()` will ensure
+				 * that they are only provided with posts that they have authorization to read.
+				 */
+				'permission_callback' => function() {
+					return current_user_can( 'read' );
+					// todo test
+					// does `read` include logged out visitors? if so maybe use `exist` instead?
+				}
+			)
+		);
 	}
 
 	/**
@@ -104,7 +127,8 @@ class Quick_Navigation_Interface {
 	 *
 	 * @return array
 	 */
-	public function get_content_index() {
+	public function get_content_index( WP_REST_Request $request ) {
+		// todo make sure only send them their content, guess will happen by default since requiring logged in above?
 		$current_user_id = get_current_user_id();
 
 		// Return the cached index if it's not stale
@@ -124,7 +148,7 @@ class Quick_Navigation_Interface {
 		) );
 
 		$content = get_posts( $content_params );
-
+//wp_send_json_error($content);wp_die();
 		foreach ( $content as $item ) {
 			if ( current_user_can( 'edit_post', $item->ID ) ) {
 				$index[] = array(
@@ -134,6 +158,7 @@ class Quick_Navigation_Interface {
 				);
 			}
 		}
+//wp_send_json_error($index);wp_die();	// prob failing for same reason that permissions_callback is
 
 		/*
 		 * Cache the index and the time it was generated
@@ -156,6 +181,8 @@ class Quick_Navigation_Interface {
 	 * @return bool
 	 */
 	protected function content_index_expired() {
+		return true;//testing
+
 		$expired         = true;
 		$index_timestamp = get_user_meta( get_current_user_id(), 'qni_content_index_timestamp', time() );
 
@@ -193,19 +220,19 @@ class Quick_Navigation_Interface {
 			'all'
 		);
 
-		wp_enqueue_script(
-			'qni-content-index',
-			$content_index_url,   // see output_content_index() for an explanation of why we're enqueueing an AJAX handler as if it were a script
-			array(),
-			$this->get_content_index_timestamp(),
-			true
-		);
+//		wp_enqueue_script(
+//			'qni-content-index',
+//			$content_index_url,   // see output_content_index() for an explanation of why we're enqueueing an AJAX handler as if it were a script
+//			array(),
+//			$this->get_content_index_timestamp(),
+//			true
+//		);
 
 		wp_enqueue_script(
 			'quick-navigation-interface',
 			plugins_url( 'build/index.js', __DIR__ ),
 			array(
-				'qni-content-index',
+//				'qni-content-index',
 				'wp-components',
 				'wp-element',
 				'wp-i18n',
@@ -214,11 +241,25 @@ class Quick_Navigation_Interface {
 			true
 		);
 
-		wp_localize_script(
-			'quick-navigation-interface',
-			'qniOptions',
-			$this->options
+		$script_data = sprintf( '
+			var qniOptions = %s;
+			var qniApi     = %s;',
+			wp_json_encode( $this->options ),
+			wp_json_encode( array(
+				'rootUrl' => esc_url_raw( rest_url() ),
+				'nonce'   => wp_create_nonce( 'wp_rest' )
+				// also need 2nd nonce?
+				// combine into one var? or name better?
+			) )
 		);
+
+		wp_add_inline_script( 'quick-navigation-interface', $script_data, 'before' );
+//
+//		wp_localize_script(
+//			'quick-navigation-interface',
+//			'qniOptions',
+//			$this->options
+//		);
 	}
 
 	/**

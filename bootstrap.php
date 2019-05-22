@@ -43,13 +43,25 @@ function qni_requirements_error() {
 	require_once( dirname( __FILE__ ) . '/views/requirements-error.php' );
 }
 
+/**
+ * Determines whether the current request is a REST API request for one of our endpoints.
+ *
+ * @return bool
+ */
+function qni_rest_request() {
+	$prefix = rest_get_url_prefix();
+
+	// Using `$_SERVER` because this runs too early to check the `REST_REQUEST` constant.
+	return 0 === stripos( $_SERVER['REQUEST_URI'], "/$prefix/quick-navigation-interface" );
+}
+
 /*
  * Check requirements and load the main class
  *
  * The main program needs to be in a separate file that only gets loaded if the plugin requirements are met. Otherwise older PHP installations could crash when trying to parse it.
  */
 if ( qni_requirements_met() ) {
-	if ( is_admin() ) {
+	if ( is_admin() || qni_rest_request() ) {
 		require_once( dirname( __FILE__ ) . '/classes/quick-navigation-interface.php' );
 		$GLOBALS['Quick_Navigation_Interface'] = new Quick_Navigation_Interface();
 	}

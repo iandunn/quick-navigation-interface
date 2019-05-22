@@ -7,7 +7,8 @@ const { UP, DOWN }  = wp.keycodes;
 /**
  * Internal dependencies
  */
-import MainView from './view';
+import LoadingView from './loading-view';
+import MainView    from './main-view';   // rename file? rename to successview or something too?
 
 /**
  * Manage the state for the main interface.
@@ -31,9 +32,9 @@ class MainController extends Component {
 		 */
 		this.state = {
 			activeResultIndex : null,
-			interfaceOpen     : false,
+			interfaceOpen     : true,
 			results           : [],
-			searchQuery       : '',
+			searchQuery       : 'p',
 		};
 
 		this.handleKeyboardEvents         = this.handleKeyboardEvents.bind( this );
@@ -278,7 +279,35 @@ class MainController extends Component {
 
 	render() {
 		const { activeResultIndex, interfaceOpen, results, searchQuery } = this.state;
-		const { shortcuts }                                              = this.props;
+		const { browserCompatible, error, loading, shortcuts }           = this.props;
+
+		console.log( this.props );
+		// if loading, show that view instead of mainview. maybe rename mainview to loadedview
+
+		// need loading view, and also browserincompat view (pick from other branch)
+		// test loading by using devtools to slow down network requests a lot. probably don't need in practice, but good habit to form
+
+
+	// ie11 doesn't support fetch, so cherry-pick the incompatbrowser thing from local-storage branch, and render that if fetch isn't supported
+		// test on ie11
+
+		// these should be inside the modal
+		if ( ! browserCompatible ) {
+			return <div>browse happy</div>
+		}
+
+		if ( loading ) {
+			console.log('lo2');
+			return (
+				<LoadingView
+					handleModalClose={ this.closeInterface }
+				/>
+			);
+		}
+
+		if ( error ) {
+			return <div>error: {error}</div>
+		}
 
 		return (
 			<MainView

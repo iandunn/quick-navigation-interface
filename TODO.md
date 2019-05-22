@@ -12,7 +12,6 @@ update screenshots - have to do after pushing stable
 update w.org banner - have to do after pushing stable
 update youtube video - have nicer mic now too. maybe do a quick "hi i'm ian, built this because... but 5 seconds max, then get to the point". set video poster to be the interface not your face.
 
-rename master branch to develop or anything else
 
 ### 1.0 stretch goals
 
@@ -44,6 +43,8 @@ add to changelog in readme.txt if do any of these
 * rest api instead of admin-ajax? related to localstorage
 	use core posts endpoint for posts instead of custom?
 		but want all post types
+			can batch them all into single request?
+				what about post types that aren't registerd in api though, still want those.
 		anything else included in content index that would need to be pulled in as well?
 
 	* have to switch to local storage at this point too, because rest api endpoints wouldn't be cached locally? 
@@ -52,6 +53,10 @@ add to changelog in readme.txt if do any of these
 	* maybe use service worker like https://codesandbox.io/s/github/haldarmahesh/react-context-demo/tree/master/?from-embed
 	* cant setup service worker until pwa plugin integrated w/ core
 
+* feels like there's a slight delay in up/down keys, maybe look into how to troubleshoot react performance issues
+	* maybe things are unneccessarily re-rendering or some other common mistake?
+	* actually, that may just be firefox vs chrome, since the backbone version feels a bit slow in ff too
+	* might still be some optimizations you can make though
 
 
 ### Next minor version
