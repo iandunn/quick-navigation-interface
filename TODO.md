@@ -39,6 +39,8 @@ add to changelog in readme.txt if do any of these
 	* any security/privacy issues with that?
 	* Can double/triple limit or eliminate it?
 	* But still need to store in db so limit there
+	* don't store page links, just grab those on each load like currently are
+	* indexdb v1 seems good, but Cache API is better? can't use service worker yet but don't need to
 
 * rest api instead of admin-ajax? related to localstorage
 	use core posts endpoint for posts instead of custom?

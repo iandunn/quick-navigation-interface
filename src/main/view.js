@@ -11,6 +11,8 @@ const { __ }                 = wp.i18n;
 import ActiveUrlPreview from '../active-url-preview';
 import Instructions     from '../instructions';
 import SearchResults    from '../search-results/';
+import IncompatibleBrowserNotice from '../incompatible-browser-notice';
+// todo align next commit
 
 /**
  * Render the view for the main interface.
@@ -21,9 +23,15 @@ import SearchResults    from '../search-results/';
  */
 function MainView( props ) {
 	const {
-		activeResultIndex, handleModalClose, handleNewQuery, handleQueryKeyDown,
+		activeResultIndex, browserMeetsRequirements, handleModalClose, handleNewQuery, handleQueryKeyDown,
 		interfaceOpen, results, searchQuery, shortcuts,
 	} = props;
+	// todo reformat next commit
+
+	const title = browserMeetsRequirements
+		? __( 'Start typing to open any post, menu item, etc', 'quick-navigation-interface' )
+		: __( 'Incompatible Browser',                          'quick-navigation-interface' )
+	;
 
 	if ( ! interfaceOpen ) {
 		return null;
@@ -32,7 +40,7 @@ function MainView( props ) {
 	return (
 		<Fragment>
 			<Modal
-				title={ __( 'Start typing to open any post, menu item, etc', 'quick-navigation-interface' ) }
+				title={ title }
 				onRequestClose={ handleModalClose }
 
 				// Focusing on close button creates scrollbars -- https://github.com/WordPress/gutenberg/issues/15434.
@@ -42,32 +50,40 @@ function MainView( props ) {
 				// Without this, the modal would get the focus, preventing the TextControl.autofocus from working.
 				focusOnMount={ false }
 			>
-				<TextControl
-					/*
-					 * We should grab the label ID programmatically, but I'm not sure that's possible. This should
-					 * always work in practice, though, unless there's another modal on the page. If that happens,
-					 * we have bigger problems :)
-					 */
-					aria-labelledby="components-modal-header-0"
+				{ ! browserMeetsRequirements &&
+					<IncompatibleBrowserNotice />
+				}
 
-					/*
-					 * Autofocus is appropriate in this situation.
-					 * See https://ux.stackexchange.com/a/60027/13828.
-					 */
-					// eslint-disable-next-line jsx-a11y/no-autofocus
-					autoFocus="true"
-					placeholder={ __( 'e.g., Posts, Settings, Plugins, Comments, etc', 'quick-navigation-interface' ) }
-					value={ searchQuery }
-					onChange={ handleNewQuery }
-					onKeyDown={ handleQueryKeyDown }
-				/>
+				{ browserMeetsRequirements &&
+					<Fragment>
+						<TextControl
+							/*
+							 * We should grab the label ID programmatically, but I'm not sure that's possible. This should
+							 * always work in practice, though, unless there's another modal on the page. If that happens,
+							 * we have bigger problems :)
+							 */
+							aria-labelledby="components-modal-header-0"
 
-				<Instructions shortcuts={ shortcuts } />
+							/*
+							 * Autofocus is appropriate in this situation.
+							 * See https://ux.stackexchange.com/a/60027/13828.
+							 */
+							// eslint-disable-next-line jsx-a11y/no-autofocus
+							autoFocus="true"
+							placeholder={ __( 'e.g., Posts, Settings, Plugins, Comments, etc', 'quick-navigation-interface' ) }
+							value={ searchQuery }
+							onChange={ handleNewQuery }
+							onKeyDown={ handleQueryKeyDown }
+						/>
 
-				<SearchResults
-					activeResultIndex={ activeResultIndex }
-					results={ results }
-				/>
+						<Instructions shortcuts={ shortcuts } />
+
+						<SearchResults
+							activeResultIndex={ activeResultIndex }
+							results={ results }
+						/>
+					</Fragment>
+				}
 			</Modal>
 
 			{ results.hasOwnProperty( activeResultIndex ) &&

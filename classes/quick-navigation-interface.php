@@ -282,6 +282,9 @@ class Quick_Navigation_Interface {
 	 * @return array
 	 */
 	public function set_cache_headers( $cache_headers ) {
+		return;// todo simulate loading every time to make sure that cache api code is working
+		// 'disable cache' in ff dev tools already doing this, but doesn't hurt
+
 		// Override the existing no-cache headers with cache headers
 		if ( defined( 'DOING_AJAX' ) && isset( $_GET['action'] ) && 'qni_content_index' == $_GET['action'] ) {
 			$last_modified     = date( 'D, d M Y H:i:s', $this->get_content_index_timestamp() ) . ' GMT';

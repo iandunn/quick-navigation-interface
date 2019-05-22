@@ -31,9 +31,9 @@ class MainController extends Component {
 		 */
 		this.state = {
 			activeResultIndex : null,
-			interfaceOpen     : false,
+			interfaceOpen     : true,
 			results           : [],
-			searchQuery       : '',
+			searchQuery       : 'pr',
 		};
 
 		this.handleKeyboardEvents         = this.handleKeyboardEvents.bind( this );
@@ -280,9 +280,16 @@ class MainController extends Component {
 		const { activeResultIndex, interfaceOpen, results, searchQuery } = this.state;
 		const { shortcuts }                                              = this.props;
 
+		// as of may 2019, support for the cache api is pretty good, it's mostly just mobile browsers that lack it
+		// normally that'd be a blocker, but for this app it's likely that the vast majority of users will be on desktop, given the nature of wp-admin
+		// https://developer.mozilla.org/en-US/docs/Web/API/Cache#Browser_compatibility
+		// https://github.com/Fyrd/caniuse/issues/3122
+		const browserMeetsRequirements = 'caches' in window;   // todo test
+
 		return (
 			<MainView
 				activeResultIndex={ activeResultIndex }
+				browserMeetsRequirements={ browserMeetsRequirements }
 				handleNewQuery={ this.handleNewQuery }
 				handleQueryKeyDown={ MainController.handleQueryKeyDown }
 				handleModalClose={ this.closeInterface }
@@ -292,6 +299,7 @@ class MainController extends Component {
 				shortcuts={ shortcuts }
 			/>
 		);
+		{/* why do some of these use `this` and some dont? need to understand when have to bind, and make sure all the ones that should be are, and none of the ones that shouldn't be aren't */}
 	}
 }
 
