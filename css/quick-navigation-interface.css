@@ -1,7 +1,10 @@
+/* todo doh, all these need to change to BEMish convention :| */
+
 /*
  * LoadingView.
  */
 .qni-loading .components-spinner {
+	/* todo change to `is-loading` ? probably. does G already have a class for that? */
 	display: block;
 	float: none;
 	margin-left: auto;

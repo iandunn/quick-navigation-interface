@@ -8,9 +8,7 @@ const { __ }        = wp.i18n;
 /**
  * Internal dependencies
  */
-import ErrorView   from './error-view';
-import LoadingView from './loading-view';
-import MainView    from './main-view';
+import MainView from './main-view';
 
 /**
  * Manage the state for the main interface.
@@ -34,9 +32,9 @@ class MainController extends Component {
 		 */
 		this.state = {
 			activeResultIndex : null,
-			interfaceOpen     : false,//true,
+			interfaceOpen     : true,
 			results           : [],
-			searchQuery       : '',//'p',
+			searchQuery       : 'p',
 		};
 
 		this.handleKeyboardEvents         = this.handleKeyboardEvents.bind( this );
@@ -283,63 +281,16 @@ class MainController extends Component {
 		const { activeResultIndex, interfaceOpen, results, searchQuery } = this.state;
 		const { browserCompatible, error, loading, shortcuts }           = this.props;
 
-		//maybe reuse the parent modal instead of returning diff ones?
-			// or maybe move the modal up to this level? instead of having down there? that sounds good.
-
-		if ( ! interfaceOpen ) {
-			return null;
-		}
-
-		if ( ! browserCompatible ) {
-			return (
-				<ErrorView
-					title={ __( 'Incompatible Browser', 'quick-navigation-interface' ) }
-					error={
-						<div>
-							<p>I'm sorry, but your browser doesn't support one of the technologies that this feature requires.</p>
-
-							<p>If you can, please <a href="https://browsehappy.com/">upgrade to a newer version</a>.</p>
-						</div>
-					}
-					handleModalClose={ this.closeInterface }
-				/>
-			);
-
-			// todo can't escape from this? what about other one?
-				// test escape key and click on button
-		}
-
-		if ( loading ) {
-			// test loading by using devtools to slow down network requests a lot. probably don't need in practice, but good habit to form
-
-			return (
-				<LoadingView
-					handleModalClose={ this.closeInterface }
-				/>
-			);
-		}
-
-		if ( error ) {
-			return (
-				<ErrorView
-					error={
-						<div>
-							<p>I'm sorry, but there was an unrecoverable error while trying to retrieve your site's content.</p>
-
-							<p>The exact error was: <code>{ error }</code>.</p>
-						</div>
-					}
-					handleModalClose={ this.closeInterface }
-				/>
-			);
-		}
-
 		return (
 			<MainView
 				activeResultIndex={ activeResultIndex }
+				browserCompatible={ browserCompatible }
+				error={ error }
 				handleNewQuery={ this.handleNewQuery }
 				handleQueryKeyDown={ MainController.handleQueryKeyDown }
 				handleModalClose={ this.closeInterface }
+				interfaceOpen={ interfaceOpen }
+				loading={ loading }
 				results={ results }
 				searchQuery={ searchQuery }
 				shortcuts={ shortcuts }

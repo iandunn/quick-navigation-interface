@@ -45,6 +45,10 @@ import QuickNavigationInterface from './main/controller';
 			const item  = { type, title, parentTitle, url };
 			const id    = JSON.stringify( Object.values( item ) ).replace( /[^\w]/g, '' );
 			links[ id ] = item;
+
+			// todo "33 plugin links" when 3 plugins need updating
+				// probably throw out the text in `ab-label`
+				// or maybe shouldn't be searching for .ab-label above?
 		}
 
 		// Return a simple array so it's smaller and easier to work with.
@@ -78,31 +82,34 @@ import QuickNavigationInterface from './main/controller';
 					// but will need it for localstorage? does G have a polyfill for that too?
 
 			error             : false,
-			loading           : true,
 			links             : getCurrentPageLinks(),
 			...qniOptions,
 				// todo should have an `options` key instead of cluttering the root level?
 		};
 
-		container.id = 'qni-container';
+		props.loading = props.browserCompatible;
+		container.id  = 'qni-container';
+
 		document.getElementById( 'wpwrap' ).appendChild( container );
 		renderApp( container, props );
 
-		apiFetch( { path: '/quick-navigation-interface/v1/content-index/' } )
-			.then( data => {
+		if ( props.browserCompatible ) {
+			apiFetch( { path: '/quick-navigation-interface/v1/content-index/' } ).then( data => {
 				props.links.push( ...data );
 				// todo test when data empty, when server endpoint returns string or WP_Error
-			} )
-			.catch( error => {
+			} ).catch( error => {
 				props.error = `${error.data.status} ${error.code}: ${error.message}`;
 				// todo is it possible that error will ever just be a string rather than this object?
-			} )
-			.finally( function() {
+			} ).finally( function () {
 				props.loading = false;
 				renderApp( container, props );
 			} );
+		}
 
 		/// todo this is just the first part. merge this, but then immediately need to work on local storage, b/c can't be making this http request on every page load
+
+		// todo should load this script sooner. on slow connections have to wait until after images have loaded etc, but may want to skip all that and go to another page
+			// need to cut down build size first, though, 50k is fraking ridiculous
 	}
 
 	init();
