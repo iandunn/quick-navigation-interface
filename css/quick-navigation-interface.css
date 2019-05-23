@@ -3,7 +3,12 @@
 /*
  * LoadingView.
  */
-
+.qni-loading .components-spinner {
+	display: block;
+	float: none;
+	margin-left: auto;
+	margin-right: auto;
+}
 
 
 /* error

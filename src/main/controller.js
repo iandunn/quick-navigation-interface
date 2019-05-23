@@ -7,8 +7,9 @@ const { UP, DOWN }  = wp.keycodes;
 /**
  * Internal dependencies
  */
+import ErrorView   from './error-view';
 import LoadingView from './loading-view';
-import MainView    from './main-view';   // rename file? rename to successview or something too?
+import MainView    from './main-view';
 
 /**
  * Manage the state for the main interface.
@@ -282,22 +283,27 @@ class MainController extends Component {
 		const { browserCompatible, error, loading, shortcuts }           = this.props;
 
 		console.log( this.props );
-		// if loading, show that view instead of mainview. maybe rename mainview to loadedview
-
-		// need loading view, and also browserincompat view (pick from other branch)
-		// test loading by using devtools to slow down network requests a lot. probably don't need in practice, but good habit to form
 
 
 	// ie11 doesn't support fetch, so cherry-pick the incompatbrowser thing from local-storage branch, and render that if fetch isn't supported
 		// test on ie11
+		// actually, don't need this right now, because gutenberg polyfills fetch?
+			// er, does it? i don't see one. are they just using it even though ie11 doesn't support it?
+		// but will need it for localstorage? does G have a polyfill for that too?
 
 		// these should be inside the modal
 		if ( ! browserCompatible ) {
-			return <div>browse happy</div>
+			// todo can just combine this with errorview instead of being separate?
+			// (pick from other branch)
+			return <ErrorView
+				error="browser incompat, browsehappy"
+				handleModalClose={ this.closeInterface }
+			/>
 		}
 
 		if ( loading ) {
-			console.log('lo2');
+			// test loading by using devtools to slow down network requests a lot. probably don't need in practice, but good habit to form
+
 			return (
 				<LoadingView
 					handleModalClose={ this.closeInterface }
@@ -306,7 +312,12 @@ class MainController extends Component {
 		}
 
 		if ( error ) {
-			return <div>error: {error}</div>
+			return (
+				<ErrorView
+					error={ error }
+					handleModalClose={ this.closeInterface }
+				/>
+			);
 		}
 
 		return (

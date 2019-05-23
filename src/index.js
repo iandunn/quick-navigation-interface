@@ -2,8 +2,10 @@
  * WordPress dependencies
  */
 const { render, createElement } = wp.element;
-//const { apiFetch } = wp.apiFetch;
+
 import apiFetch from '@wordpress/api-fetch';
+//const { apiFetch } = wp.apiFetch;
+// can do const {} pattern instead?
 
 /**
  * Internal dependencies
@@ -90,9 +92,9 @@ import QuickNavigationInterface from './main/controller';
 		// need 2nd nonce somewhere? https://wordpress.stackexchange.com/questions/323637/verify-nonce-in-rest-api
 
 		props = {
-			browserCompatible : true, //false, // 'fetch' in window, // todo, anything else to add here? localstorage when do that
-			error             : 'myerror', // false
-			loading           : true, // add loading view along with browser incompat? or not really necessary?
+			browserCompatible : false, // 'fetch' in window, // todo, anything else to add here? localstorage when do that.
+			error             : false,
+			loading           : true,
 			links             : getCurrentPageLinks(),
 			...qniOptions,
 		};
@@ -102,9 +104,9 @@ import QuickNavigationInterface from './main/controller';
 		document.getElementById( 'wpwrap' ).appendChild( container );
 		renderApp( container, props );
 
-		apiFetch( { path: '/wp/v2/posts' } ).then( posts => {
-			console.log( posts );
-		} );
+		//apiFetch( { path: '/quick-navigation-interface/v1/content-index/' } )
+		//	.then( posts => console.log( posts ) )
+		//	.catch( error => console.log( error ) );
 
 		if ( 'fetch' in window ) {
 			return;//tmp
