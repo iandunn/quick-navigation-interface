@@ -1,5 +1,3 @@
-/* browserincompat
-
 /*
  * LoadingView.
  */
@@ -10,8 +8,6 @@
 	margin-right: auto;
 }
 
-
-/* error
 
 /*
  * MainView.
@@ -61,8 +57,9 @@
 	text-align: right;
 }
 
+
 /*
- * ActiveUrlPreview
+ * ActiveUrlPreview.
  *
  * The Modal that contains most of the markup creates its own div at the root of the DOM, so the result preview is
  * the only thing that actually gets rendered in the root container.

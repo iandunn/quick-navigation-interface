@@ -12,16 +12,19 @@ const { __ }    = wp.i18n;
  * @return {Element}
  */
 function ErrorView( props ) {
-	const { handleModalClose, error } = props;
+	const {
+		handleModalClose, error,
+		title = __( 'Error', 'quick-navigation-interface' ),
+	} = props;
 
 	return (
 		<Modal
 			className="qni-error"
-			title={ __( 'Error', 'quick-navigation-interface' ) }
+			title={ title }
 			onRequestClose={ handleModalClose }
 			isDismissable={ true }
 		>
-			{error}
+			{ error }
 		</Modal>
 	);
 }

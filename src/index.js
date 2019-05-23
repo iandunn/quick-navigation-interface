@@ -1,11 +1,8 @@
 /**
  * WordPress dependencies
  */
+const { apiFetch }              = wp;
 const { render, createElement } = wp.element;
-
-import apiFetch from '@wordpress/api-fetch';
-//const { apiFetch } = wp.apiFetch;
-// can do const {} pattern instead?
 
 /**
  * Internal dependencies
@@ -32,6 +29,8 @@ import QuickNavigationInterface from './main/controller';
 			url         = link.getAttribute( 'href' );
 
 			// This can be simplified if JS ever provides an alternative to jQuery.closest().
+				// todo wait, there is one? see wp-polyfill-element-closest
+
 			if ( link.parentNode.parentNode.classList.contains( 'wp-submenu' ) ) {
 				parentTitle = link.parentNode.parentNode.parentNode.querySelector( '.wp-menu-name' ).textContent;
 				type = 'menu item';
@@ -52,7 +51,12 @@ import QuickNavigationInterface from './main/controller';
 		return Object.values( links );
 	}
 
-	//
+	/**
+	 * Render the app.
+	 *
+	 * @param {Element} container
+	 * @param {Array}   props
+	 */
 	function renderApp( container, props ) {
 		render(
 			createElement( QuickNavigationInterface, props ),
@@ -60,81 +64,43 @@ import QuickNavigationInterface from './main/controller';
 		);
 	}
 
-	//
-	function fetchResolved( response ) {
-		if ( response.status !== 200 ) {
-			// todo the api returns some 200 for errors? need to check something else too?
-			throw `${response.status} ${response.statusText}`;
-		}
-
-		response.json().then( function ( data ) {
-			props.loading = false;
-
-			// Append content links to existing links, to avoid creating a new array, which would double memory usage.
-				// is ^ still true? was it ever since arrays are references? probably was true, not sure if still is
-			Array.prototype.push.apply( props.links, data );
-
-			renderApp( container, props );
-		} );
-	}
-
-	//
-	function fetchRejected( error ) {
-		props.loading = false;
-		props.error   = error;
-
-		renderApp( container, props );
-	}
-
-	//
+	/**
+	 * Initialize the app.
+	 */
 	function init() {
-		const apiUrl    = qniApi.rootUrl + 'quick-navigation-interface/v1/content-index/?_wpnonce=' + qniApi.nonce;
-		// need 2nd nonce somewhere? https://wordpress.stackexchange.com/questions/323637/verify-nonce-in-rest-api
-
 		props = {
-			browserCompatible : false, // 'fetch' in window, // todo, anything else to add here? localstorage when do that.
+			browserCompatible : 'fetch' in window,
+				// todo, anything else to add here? localstorage when do that.. not needed now b/c G polyfills? does it polyfill local storage to? or what does it use?
+					// ie11 doesn't support fetch, so cherry-pick the incompatbrowser thing from local-storage branch, and render that if fetch isn't supported
+					// test on ie11
+					// actually, don't need this right now, because gutenberg polyfills fetch?
+						// er, does it? i don't see one. are they just using it even though ie11 doesn't support it?
+					// but will need it for localstorage? does G have a polyfill for that too?
+
 			error             : false,
 			loading           : true,
 			links             : getCurrentPageLinks(),
 			...qniOptions,
+				// todo should have an `options` key instead of cluttering the root level?
 		};
 
 		container.id = 'qni-container';
-
 		document.getElementById( 'wpwrap' ).appendChild( container );
 		renderApp( container, props );
 
-		//apiFetch( { path: '/quick-navigation-interface/v1/content-index/' } )
-		//	.then( posts => console.log( posts ) )
-		//	.catch( error => console.log( error ) );
+		apiFetch( { path: '/quick-navigation-interface/v1/content-index/' } )
+			.then( data => {
+				props.links.push( ...data );
+			} )
+			.catch( error => {
+				props.error = `${error.data.status} ${error.code}: ${error.message}`;
+			} )
+			.finally( function() {
+				props.loading = false;
+				renderApp( container, props );
+			} );
 
-		if ( 'fetch' in window ) {
-			return;//tmp
-
-			fetch(
-				apiUrl + '',
-				// tmp
-
-				/*
-				 * Explicitly declare `same-origin` for older browsers.
-				 *
-				 * `same-origin` is the default value now, but it used to be `omit`, so older browsers will fail
-				 * if it's not explicitly declared.
-				 *
-				 * See https://github.com/whatwg/fetch/pull/585.
-				 */
-				{ credentials: 'same-origin' }
-			).then( fetchResolved ).catch( fetchRejected );
-
-			// seems like rest api is using nonces for _authentication_ rather than just _intention_, but that can't be right, so what are you missing?
-
-			/// todo this is just part part. merge this, but then immediately need to work on local storage, b/c can't be making this http request on every page load
-		}
-
-		// ugh, this is kinda ugly. maybe you should just use the backbone client?
-			// no, much smaller bundle to do this. well, but if they already have it cached from another page...
-			// what does Gutenberg use?
-				// doh, repalce this with apiFetch()
+		/// todo this is just part part. merge this, but then immediately need to work on local storage, b/c can't be making this http request on every page load
 	}
 
 	init();

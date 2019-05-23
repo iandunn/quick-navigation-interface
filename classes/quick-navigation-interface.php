@@ -182,6 +182,7 @@ class Quick_Navigation_Interface {
 	 */
 	protected function content_index_expired() {
 		return true;//testing
+		// huh, how to affect this w/ rest api? oh wait that's not affected?
 
 		$expired         = true;
 		$index_timestamp = get_user_meta( get_current_user_id(), 'qni_content_index_timestamp', time() );
@@ -233,6 +234,7 @@ class Quick_Navigation_Interface {
 			plugins_url( 'build/index.js', __DIR__ ),
 			array(
 //				'qni-content-index',
+				'wp-api-fetch',
 				'wp-components',
 				'wp-element',
 				'wp-i18n',
@@ -252,6 +254,7 @@ class Quick_Navigation_Interface {
 				// combine into one var? or name better?
 			) )
 		);
+		// todo don't need to mess up ^ anymore b/c G handles for you ******************************
 
 		wp_add_inline_script( 'quick-navigation-interface', $script_data, 'before' );
 //
@@ -277,7 +280,7 @@ class Quick_Navigation_Interface {
 	 */
 	protected function get_content_index_timestamp() {
 		if ( ! $index_timestamp = get_user_meta( get_current_user_id(), 'qni_content_index_timestamp', true ) ) {
-			$this->get_content_index();
+			$this->get_content_index();	// todo param missing, maybe just don't accept at all
 			$index_timestamp = get_user_meta( get_current_user_id(), 'qni_content_index_timestamp', true );
 		}
 
@@ -295,7 +298,7 @@ class Quick_Navigation_Interface {
 	 *
 	 * The generated index is cached on the server side as well, so the overhead associated with dynamically printing
 	 * it each time is trivial, and no greater than it would be if using wp_localize_script().
-	 */
+	 *
 	public function output_content_index() {
 		if ( ! wp_verify_nonce( $_GET['nonce'], 'qni_content_index' ) ) {
 			wp_die( 'Invalid nonce.' );
@@ -321,7 +324,7 @@ class Quick_Navigation_Interface {
 	 * @param array $cache_headers
 	 *
 	 * @return array
-	 */
+	 *
 	public function set_cache_headers( $cache_headers ) {
 		// Override the existing no-cache headers with cache headers
 		if ( defined( 'DOING_AJAX' ) && isset( $_GET['action'] ) && 'qni_content_index' == $_GET['action'] ) {
@@ -338,4 +341,5 @@ class Quick_Navigation_Interface {
 
 		return $cache_headers;
 	}
+ 	*/
 }

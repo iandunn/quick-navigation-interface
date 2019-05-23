@@ -3,6 +3,7 @@
  */
 const { Component } = wp.element;
 const { UP, DOWN }  = wp.keycodes;
+const { __ }        = wp.i18n;
 
 /**
  * Internal dependencies
@@ -282,23 +283,23 @@ class MainController extends Component {
 		const { activeResultIndex, interfaceOpen, results, searchQuery } = this.state;
 		const { browserCompatible, error, loading, shortcuts }           = this.props;
 
-		console.log( this.props );
+		//maybe reuse the parent modal instead of returning diff ones?
+			// or maybe move the modal up to this level? instead of having down there? that sounds good.
 
-
-	// ie11 doesn't support fetch, so cherry-pick the incompatbrowser thing from local-storage branch, and render that if fetch isn't supported
-		// test on ie11
-		// actually, don't need this right now, because gutenberg polyfills fetch?
-			// er, does it? i don't see one. are they just using it even though ie11 doesn't support it?
-		// but will need it for localstorage? does G have a polyfill for that too?
-
-		// these should be inside the modal
 		if ( ! browserCompatible ) {
-			// todo can just combine this with errorview instead of being separate?
-			// (pick from other branch)
-			return <ErrorView
-				error="browser incompat, browsehappy"
-				handleModalClose={ this.closeInterface }
-			/>
+			return (
+				<ErrorView
+					title={ __( 'Incompatible Browser', 'quick-navigation-interface' ) }
+					error={
+						<div>
+							<p>I'm sorry, but your browser doesn't support one of the technologies that this feature requires.</p>
+
+							<p>If you can, please <a href="https://browsehappy.com/">upgrade to a newer version</a>.</p>
+						</div>
+					}
+					handleModalClose={ this.closeInterface }
+				/>
+			);
 		}
 
 		if ( loading ) {
@@ -314,7 +315,13 @@ class MainController extends Component {
 		if ( error ) {
 			return (
 				<ErrorView
-					error={ error }
+					error={
+						<div>
+							<p>I'm sorry, but there was an unrecoverable error while trying to retrieve your site's content.</p>
+
+							<p>The exact error was: <code>{ error }</code>.</p>
+						</div>
+					}
 					handleModalClose={ this.closeInterface }
 				/>
 			);

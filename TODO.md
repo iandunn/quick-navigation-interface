@@ -1,5 +1,7 @@
 ### React conversion
 
+build is 50k, wtf?
+
 finish readme
 
 * maybe write blog post on how to build react app in wp that isn't a block, but uses G's components and abstraction layer
@@ -11,6 +13,7 @@ update screenshots - have to do after pushing stable
 	on w.org and in readme.md
 update w.org banner - have to do after pushing stable
 update youtube video - have nicer mic now too. maybe do a quick "hi i'm ian, built this because... but 5 seconds max, then get to the point". set video poster to be the interface not your face.
+
 
 
 ### 1.0 stretch goals
