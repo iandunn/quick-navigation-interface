@@ -22,12 +22,8 @@ import SearchResults    from '../search-results/';
 function MainView( props ) {
 	const {
 		activeResultIndex, handleModalClose, handleNewQuery, handleQueryKeyDown,
-		interfaceOpen, results, searchQuery, shortcuts,
+		results, searchQuery, shortcuts,
 	} = props;
-
-	if ( ! interfaceOpen ) {
-		return null;
-	}
 
 	return (
 		<Fragment>

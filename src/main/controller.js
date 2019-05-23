@@ -34,9 +34,9 @@ class MainController extends Component {
 		 */
 		this.state = {
 			activeResultIndex : null,
-			interfaceOpen     : true,
+			interfaceOpen     : false,//true,
 			results           : [],
-			searchQuery       : 'p',
+			searchQuery       : '',//'p',
 		};
 
 		this.handleKeyboardEvents         = this.handleKeyboardEvents.bind( this );
@@ -286,6 +286,10 @@ class MainController extends Component {
 		//maybe reuse the parent modal instead of returning diff ones?
 			// or maybe move the modal up to this level? instead of having down there? that sounds good.
 
+		if ( ! interfaceOpen ) {
+			return null;
+		}
+
 		if ( ! browserCompatible ) {
 			return (
 				<ErrorView
@@ -300,6 +304,9 @@ class MainController extends Component {
 					handleModalClose={ this.closeInterface }
 				/>
 			);
+
+			// todo can't escape from this? what about other one?
+				// test escape key and click on button
 		}
 
 		if ( loading ) {
@@ -333,7 +340,6 @@ class MainController extends Component {
 				handleNewQuery={ this.handleNewQuery }
 				handleQueryKeyDown={ MainController.handleQueryKeyDown }
 				handleModalClose={ this.closeInterface }
-				interfaceOpen={ interfaceOpen }
 				results={ results }
 				searchQuery={ searchQuery }
 				shortcuts={ shortcuts }

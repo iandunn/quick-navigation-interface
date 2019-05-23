@@ -60,7 +60,7 @@ import QuickNavigationInterface from './main/controller';
 	function renderApp( container, props ) {
 		render(
 			createElement( QuickNavigationInterface, props ),
-			document.getElementById( 'qni-container' )
+			container
 		);
 	}
 
@@ -91,16 +91,18 @@ import QuickNavigationInterface from './main/controller';
 		apiFetch( { path: '/quick-navigation-interface/v1/content-index/' } )
 			.then( data => {
 				props.links.push( ...data );
+				// todo test when data empty, when server endpoint returns string or WP_Error
 			} )
 			.catch( error => {
 				props.error = `${error.data.status} ${error.code}: ${error.message}`;
+				// todo is it possible that error will ever just be a string rather than this object?
 			} )
 			.finally( function() {
 				props.loading = false;
 				renderApp( container, props );
 			} );
 
-		/// todo this is just part part. merge this, but then immediately need to work on local storage, b/c can't be making this http request on every page load
+		/// todo this is just the first part. merge this, but then immediately need to work on local storage, b/c can't be making this http request on every page load
 	}
 
 	init();
