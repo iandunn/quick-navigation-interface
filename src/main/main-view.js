@@ -27,7 +27,8 @@ function MainView( props ) {
 
 	let title,
 	    focusOnMount = true,
-	    modalClasses = [];
+	    modalClasses = [],
+		success      = false;
 
 	if ( ! interfaceOpen ) {
 		return null;
@@ -43,9 +44,12 @@ function MainView( props ) {
 	} else {
 		// Without this, the modal would get the focus, preventing the `TextControl.autofocus` from working.
 		focusOnMount = false;
+		success      = true;
 		title        = __( 'Start typing to open any post, menu item, etc', 'quick-navigation-interface' );
 	}
 
+
+	// this is a bit long, so maybe create your own Modal wrapper and then pass in the title/content/etc there, but then that creates another abstraction layer
 	return (
 		<Fragment>
 			<Modal
@@ -78,7 +82,7 @@ function MainView( props ) {
 					</div>
 				}
 
-				{ browserCompatible && ! loading && ! error &&
+				{ success &&
 					<Fragment>
 						<TextControl
 							/*

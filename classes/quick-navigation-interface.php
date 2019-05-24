@@ -18,6 +18,7 @@ class Quick_Navigation_Interface {
 	}
 
 	//
+	// explain need custom endpoint b/c want all post types, more than 100, and [ what were other restrictions with posts/search endpoints? ]
 	public function register_endpoints() {
 		register_rest_route(
 			'quick-navigation-interface/v1',
@@ -89,6 +90,8 @@ class Quick_Navigation_Interface {
 	 */
 	public function update_content_index_expiration_timestamp() {
 		$current_filter = current_filter();
+
+		//test that htis still works
 
 		// We only need to update the timestamp when called manually, a title changes, or a new post is added
 		if ( 'post_updated' == $current_filter ) {
@@ -166,6 +169,8 @@ class Quick_Navigation_Interface {
 		 * A extra second is added to the timestamp, just to be safe, because this will run soon after
 		 * update_content_index_expiration_timestamp(), and the time difference will be rounded off to nearest second,
 		 * which could make them equal, and that would distort the results of content_index_expired().
+		 *
+		 * todo still need this once user saves in localstorage? i guess it's still useful b/c it's 1 db query instead of a ton, and smaler subset of info?
 		 */
 		update_user_meta( $current_user_id, 'qni_content_index',           $index );
 		update_user_meta( $current_user_id, 'qni_content_index_timestamp', time() + 1 );
@@ -183,6 +188,8 @@ class Quick_Navigation_Interface {
 	protected function content_index_expired() {
 		return true;//testing
 		// huh, how to affect this w/ rest api? oh wait that's not affected?
+
+		//test that htis still works
 
 		$expired         = true;
 		$index_timestamp = get_user_meta( get_current_user_id(), 'qni_content_index_timestamp', time() );
@@ -204,15 +211,6 @@ class Quick_Navigation_Interface {
 	 * Enqueue scripts and stylesheets
 	 */
 	public function enqueue_scripts() {
-		$content_index_url = add_query_arg(
-			array(
-				'action' => 'qni_content_index',
-				'user'   => get_current_user_id(),
-				'nonce'  => wp_create_nonce( 'qni_content_index' ),
-			),
-			admin_url( 'admin-ajax.php' )
-		);
-
 		wp_enqueue_style(
 			'quick-navigation-interface',
 			plugins_url( "css/quick-navigation-interface.css", __DIR__ ),
@@ -221,19 +219,10 @@ class Quick_Navigation_Interface {
 			'all'
 		);
 
-//		wp_enqueue_script(
-//			'qni-content-index',
-//			$content_index_url,   // see output_content_index() for an explanation of why we're enqueueing an AJAX handler as if it were a script
-//			array(),
-//			$this->get_content_index_timestamp(),
-//			true
-//		);
-
 		wp_enqueue_script(
 			'quick-navigation-interface',
 			plugins_url( 'build/index.js', __DIR__ ),
 			array(
-//				'qni-content-index',
 				'wp-api-fetch',
 				'wp-components',
 				'wp-element',
@@ -243,26 +232,12 @@ class Quick_Navigation_Interface {
 			true
 		);
 
-		$script_data = sprintf( '
-			var qniOptions = %s;
-			var qniApi     = %s;',
-			wp_json_encode( $this->options ),
-			wp_json_encode( array(
-				'rootUrl' => esc_url_raw( rest_url() ),
-				'nonce'   => wp_create_nonce( 'wp_rest' )
-				// also need 2nd nonce?
-				// combine into one var? or name better?
-			) )
+		$script_data = sprintf(
+			'var qniOptions = %s;',
+			wp_json_encode( $this->options )
 		);
-		// todo don't need to mess up ^ anymore b/c G handles for you ******************************
 
 		wp_add_inline_script( 'quick-navigation-interface', $script_data, 'before' );
-//
-//		wp_localize_script(
-//			'quick-navigation-interface',
-//			'qniOptions',
-//			$this->options
-//		);
 	}
 
 	/**

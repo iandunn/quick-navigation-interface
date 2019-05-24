@@ -36,6 +36,11 @@ import QuickNavigationInterface from './main/controller';
 				type = 'menu item';
 			} else if ( 'wp-admin-bar-new-content-default' === link.parentNode.parentNode.getAttribute( 'id' ) ) {
 				title = document.querySelector( '#wp-admin-bar-new-content' ).querySelector( '.ab-label' ).textContent + ' ' + title;
+				// todo "33 plugin links" when 3 plugins need updating
+					// probably throw out the text in `ab-label`
+					// or maybe shouldn't be searching for .ab-label above?
+					// related https://github.com/iandunn/quick-navigation-interface/issues/2
+
 				type = 'menu item';
 			} else if ( -1 !== link.parentNode.id.indexOf( 'wp-admin-bar' ) ) {
 				type = 'menu item';
@@ -46,9 +51,6 @@ import QuickNavigationInterface from './main/controller';
 			const id    = JSON.stringify( Object.values( item ) ).replace( /[^\w]/g, '' );
 			links[ id ] = item;
 
-			// todo "33 plugin links" when 3 plugins need updating
-				// probably throw out the text in `ab-label`
-				// or maybe shouldn't be searching for .ab-label above?
 		}
 
 		// Return a simple array so it's smaller and easier to work with.
@@ -74,12 +76,8 @@ import QuickNavigationInterface from './main/controller';
 	function init() {
 		props = {
 			browserCompatible : 'fetch' in window,
-				// todo, anything else to add here? localstorage when do that.. not needed now b/c G polyfills? does it polyfill local storage to? or what does it use?
-					// ie11 doesn't support fetch, so cherry-pick the incompatbrowser thing from local-storage branch, and render that if fetch isn't supported
-					// test on ie11
-					// actually, don't need this right now, because gutenberg polyfills fetch?
-						// er, does it? i don't see one. are they just using it even though ie11 doesn't support it?
-					// but will need it for localstorage? does G have a polyfill for that too?
+			// todo don't need ^ b/c G polyfills fetch
+				// but will need it for Cache API, and maybe for indexdb
 
 			error             : false,
 			links             : getCurrentPageLinks(),
@@ -94,13 +92,17 @@ import QuickNavigationInterface from './main/controller';
 		renderApp( container, props );
 
 		if ( props.browserCompatible ) {
+			// todo the old ajax query included `'user'   => get_current_user_id(),` in the url, should this do that too?
+				// should always be the current user, don't want to see other users content, espec if logged out
+				// maybe
+			// it also used the content-index-timestamp as a cachebuster, do we still need that? i guess not b/c rest api sends headers to not cache?
 			apiFetch( { path: '/quick-navigation-interface/v1/content-index/' } ).then( data => {
 				props.links.push( ...data );
 				// todo test when data empty, when server endpoint returns string or WP_Error
 			} ).catch( error => {
 				props.error = `${error.data.status} ${error.code}: ${error.message}`;
 				// todo is it possible that error will ever just be a string rather than this object?
-			} ).finally( function () {
+			} ).finally( () => {
 				props.loading = false;
 				renderApp( container, props );
 			} );
@@ -110,6 +112,8 @@ import QuickNavigationInterface from './main/controller';
 
 		// todo should load this script sooner. on slow connections have to wait until after images have loaded etc, but may want to skip all that and go to another page
 			// need to cut down build size first, though, 50k is fraking ridiculous
+			// why is it so big? maybe need to set some things as webpack externals, or need tree-shaking? but dependencies is empty.
+			// look in the buld file and see what's in there
 	}
 
 	init();

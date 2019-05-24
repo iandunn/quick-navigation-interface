@@ -1,4 +1,10 @@
-/* todo doh, all these need to change to BEMish convention :| */
+/* todo doh, all these need to change to BEMish convention :|
+	er, but what abiout back-compat?
+	that'll break anyway b/c of changing the containers etc?
+	but things like qni-search-results haven't changed, right?
+
+	so few uesrs, unlikely anybody has customized, just go ahead and change it. it's a 1.0 release anyway
+*/
 
 /*
  * LoadingView.
