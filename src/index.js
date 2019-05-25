@@ -50,7 +50,6 @@ import QuickNavigationInterface from './main/controller';
 			const item  = { type, title, parentTitle, url };
 			const id    = JSON.stringify( Object.values( item ) ).replace( /[^\w]/g, '' );
 			links[ id ] = item;
-
 		}
 
 		// Return a simple array so it's smaller and easier to work with.
@@ -111,9 +110,6 @@ import QuickNavigationInterface from './main/controller';
 		/// todo this is just the first part. merge this, but then immediately need to work on local storage, b/c can't be making this http request on every page load
 
 		// todo should load this script sooner. on slow connections have to wait until after images have loaded etc, but may want to skip all that and go to another page
-			// need to cut down build size first, though, 50k is fraking ridiculous
-			// why is it so big? maybe need to set some things as webpack externals, or need tree-shaking? but dependencies is empty.
-			// look in the buld file and see what's in there
 	}
 
 	init();

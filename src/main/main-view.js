@@ -2,8 +2,8 @@
  * WordPress dependencies
  */
 const { Modal, TextControl, Spinner } = wp.components;
-const { Fragment }           = wp.element;
-const { __ }                 = wp.i18n;
+const { Fragment, RawHTML }           = wp.element;
+const { __, sprintf }                 = wp.i18n;
 
 /**
  * Internal dependencies
@@ -11,6 +11,114 @@ const { __ }                 = wp.i18n;
 import ActiveUrlPreview from '../active-url-preview';
 import Instructions     from '../instructions';
 import SearchResults    from '../search-results/';
+
+/**
+ * Render the view for the browser incompatibility notice.
+ *
+ * @return {Element}
+ */
+function BrowserIncompatible() {
+	return (
+		<Fragment>
+			<p>
+				{ __(
+					"I'm sorry, but your browser doesn't support one of the technologies that this feature requires.",
+					'quick-navigation-interface'
+				) }
+			</p>
+
+			<p>
+				<RawHTML>
+					{ sprintf(
+						/*
+						 * SECURITY WARNING: This string is intentionally not internationalized.
+						 * See Instructions component for details.
+						 */
+						'If you can, please <a href="%s">upgrade to a newer version</a>.',
+						'https://browsehappy.com/'
+					) }
+				</RawHTML>
+			</p>
+		</Fragment>
+	);
+}
+
+/**
+ * Render the view for the error notice notice.
+ *
+ * @param {Array} props
+ *
+ * @return {Element}
+ */
+function Error( props ) {
+	const { error } = props;
+
+	return (
+		<Fragment>
+			<p>
+				{ __(
+					"I'm sorry, but there was an unrecoverable error while trying to retrieve your site's content.",
+					'quick-navigation-interface'
+				) }
+			</p>
+
+			<p>
+				<RawHTML>
+					{ sprintf(
+						/*
+						 * SECURITY WARNING: This string is intentionally not internationalized.
+						 * See Instructions component for details.
+						 */
+						'The exact error was: <code>%s</code>.',
+						error
+					) }
+				</RawHTML>
+			</p>
+		</Fragment>
+	);
+}
+
+/**
+ * Render the view for the error notice notice.
+ *
+ * @param {Array} props
+ *
+ * @return {Element}
+ */
+function Success( props ) {
+	const { activeResultIndex, handleNewQuery, handleQueryKeyDown, results, searchQuery, shortcuts } = props;
+
+	return (
+		<Fragment>
+			<TextControl
+				/*
+				 * We should grab the label ID programmatically, but I'm not sure that's possible. This should
+				 * always work in practice, though, unless there's another modal on the page. If that happens,
+				 * we have bigger problems :)
+				 */
+				aria-labelledby="components-modal-header-0"
+
+				/*
+				 * Autofocus is appropriate in this situation.
+				 * See https://ux.stackexchange.com/a/60027/13828.
+				 */
+				// eslint-disable-next-line jsx-a11y/no-autofocus
+				autoFocus="true"
+				placeholder={ __( 'e.g., Posts, Settings, Plugins, Comments, etc', 'quick-navigation-interface' ) }
+				value={ searchQuery }
+				onChange={ handleNewQuery }
+				onKeyDown={ handleQueryKeyDown }
+			/>
+
+			<Instructions shortcuts={ shortcuts } />
+
+			<SearchResults
+				activeResultIndex={ activeResultIndex }
+				results={ results }
+			/>
+		</Fragment>
+	);
+}
 
 /**
  * Render the view for the main interface.
@@ -48,8 +156,6 @@ function MainView( props ) {
 		title        = __( 'Start typing to open any post, menu item, etc', 'quick-navigation-interface' );
 	}
 
-
-	// this is a bit long, so maybe create your own Modal wrapper and then pass in the title/content/etc there, but then that creates another abstraction layer
 	return (
 		<Fragment>
 			<Modal
@@ -62,55 +168,21 @@ function MainView( props ) {
 				// Down key broken after hitting escape --  https://github.com/WordPress/gutenberg/issues/15429.
 				isDismissable={ true }
 			>
-				{ ! browserCompatible &&
-					<div>
-						<p>I'm sorry, but your browser doesn't support one of the technologies that this feature requires.</p>
+				{ ! browserCompatible && <BrowserIncompatible /> }
 
-						<p>If you can, please <a href="https://browsehappy.com/">upgrade to a newer version</a>.</p>
-					</div>
-				}
+				{ loading && <Spinner /> }
 
-				{ loading &&
-					<Spinner />
-				}
-
-				{ error &&
-					<div>
-						<p>I'm sorry, but there was an unrecoverable error while trying to retrieve your site's content.</p>
-
-						<p>The exact error was: <code>{ error }</code>.</p>
-					</div>
-				}
+				{ error && <Error error={ error } /> }
 
 				{ success &&
-					<Fragment>
-						<TextControl
-							/*
-							 * We should grab the label ID programmatically, but I'm not sure that's possible. This should
-							 * always work in practice, though, unless there's another modal on the page. If that happens,
-							 * we have bigger problems :)
-							 */
-							aria-labelledby="components-modal-header-0"
-
-							/*
-							 * Autofocus is appropriate in this situation.
-							 * See https://ux.stackexchange.com/a/60027/13828.
-							 */
-							// eslint-disable-next-line jsx-a11y/no-autofocus
-							autoFocus="true"
-							placeholder={ __( 'e.g., Posts, Settings, Plugins, Comments, etc', 'quick-navigation-interface' ) }
-							value={ searchQuery }
-							onChange={ handleNewQuery }
-							onKeyDown={ handleQueryKeyDown }
-						/>
-
-						<Instructions shortcuts={ shortcuts } />
-
-						<SearchResults
-							activeResultIndex={ activeResultIndex }
-							results={ results }
-						/>
-					</Fragment>
+					<Success
+						activeResultIndex={ activeResultIndex }
+						handleNewQuery={ handleNewQuery }
+						handleQueryKeyDown={ handleQueryKeyDown }
+						results={ results }
+						searchQuery={ searchQuery }
+						shortcuts={ shortcuts }
+					/>
 				}
 			</Modal>
 

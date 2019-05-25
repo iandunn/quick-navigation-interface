@@ -61,6 +61,12 @@ add to changelog in readme.txt if do any of these
 	* actually, that may just be firefox vs chrome, since the backbone version feels a bit slow in ff too
 	* might still be some optimizations you can make though
 
+* reduce build size
+	9k for `npm run build`, not horrible but still seems pretty high for something so small as thing
+		backbone version was 2k
+	why is it so big? maybe need to set some things as webpack externals, or need tree-shaking? but dependencies is empty.
+	look in the buld file and see what's in there
+	make sure you're loooking at build not watch
 
 ### Next minor version
 
