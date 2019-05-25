@@ -109,7 +109,7 @@ import QuickNavigationInterface from './main/controller';
 
 		/// todo this is just the first part. merge this, but then immediately need to work on local storage, b/c can't be making this http request on every page load
 
-		// todo should load this script sooner. on slow connections have to wait until after images have loaded etc, but may want to skip all that and go to another page
+		// todo test that caching expiration works as expected, shouldn't fetch new index unless current one is expired
 	}
 
 	init();
