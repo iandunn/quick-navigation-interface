@@ -9,11 +9,10 @@ class Quick_Navigation_Interface {
 	public function __construct() {
 		$this->options = $this->get_options();
 
+		add_action( 'rest_api_init',             array( $this, 'register_endpoints' ) );
 		add_action( 'admin_enqueue_scripts',     array( $this, 'enqueue_scripts'  ) );
 		add_action( 'post_updated',              array( $this, 'update_content_index_expiration_timestamp' ), 10, 3 );
 		add_action( 'transition_post_status',    array( $this, 'update_content_index_expiration_timestamp' ), 10, 3 );
-		add_action( 'wp_ajax_qni_content_index', array( $this, 'output_content_index' ) ); // intentionally only registered for authenticated users, because output is user-specific
-		add_filter( 'nocache_headers',           array( $this, 'set_cache_headers' ) );
 	}
 
 	/**
@@ -49,18 +48,46 @@ class Quick_Navigation_Interface {
 	}
 
 	/**
+	 * Register the REST API endpoints.
+	 *
+	 * We use a custom endpoint rather than the Core ones, because we want to get all post types, want post types
+	 * that aren't registered in the API, and want more than 100 items per request.
+	 *
+	 * We don't use the Search endpoint, because that would be much, much slower than having a local index of all
+	 * content that can be immediately searched on the client side, without the delays of slow HTTP requests.
+	 */
+	public function register_endpoints() {
+		register_rest_route(
+			'quick-navigation-interface/v1',
+			'/content-index/',
+			array(
+				'methods'  => 'GET',
+				'callback' => array( $this, 'get_content_index' ),
+
+				/*
+				 * Allow any user who can read posts to access the endpoint. `serve_content_index()` will ensure
+				 * that they are only provided with posts that they have authorization to read.
+				 */
+				'permission_callback' => function() {
+					return current_user_can( 'read' );
+				}
+			)
+		);
+	}
+
+	/**
 	 * Update the timestamp of the last cache invalidation event
 	 *
 	 * When a new post is added, or an existing post changes its title, then the cached index for all users is now
 	 * stale and needs to be rebuilt. We store a central option with the timestamp of when the caches were invalidated,
-	 * and is_expired() checks the timestamp of each user's index against that value to determine if it's stale.
+	 * and content_index_expired() checks the timestamp of each user's index against that value to determine if it's stale.
 	 *
 	 * This approach is more complex than the alternatives, but necessary. Rebuilding all the indexes immediately
 	 * would not be performant at scale, and making a manual DELETE query on all index timestamps in the usermeta
 	 * table would bypass all the logic in delete_metadata(), which could cause caches to get out of sync and
 	 * other bugs.
 	 *
-	 * This can also be called manually, like in the case of index_expired(). Because it can be called from varied
+	 * This can also be called manually, like in the case of content_index_expired(). Because it can be called from varied
 	 * sources, the parameters are accessed dynamically based on context, rather than being explicitly declared in
 	 * the function definition.
 	 */
@@ -84,8 +111,9 @@ class Quick_Navigation_Interface {
 		}
 
 		update_option( 'qni_content_index_expiration_timestamp', time() );
-		$this->get_content_index();
 
+		$this->get_content_index(); // Rebuild the index.
+			// todo param missing, maybe just don't accept at all since not used
 	}
 
 	/**
@@ -104,7 +132,13 @@ class Quick_Navigation_Interface {
 	 *
 	 * @return array
 	 */
-	public function get_content_index() {
+	public function get_content_index( WP_REST_Request $request ) {
+		/*
+		 * When this is called from the REST API server, the a nonce has already been verified.
+		 *
+		 * When this is called programmatically, a nonce is not needed.
+		 */
+
 		$current_user_id = get_current_user_id();
 
 		// Return the cached index if it's not stale
@@ -119,7 +153,9 @@ class Quick_Navigation_Interface {
 			'post_type'   => 'any',
 			'post_status' => 'any',
 			'numberposts' => 500,
-			'orderby'     => 'date',    // because we may reach the limit and exclude some posts, and the user is more likely to want recent posts than older ones
+
+			// We may reach the limit and exclude some posts, and the user is more likely to want new posts than older ones.
+			'orderby'     => 'date',
 			'order'       => 'DESC',
 		) );
 
@@ -141,6 +177,9 @@ class Quick_Navigation_Interface {
 		 * A extra second is added to the timestamp, just to be safe, because this will run soon after
 		 * update_content_index_expiration_timestamp(), and the time difference will be rounded off to nearest second,
 		 * which could make them equal, and that would distort the results of content_index_expired().
+		 *
+		 * @todo document why 1 second is added, IIRC race condition with updating the index and user requesting it,
+		 * and want to make sure they get a fresh copy?
 		 */
 		update_user_meta( $current_user_id, 'qni_content_index',           $index );
 		update_user_meta( $current_user_id, 'qni_content_index_timestamp', time() + 1 );
@@ -159,7 +198,14 @@ class Quick_Navigation_Interface {
 		$expired         = true;
 		$index_timestamp = get_user_meta( get_current_user_id(), 'qni_content_index_timestamp', time() );
 
-		// Prime the expiration timestamp if update_content_index_expiration_timestamp() hasn't been triggered yet
+		/*
+		 * Prime the expiration timestamp if `update_content_index_expiration_timestamp()` hasn't been triggered
+		 * yet.
+		 *
+		 * `qni_content_index_expiration_timestamp` is shared by all users, since updating/adding a post will
+		 * invalidate the cache for most users in most cases, so it's simpler to invalidate all that trying to only
+		 * invalidate those actually affected.
+		 */
 		if ( ! $expiration_timestamp = get_option( 'qni_content_index_expiration_timestamp' ) ) {
 			$this->update_content_index_expiration_timestamp();
 			$expiration_timestamp = get_option( 'qni_content_index_expiration_timestamp' );
@@ -176,15 +222,6 @@ class Quick_Navigation_Interface {
 	 * Enqueue scripts and stylesheets
 	 */
 	public function enqueue_scripts() {
-		$content_index_url = add_query_arg(
-			array(
-				'action' => 'qni_content_index',
-				'user'   => get_current_user_id(),
-				'nonce'  => wp_create_nonce( 'qni_content_index' ),
-			),
-			admin_url( 'admin-ajax.php' )
-		);
-
 		wp_enqueue_style(
 			'quick-navigation-interface',
 			plugins_url( "css/quick-navigation-interface.css", __DIR__ ),
@@ -194,18 +231,10 @@ class Quick_Navigation_Interface {
 		);
 
 		wp_enqueue_script(
-			'qni-content-index',
-			$content_index_url,   // see output_content_index() for an explanation of why we're enqueueing an AJAX handler as if it were a script
-			array(),
-			$this->get_content_index_timestamp(),
-			true
-		);
-
-		wp_enqueue_script(
 			'quick-navigation-interface',
 			plugins_url( 'build/index.js', __DIR__ ),
 			array(
-				'qni-content-index',
+				'wp-api-fetch',
 				'wp-components',
 				'wp-element',
 				'wp-i18n',
@@ -214,11 +243,12 @@ class Quick_Navigation_Interface {
 			true
 		);
 
-		wp_localize_script(
-			'quick-navigation-interface',
-			'qniOptions',
-			$this->options
+		$script_data = sprintf(
+			'var qniOptions = %s;',
+			wp_json_encode( $this->options )
 		);
+
+		wp_add_inline_script( 'quick-navigation-interface', $script_data, 'before' );
 	}
 
 	/**
@@ -235,66 +265,14 @@ class Quick_Navigation_Interface {
 	 * @return int
 	 */
 	protected function get_content_index_timestamp() {
+		// todo this isn't called from anywhere after deleting set_cache_headers(), so can maybe delete it too
+			// will it be needed once add local storage though?
+
 		if ( ! $index_timestamp = get_user_meta( get_current_user_id(), 'qni_content_index_timestamp', true ) ) {
-			$this->get_content_index();
+			$this->get_content_index();  // Rebuild the index.
 			$index_timestamp = get_user_meta( get_current_user_id(), 'qni_content_index_timestamp', true );
 		}
 
 		return $index_timestamp;
-	}
-
-	/**
-	 * Output the user's content index
-	 *
-	 * Normally data like this would be printed to each page using wp_localize_script, but the index can be up to
-	 * about 50k, so we don't want to add that much weight to every single page load.
-	 *
-	 * So instead we enqueue this AJAX handler as a script, and have it output the index. That way the browser
-	 * treats it like a file and caches it locally after the first time it's downloaded.
-	 *
-	 * The generated index is cached on the server side as well, so the overhead associated with dynamically printing
-	 * it each time is trivial, and no greater than it would be if using wp_localize_script().
-	 */
-	public function output_content_index() {
-		if ( ! wp_verify_nonce( $_GET['nonce'], 'qni_content_index' ) ) {
-			wp_die( 'Invalid nonce.' );
-		}
-
-		header( 'Content-Type: application/x-javascript; charset=' . get_option( 'blog_charset' ) );
-
-		?>
-
-		window.qniContentIndex = <?php echo wp_json_encode( $this->get_content_index() ); ?>;
-
-		<?php
-
-		die();
-	}
-
-	/**
-	 * Adjust HTTP headers so that browsers will cache responses to the `qni_content_index` AJAX request
-	 *
-	 * Normally Core prevents caching of all AJAX requests, but we want to make sure the content index is
-	 * cached because it's loaded on every wp-admin screen and is potentially very heavy.
-	 *
-	 * @param array $cache_headers
-	 *
-	 * @return array
-	 */
-	public function set_cache_headers( $cache_headers ) {
-		// Override the existing no-cache headers with cache headers
-		if ( defined( 'DOING_AJAX' ) && isset( $_GET['action'] ) && 'qni_content_index' == $_GET['action'] ) {
-			$last_modified     = date( 'D, d M Y H:i:s', $this->get_content_index_timestamp() ) . ' GMT';
-			$expiration_period = WEEK_IN_SECONDS;
-
-			$cache_headers = array(
-				'Cache-Control' => 'maxage=' . $expiration_period,
-				'ETag'          => '"' . md5( $last_modified ) . '"',
-				'Last-Modified' => $last_modified,
-				'Expires'       => gmdate( 'D, d M Y H:i:s', time() + $expiration_period ) . ' GMT',
-			);
-		}
-
-		return $cache_headers;
 	}
 }

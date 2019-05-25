@@ -3,11 +3,12 @@
  */
 const { Component } = wp.element;
 const { UP, DOWN }  = wp.keycodes;
+const { __ }        = wp.i18n;
 
 /**
  * Internal dependencies
  */
-import MainView from './view';
+import MainView from './main-view';
 
 /**
  * Manage the state for the main interface.
@@ -278,15 +279,18 @@ class MainController extends Component {
 
 	render() {
 		const { activeResultIndex, interfaceOpen, results, searchQuery } = this.state;
-		const { shortcuts }                                              = this.props;
+		const { browserCompatible, error, loading, shortcuts }           = this.props;
 
 		return (
 			<MainView
 				activeResultIndex={ activeResultIndex }
+				browserCompatible={ browserCompatible }
+				error={ error }
 				handleNewQuery={ this.handleNewQuery }
 				handleQueryKeyDown={ MainController.handleQueryKeyDown }
 				handleModalClose={ this.closeInterface }
 				interfaceOpen={ interfaceOpen }
+				loading={ loading }
 				results={ results }
 				searchQuery={ searchQuery }
 				shortcuts={ shortcuts }

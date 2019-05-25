@@ -1,22 +1,26 @@
-### React conversion
+### 1.0
 
-finish readme
+* store the contentindex in localstorage
+	* any security/privacy issues with that?
+	* Can double/triple limit or eliminate it?
+		* But still need to store in db so consider the impact there too
+	test that caching still works similar to before, where you only  make the api request when local storage is stale
+	how to know when localstorage is stale, i guess need to output var in inline script
+	maybe kick off the stale request in the bg instead of making them wait while it occurs?
+		but the db cache will already be generated, so it'll just be a normal http request, won't have to wait on the index to be generated 
 
-* maybe write blog post on how to build react app in wp that isn't a block, but uses G's components and abstraction layer
-* then consider doing a seattle wp dev meetup presentation
-* then consider doing a seattle wordcamp talk
-	* #262-meta would be better example since it's a normal admin screen rather than a modal that appears on all screens
+* localstorage or something else instead of memory? then don't have to pass around
+	* maybe use service worker like https://codesandbox.io/s/github/haldarmahesh/react-context-demo/tree/master/?from-embed
+	* cant setup service worker until pwa plugin integrated w/ core
 
-update screenshots - have to do after pushing stable
-	on w.org and in readme.md
-update w.org banner - have to do after pushing stable
-update youtube video - have nicer mic now too. maybe do a quick "hi i'm ian, built this because... but 5 seconds max, then get to the point". set video poster to be the interface not your face.
+change all css classes to BEMish convention
+	er, but what abiout back-compat?
+	that'll break anyway b/c of changing the containers etc?
+	but things like qni-search-results haven't changed, right?
+	so few uesrs, unlikely anybody has customized, just go ahead and change it. it's a 1.0 release anyway
 
-rename master branch to develop or anything else
+test that everything in php side still works as expected, caching, expiring cache, etc
 
-### 1.0 stretch goals
-
-add to changelog in readme.txt if do any of these
 
 * Maybe change command to `[modifier] /` or just `g`
 	probably add it as an additional for back-compat
@@ -36,21 +40,44 @@ add to changelog in readme.txt if do any of these
 		// https://www.hanselman.com/blog/TheWebIsTheNewTerminalAreYouUsingTheWebsKeyboardShortcutsAndHotkeys.aspx
 		// look for more
 
-* maybe store the contentindex in localstorage?
-	* any security/privacy issues with that?
-	* Can double/triple limit or eliminate it?
-	* But still need to store in db so limit there
+finish readme
 
-* rest api instead of admin-ajax? related to localstorage
-	use core posts endpoint for posts instead of custom?
-		but want all post types
-		anything else included in content index that would need to be pulled in as well?
+* maybe write blog post on how to build react app in wp that isn't a block, but uses G's components and abstraction layer
+* then consider doing a seattle wp dev meetup presentation
+* then consider doing a seattle wordcamp talk
+	* #262-meta would be better example since it's a normal admin screen rather than a modal that appears on all screens
 
-	* have to switch to local storage at this point too, because rest api endpoints wouldn't be cached locally? 
+update screenshots - have to do after pushing stable
+	on w.org and in readme.md
+update w.org banner - have to do after pushing stable
+update youtube video - have nicer mic now too. maybe do a quick "hi i'm ian, built this because... but 5 seconds max, then get to the point". set video poster to be the interface not your face.
 
-* localstorage or something else instead of memory? then don't have to pass around
-	* maybe use service worker like https://codesandbox.io/s/github/haldarmahesh/react-context-demo/tree/master/?from-embed
-	* cant setup service worker until pwa plugin integrated w/ core
+
+
+### 1.0 stretch goals
+
+add to changelog in readme.txt if do any of these
+
+// todo "33 plugin links" when 3 plugins need updating
+	// probably throw out the text in `ab-label`
+	// or maybe shouldn't be searching for .ab-label above?
+	// related https://github.com/iandunn/quick-navigation-interface/issues/2
+		fix ^ too if not same thing
+
+* reduce build size
+	9k for `npm run build`, not horrible but still seems pretty high for something so small as thing
+		backbone version was 2k
+	why is it so big? maybe need to set some things as webpack externals, or need tree-shaking? but dependencies is empty.
+	look in the buld file and see what's in there
+	make sure you're loooking at build not watch
+
+should load the script sooner.
+	on slow connections have to wait until after images have loaded etc, but may want to skip all that and go to another page
+
+* feels like there's a slight delay in up/down keys, maybe look into how to troubleshoot react performance issues
+	* maybe things are unneccessarily re-rendering or some other common mistake?
+	* actually, that may just be firefox vs chrome, since the backbone version feels a bit slow in ff too
+	* might still be some optimizations you can make though
 
 
 
@@ -59,7 +86,6 @@ add to changelog in readme.txt if do any of these
 * css no longer minified b/c not using grunt anymore and wp-scripts doesn't support it
 when it does, scss files inside each component folder, and have wp-scripts build a single minified/concat'd file in `build/`
 https://github.com/WordPress/gutenberg/issues/14801
-
 
 * Listen for new links added by asyncronously, like News dashboard widget
 

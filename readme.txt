@@ -64,10 +64,10 @@ I've done my best to ensure that it is, but just in case I missed anything [I al
 = v1.0 (2019-??-??) =
 
 * [NEW] Highlighting a link shows a preview of its URL, so you can know where it will take you.
-* [NEW] Links for menu items include their parent menu, if applicable.
+* [NEW] Links for menu items include their parent menu title, if applicable.
 * [NEW] The type of link is now displayed (post, page, menu item, etc).
-* [NEW] Front end rebuilt in React, using Gutenberg's library of UI components.
 * [NEW] The plugin can now be [translated on WordPress.org](https://translate.wordpress.org/projects/wp-plugins/quick-navigation-interface/).
+* [NEW] Front end rebuilt in React, using Gutenberg's library of UI components, the REST API, and local storage.
 * [FIX] Removed duplicate on-page links from the results.
 * [FIX] Fixed conflict with using backtick key within Gutenberg editor.
 
