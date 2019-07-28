@@ -243,12 +243,22 @@ class Quick_Navigation_Interface {
 			true
 		);
 
-		$script_data = sprintf(
-			'var qniOptions = %s;',
-			wp_json_encode( $this->options )
+		$script_data = array_merge(
+			$this->options,
+			array(
+				'plugin_version'  => QNI_VERSION,
+				'user_db_version' => 1,
+					// todo need to pull from usermeta, default to 1, update whenever rebuild index
+				'root_url'        => get_rest_url(),
+			)
 		);
 
-		wp_add_inline_script( 'quick-navigation-interface', $script_data, 'before' );
+		$inline_script = sprintf(
+			'var qniOptions = %s;',
+			wp_json_encode( $script_data )
+		);
+
+		wp_add_inline_script( 'quick-navigation-interface', $inline_script, 'before' );
 	}
 
 	/**

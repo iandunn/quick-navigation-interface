@@ -37,6 +37,7 @@ class MainController extends Component {
 			searchQuery       : '',
 		};
 
+		// todo use experimental syntax for this to avoid these calls
 		this.handleKeyboardEvents         = this.handleKeyboardEvents.bind( this );
 		this.closeInterface               = this.closeInterface.bind( this );
 		this.handleNewQuery               = this.handleNewQuery.bind( this );
@@ -300,3 +301,7 @@ class MainController extends Component {
 }
 
 export default MainController;
+
+// todo Stop using default exports, named instead
+// Maybe make exception for main controller, bc nice to have that as full name , but maybe more clear to not?
+// import { MainController as QuickNavigationInterface } from "./main/conttolleer";

@@ -49,6 +49,10 @@ There isn't a settings page, but all of the internal options can be modified via
 
 The values of the keys must correspond to [JavaScript `keyCode`s](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode#Value_of_keyCode), and the plugin doesn't currently support using combinations. Be careful to choose `keyCode`s which are consistent across browsers.
 
+= How can I edit the JavaScript files? =
+
+Unfortunately modern JavaScript makes this more difficult than editing PHP, but there are instructions in [the GitHub repository](https://github.com/iandunn/quick-navigation-interface).
+
 = Is this plugin secure? =
 I've done my best to ensure that it is, but just in case I missed anything [I also offer a security bounty](https://hackerone.com/iandunn-projects/) for any vulnerabilities that can be found and privately disclosed in any of my plugins.
 

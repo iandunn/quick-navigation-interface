@@ -95,6 +95,9 @@ function Success( props ) {
 				 * We should grab the label ID programmatically, but I'm not sure that's possible. This should
 				 * always work in practice, though, unless there's another modal on the page. If that happens,
 				 * we have bigger problems :)
+				 *
+				 * todo actually, can maybe use ${ instanceId } like `modal/index.js` in G does?
+				 * yeah, see `compose( withInstanceId )( Card );` in Compassionate Comments
 				 */
 				aria-labelledby="components-modal-header-0"
 
@@ -120,6 +123,11 @@ function Success( props ) {
 	);
 }
 
+// import { withInstanceId, compose } from '@wordpress/compose';
+//const ComposedCard = compose( withInstanceId )( Card );
+//export { ComposedCard as Card };
+
+
 /**
  * Render the view for the main interface.
  *
@@ -132,6 +140,9 @@ function MainView( props ) {
 		activeResultIndex, browserCompatible, handleModalClose, handleNewQuery, handleQueryKeyDown, error,
 		interfaceOpen, loading, results, searchQuery, shortcuts,
 	} = props;
+	// todo use shorter format instead: `ApiKey( { onChange, apiKey } )` ? if so, do for all functions that just reference local props
+		// maybe don't use for big list like this fucntion, but use for smaller functions?
+		// probably can't do for ones that reference this.props and this.state
 
 	let title,
 	    focusOnMount = true,
@@ -155,6 +166,18 @@ function MainView( props ) {
 		success      = true;
 		title        = __( 'Start typing to open any post, menu item, etc', 'quick-navigation-interface' );
 	}
+
+
+	// todo Prob move mainview stuff into "content" var rather than reproducing the if...else with awful jsx limitations
+	//
+	// Why is instructions a separate file but browserCompatible error loading isn't? They don't have any logic in them. Maybe look at "thinking in react" for advice
+	//
+	// What's balance between creating separate file for every little thing, and
+	//
+	// Decompose something if it has subcomponents, if it will be reused, if it's subjectively long or complex
+	// maybe create separate files (but not folders) for some of those things? not sure
+
+
 
 	return (
 		<Fragment>

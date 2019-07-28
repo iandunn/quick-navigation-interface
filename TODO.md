@@ -42,7 +42,13 @@ test that everything in php side still works as expected, caching, expiring cach
 
 finish readme
 
-* maybe write blog post on how to build react app in wp that isn't a block, but uses G's components and abstraction layer
+* remove default exports from everything
+change to `import { render, createElement } from '@wordpress/element';` style and loading that file automatically instead of manually declaring deps
+
+* write post announcing new version - mention react convert but focus on features
+	https://iandunn.name/wordpress/wp-admin/post.php?post=2437&action=edit
+* write another blog post on how to build react app in wp that isn't a block, but uses G's components and abstraction layer
+	https://iandunn.name/wordpress/wp-admin/post.php?post=2393&action=edit
 * then consider doing a seattle wp dev meetup presentation
 * then consider doing a seattle wordcamp talk
 	* #262-meta would be better example since it's a normal admin screen rather than a modal that appears on all screens
@@ -55,6 +61,13 @@ update youtube video - have nicer mic now too. maybe do a quick "hi i'm ian, bui
 
 
 ### 1.0 stretch goals
+
+* Switch to SASS once wp-scripts supports it
+	* https://github.com/WordPress/gutenberg/issues/14801
+	* Can do it now like wordcamp.org did? See https://github.com/WordPress/wordcamp.org/pull/157/
+
+reorganize folder structure similar to compassionate comments
+	don't break back-compat though
 
 add to changelog in readme.txt if do any of these
 
@@ -88,6 +101,9 @@ when it does, scss files inside each component folder, and have wp-scripts build
 https://github.com/WordPress/gutenberg/issues/14801
 
 * Listen for new links added by asyncronously, like News dashboard widget
+
+* doesn't work inside customizer?
+
 
 ### Next-next minor version
 
