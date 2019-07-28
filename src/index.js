@@ -68,6 +68,27 @@ import QuickNavigationInterface from './main/controller';
 	}
 
 	/**
+	 * Delete any old QNI caches to respect user's disk space.
+	 *
+	 * @param {string} currentCache
+	 */
+	function deleteOldCaches( currentCache ) {
+		return caches.keys().then( function ( keyList ) {
+			return Promise.all( keyList.map( function ( key ) {
+				const isQniCache = 'qni-' === key.substr( 0, 4 );
+
+				if ( currentCache === key || ! isQniCache ) {
+					return;
+				}
+
+				return caches.delete( key );
+			} ) );
+		} );
+
+		// todo convert to use `await` instead, for better readability
+	}
+
+	/**
 	 * Initialize the app.
 	 */
 	function init() {
@@ -138,6 +159,8 @@ import QuickNavigationInterface from './main/controller';
 
 				} ).then ( data => {
 					props.links.push( ...data );
+
+					deleteOldCaches( cacheName );
 
 					// todo convert all this nasty crap to use `await` instead of this chain hell
 					// modularize it into a function too, waaaaaay to much crap going on here to be inside init()
