@@ -243,8 +243,7 @@ class Quick_Navigation_Interface {
 			$this->options,
 			array(
 				'plugin_version'  => QNI_VERSION,
-				'user_db_version' => 1,
-					// todo need to pull from usermeta, default to 1, update whenever rebuild index
+				'user_db_version' => get_user_meta( get_current_user_id(), 'qni_content_index_timestamp' ),
 				'root_url'        => get_rest_url(),
 			)
 		);

@@ -98,6 +98,8 @@ import QuickNavigationInterface from './main/controller';
 			// it also used the content-index-timestamp as a cachebuster, do we still need that?
 			// i guess not b/c rest api sends headers to not cache?
 
+			// if false maybe show message that can't retrieve all content, link to browse happy, ask to upgarde
+
 
 			// todo document that use pluginver to avoid syntax errors when schema changes, etc
 			// using dbver so content updates when the index changes
@@ -148,6 +150,7 @@ import QuickNavigationInterface from './main/controller';
 
 			} ).catch( error => {
 				props.error = `${error.data.status} ${error.code}: ${error.message}`;
+					// todo need to redo ^ based on types of errors receiving now after it was refactored
 				// todo is it possible that error will ever just be a string rather than this object?
 				// todo test after all the refactoring
 
@@ -165,7 +168,6 @@ import QuickNavigationInterface from './main/controller';
 				renderApp( container, props );
 			} );
 		}
-
 
 		// todo test that caching expiration works as expected, shouldn't fetch new index unless current one is expired
 		/*

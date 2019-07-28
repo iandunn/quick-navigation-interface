@@ -18,6 +18,7 @@ function Result( props ) {
 				{ parentTitle && parentTitle + ' > ' }
 				<a href={ url }>
 					{ title }
+					{/* todo apostrpohes in post titles (but not link titles) should up as &#8217; instead of the character */}
 				</a>
 			</span>
 
