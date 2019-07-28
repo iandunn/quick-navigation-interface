@@ -21,7 +21,6 @@ define( 'QNI_REQUIRED_WP_VERSION',  '5.0' );  // Because of Gutenberg components
  */
 function qni_requirements_met() {
 	global $wp_version;
-	require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 
 	if ( version_compare( PHP_VERSION, QNI_REQUIRED_PHP_VERSION, '<' ) ) {
 		return false;
@@ -43,26 +42,21 @@ function qni_requirements_error() {
 	require_once( dirname( __FILE__ ) . '/views/requirements-error.php' );
 }
 
-/**
- * Determines whether the current request is a REST API request for one of our endpoints.
- *
- * @return bool
- */
-function qni_rest_request() {
-	$prefix = rest_get_url_prefix();
-
-	// Using `$_SERVER` because this runs too early to check the `REST_REQUEST` constant.
-	return 0 === stripos( $_SERVER['REQUEST_URI'], "/$prefix/quick-navigation-interface" );
-}
-
 /*
  * Check requirements and load the main class
  *
  * The main program needs to be in a separate file that only gets loaded if the plugin requirements are met. Otherwise older PHP installations could crash when trying to parse it.
  */
 if ( qni_requirements_met() ) {
-	if ( is_admin() || qni_rest_request() ) {
+	/*
+	 * This isn't really what `wp_is_json_request()` is meant for, but it's the best option until
+	 * https://core.trac.wordpress.org/ticket/42061 is resolved.
+	 *
+	 * @todo Replace with `wp_doing_rest()` (or whatever) once that's available on minimum required WP version.
+	 */
+	if ( is_admin() || wp_is_json_request() ) {
 		require_once( dirname( __FILE__ ) . '/classes/quick-navigation-interface.php' );
+
 		$GLOBALS['Quick_Navigation_Interface'] = new Quick_Navigation_Interface();
 	}
 } else {
