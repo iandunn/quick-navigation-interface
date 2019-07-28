@@ -113,7 +113,6 @@ class Quick_Navigation_Interface {
 		update_option( 'qni_content_index_expiration_timestamp', time() );
 
 		$this->get_content_index(); // Rebuild the index.
-			// todo param missing, maybe just don't accept at all since not used
 	}
 
 	/**
@@ -132,7 +131,7 @@ class Quick_Navigation_Interface {
 	 *
 	 * @return array
 	 */
-	public function get_content_index( WP_REST_Request $request ) {
+	public function get_content_index() {
 		/*
 		 * When this is called from the REST API server, the a nonce has already been verified.
 		 *
@@ -177,9 +176,6 @@ class Quick_Navigation_Interface {
 		 * A extra second is added to the timestamp, just to be safe, because this will run soon after
 		 * update_content_index_expiration_timestamp(), and the time difference will be rounded off to nearest second,
 		 * which could make them equal, and that would distort the results of content_index_expired().
-		 *
-		 * @todo document why 1 second is added, IIRC race condition with updating the index and user requesting it,
-		 * and want to make sure they get a fresh copy?
 		 */
 		update_user_meta( $current_user_id, 'qni_content_index',           $index );
 		update_user_meta( $current_user_id, 'qni_content_index_timestamp', time() + 1 );
