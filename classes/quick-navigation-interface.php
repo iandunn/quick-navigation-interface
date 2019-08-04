@@ -243,7 +243,7 @@ class Quick_Navigation_Interface {
 			$this->options,
 			array(
 				'plugin_version'  => QNI_VERSION,
-				'user_db_version' => get_user_meta( get_current_user_id(), 'qni_content_index_timestamp' ),
+				'user_db_version' => $this->get_content_index_timestamp(),
 				'root_url'        => get_rest_url(),
 			)
 		);
@@ -270,8 +270,6 @@ class Quick_Navigation_Interface {
 	 * @return int
 	 */
 	protected function get_content_index_timestamp() {
-		// todo this isn't called from anywhere after deleting set_cache_headers(), so can maybe delete it too
-			// will it be needed once add local storage though?
 
 		if ( ! $index_timestamp = get_user_meta( get_current_user_id(), 'qni_content_index_timestamp', true ) ) {
 			$this->get_content_index();  // Rebuild the index.
