@@ -1,26 +1,6 @@
 ### 1.0
 
-* store the contentindex in localstorage
-	* any security/privacy issues with that?
-	* Can double/triple limit or eliminate it?
-		* But still need to store in db so consider the impact there too
-	test that caching still works similar to before, where you only  make the api request when local storage is stale
-	how to know when localstorage is stale, i guess need to output var in inline script
-	maybe kick off the stale request in the bg instead of making them wait while it occurs?
-		but the db cache will already be generated, so it'll just be a normal http request, won't have to wait on the index to be generated 
-
-* localstorage or something else instead of memory? then don't have to pass around
-	* maybe use service worker like https://codesandbox.io/s/github/haldarmahesh/react-context-demo/tree/master/?from-embed
-	* cant setup service worker until pwa plugin integrated w/ core
-
-change all css classes to BEMish convention
-	er, but what abiout back-compat?
-	that'll break anyway b/c of changing the containers etc?
-	but things like qni-search-results haven't changed, right?
-	so few uesrs, unlikely anybody has customized, just go ahead and change it. it's a 1.0 release anyway
-
-test that everything in php side still works as expected, caching, expiring cache, etc
-
+* delete cachestorage entry when user logs out, for privacy
 
 * Maybe change command to `[modifier] /` or just `g`
 	probably add it as an additional for back-compat
@@ -28,6 +8,7 @@ test that everything in php side still works as expected, caching, expiring cach
 	https://ux.stackexchange.com/questions/76405/what-are-conventions-for-keyboard-shortcuts-in-windows-and-osx
 	http://www.hanselman.com/blog/TheWebIsTheNewTerminalAreYouUsingTheWebsKeyboardShortcutsAndHotkeys.aspx
 	* Maybe use https://github.com/jeresig/jquery.hotkeys if it'd make hotkeys easier. it's already in core
+		* probably new gutenberg components instead
 
 	// maybe fix https://github.com/iandunn/quick-navigation-interface/issues/1 now too, by changing key
 	// primary is now `g` or something else instead of `\`` ? still keep that one as backup though?
@@ -37,13 +18,36 @@ test that everything in php side still works as expected, caching, expiring cach
 
 	// search web to see what common ones are, also
 		// `/` for search might also fit, but could conflict w/ jetpack/core search in future
+			// probably just use whatever makes most sense now, then deal with conflicts if they ever come up
 		// https://www.hanselman.com/blog/TheWebIsTheNewTerminalAreYouUsingTheWebsKeyboardShortcutsAndHotkeys.aspx
 		// look for more
 
-finish readme
-
 * remove default exports from everything
 change to `import { render, createElement } from '@wordpress/element';` style and loading that file automatically instead of manually declaring deps
+
+
+reorganize folder structure similar to compassionate comments
+	don't break back-compat though
+
+
+* Switch to SASS once wp-scripts supports it
+	* https://github.com/WordPress/gutenberg/issues/14801
+	* Can do it now like wordcamp.org did? See https://github.com/WordPress/wordcamp.org/pull/157/
+* change all css classes to BEMish convention
+	er, but what abiout back-compat?
+	that'll break anyway b/c of changing the containers etc?
+	but things like qni-search-results haven't changed, right?
+	so few uesrs, unlikely anybody has customized, just go ahead and change it. it's a 1.0 release anyway
+
+
+#### Cleanup / launch
+
+* rest api + storagecache api
+	* any security/privacy issues with this new setup?
+
+* test that everything in php side still works as expected, caching, expiring cache, etc
+
+finish readme
 
 * write post announcing new version - mention react convert but focus on features
 	https://iandunn.name/wordpress/wp-admin/post.php?post=2437&action=edit
@@ -60,16 +64,11 @@ update youtube video - have nicer mic now too. maybe do a quick "hi i'm ian, bui
 
 
 
-### 1.0 stretch goals
 
-* Switch to SASS once wp-scripts supports it
-	* https://github.com/WordPress/gutenberg/issues/14801
-	* Can do it now like wordcamp.org did? See https://github.com/WordPress/wordcamp.org/pull/157/
 
-reorganize folder structure similar to compassionate comments
-	don't break back-compat though
 
-add to changelog in readme.txt if do any of these
+### Next minor version
+
 
 // todo "33 plugin links" when 3 plugins need updating
 	// probably throw out the text in `ab-label`
@@ -91,10 +90,6 @@ should load the script sooner.
 	* maybe things are unneccessarily re-rendering or some other common mistake?
 	* actually, that may just be firefox vs chrome, since the backbone version feels a bit slow in ff too
 	* might still be some optimizations you can make though
-
-
-
-### Next minor version
 
 * css no longer minified b/c not using grunt anymore and wp-scripts doesn't support it
 when it does, scss files inside each component folder, and have wp-scripts build a single minified/concat'd file in `build/`
@@ -133,6 +128,12 @@ need to test different scenarios where that might break
 
 
 ### Future iterations
+
+* can make index bigger than 55k now that using cache api?
+	// check StorageEstimates API manually just out of curiosity, and to tune and good default
+	// need to be conservative b/c average user may have less disk space than you, especially on mobile
+	// add todo.md note that in future, could check that API programatically, and add API param to request larger or smaller # of records based on the space available
+	// But still need to store in db so consider the impact there too
 
 * make it discoverable for users who don't already know it exists and how to use it
 	* https://wordpress.org/support/topic/trigger-from-search-iconbutton/

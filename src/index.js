@@ -205,10 +205,7 @@ import QuickNavigationInterface from './main/controller';
 			 // use caches.keys() to search for other `qni-` prefixed cache objects, and remove any that don't match the current pluginversion/userdbversion
 		 */
 
-		// can make it bigger than 55k when using cache api?
-			// check StorageEstimates API manually just out of curiosity, and to tune and good default
-			// need to be conservative b/c average user may have less disk space than you, especially on mobile
-			// add todo.md note that in future, could check that API programatically, and add API param to request larger or smaller # of records based on the space available
+
 	}
 
 	init();
