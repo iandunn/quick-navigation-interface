@@ -1,5 +1,11 @@
 ### 1.0
 
+incompat browser error
+	should stlil show the interface even if can't access fetch/cachestorage, b/c can still get current links on screen
+	probably don't need to show any error,just silently fall back to not fetching+caching remote data, and only showing links on screen
+	still need to detect if it's supported so don't fatal error trying to access something that doesn't exist
+		but don't need to show error msg
+
 * delete cachestorage entry when user logs out, for privacy
 
 * Maybe change command to `[modifier] /` or just `g`
@@ -22,7 +28,6 @@
 		// https://www.hanselman.com/blog/TheWebIsTheNewTerminalAreYouUsingTheWebsKeyboardShortcutsAndHotkeys.aspx
 		// look for more
 
-* remove default exports from everything
 change to `import { render, createElement } from '@wordpress/element';` style and loading that file automatically instead of manually declaring deps
 
 
@@ -33,6 +38,7 @@ reorganize folder structure similar to compassionate comments
 * Switch to SASS once wp-scripts supports it
 	* https://github.com/WordPress/gutenberg/issues/14801
 	* Can do it now like wordcamp.org did? See https://github.com/WordPress/wordcamp.org/pull/157/
+
 * change all css classes to BEMish convention
 	er, but what abiout back-compat?
 	that'll break anyway b/c of changing the containers etc?
@@ -69,7 +75,6 @@ update youtube video - have nicer mic now too. maybe do a quick "hi i'm ian, bui
 
 ### Next minor version
 
-
 // todo "33 plugin links" when 3 plugins need updating
 	// probably throw out the text in `ab-label`
 	// or maybe shouldn't be searching for .ab-label above?
@@ -90,6 +95,10 @@ should load the script sooner.
 	* maybe things are unneccessarily re-rendering or some other common mistake?
 	* actually, that may just be firefox vs chrome, since the backbone version feels a bit slow in ff too
 	* might still be some optimizations you can make though
+
+* maybe use https://reactjs.org/docs/react-api.html#reactmemo and https://reactjs.org/docs/react-api.html#reactpurecomponent ?
+	* it might improve performance, but that might be a premature optimization, but might help w/ slight delay above?
+	* be careful b/c it's only a shallow compare
 
 * css no longer minified b/c not using grunt anymore and wp-scripts doesn't support it
 when it does, scss files inside each component folder, and have wp-scripts build a single minified/concat'd file in `build/`

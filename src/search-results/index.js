@@ -36,7 +36,7 @@ function Result( props ) {
  *
  * @return {Element}
  */
-function SearchResults( props ) {
+export function SearchResults( props ) {
 	const { activeResultIndex, results } = props;
 
 	return (
@@ -53,5 +53,3 @@ function SearchResults( props ) {
 		</ul>
 	);
 }
-
-export default SearchResults;

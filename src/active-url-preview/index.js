@@ -9,7 +9,7 @@
  *
  * @return {Element}
  */
-function ActiveUrlPreview( props ) {
+export function ActiveUrlPreview( props ) {
 	const { url } = props;
 
 	return (
@@ -18,5 +18,3 @@ function ActiveUrlPreview( props ) {
 		</div>
 	);
 }
-
-export default ActiveUrlPreview;

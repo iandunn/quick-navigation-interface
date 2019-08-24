@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-const { RawHTML } = wp.element;
+const { RawHTML }     = wp.element;
 const { __, sprintf } = wp.i18n;
 
 /**
@@ -11,7 +11,7 @@ const { __, sprintf } = wp.i18n;
  *
  * @return {Element}
  */
-function Instructions( props ) {
+export function Instructions( props ) {
 	const { shortcuts } = props;
 
 	return (
@@ -35,5 +35,3 @@ function Instructions( props ) {
 		</p>
 	);
 }
-
-export default Instructions;

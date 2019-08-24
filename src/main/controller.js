@@ -8,12 +8,12 @@ const { __ }        = wp.i18n;
 /**
  * Internal dependencies
  */
-import MainView from './main-view';
+import { MainView } from './main-view';
 
 /**
  * Manage the state for the main interface.
  */
-class MainController extends Component {
+export class MainController extends Component {
 	constructor( props ) {
 		super( props );
 
@@ -299,8 +299,6 @@ class MainController extends Component {
 		);
 	}
 }
-
-export default MainController;
 
 // todo Stop using default exports, named instead
 // Maybe make exception for main controller, bc nice to have that as full name , but maybe more clear to not?

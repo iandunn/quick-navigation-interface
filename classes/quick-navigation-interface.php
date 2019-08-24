@@ -251,6 +251,7 @@ class Quick_Navigation_Interface {
 		$inline_script = sprintf(
 			'var qniOptions = %s;',
 			wp_json_encode( $script_data )
+			// todo uriencode
 		);
 
 		wp_add_inline_script( 'quick-navigation-interface', $inline_script, 'before' );

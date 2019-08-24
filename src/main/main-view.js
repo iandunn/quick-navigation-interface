@@ -8,9 +8,9 @@ const { __, sprintf }                 = wp.i18n;
 /**
  * Internal dependencies
  */
-import ActiveUrlPreview from '../active-url-preview';
-import Instructions     from '../instructions';
-import SearchResults    from '../search-results/';
+import { ActiveUrlPreview } from '../active-url-preview';
+import { Instructions }     from '../instructions';
+import { SearchResults }    from '../search-results/';
 
 /**
  * Render the view for the browser incompatibility notice.
@@ -135,7 +135,7 @@ function Success( props ) {
  *
  * @return {Element}
  */
-function MainView( props ) {
+export function MainView( props ) {
 	const {
 		activeResultIndex, browserCompatible, handleModalClose, handleNewQuery, handleQueryKeyDown, error,
 		interfaceOpen, loading, results, searchQuery, shortcuts,
@@ -215,5 +215,3 @@ function MainView( props ) {
 		</Fragment>
 	);
 }
-
-export default MainView;

@@ -7,7 +7,7 @@ const { render, createElement } = wp.element;
 /**
  * Internal dependencies
  */
-import QuickNavigationInterface from './main/controller';
+import { MainController as QuickNavigationInterface } from './main/controller';
 
 ( function() {
 	const container = document.createElement( 'div' );
@@ -172,7 +172,8 @@ import QuickNavigationInterface from './main/controller';
 				} );
 
 			} ).catch( error => {
-				props.error = `${error.data.status} ${error.code}: ${error.message}`;
+				console.log( 'caught error', {error} );
+				//props.error = `${error.data.status} ${error.code}: ${error.message}`;
 					// todo need to redo ^ based on types of errors receiving now after it was refactored
 				// todo is it possible that error will ever just be a string rather than this object?
 				// todo test after all the refactoring
