@@ -229,12 +229,7 @@ class Quick_Navigation_Interface {
 		wp_enqueue_script(
 			'quick-navigation-interface',
 			plugins_url( 'build/index.js', __DIR__ ),
-			array(
-				'wp-api-fetch',
-				'wp-components',
-				'wp-element',
-				'wp-i18n',
-			),
+			json_decode( file_get_contents( dirname( __DIR__ ) . '/build/index.deps.json' ) ),
 			QNI_VERSION,
 			true
 		);

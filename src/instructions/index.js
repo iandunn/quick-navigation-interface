@@ -1,8 +1,9 @@
 /**
  * WordPress dependencies
  */
-const { RawHTML }     = wp.element;
-const { __, sprintf } = wp.i18n;
+import { RawHTML }     from '@wordpress/element';
+import { __, sprintf } from '@wordpress/i18n';
+
 
 /**
  * Render usage instructions for the user.

@@ -1,9 +1,9 @@
 /**
  * WordPress dependencies
  */
-const { Modal, TextControl, Spinner } = wp.components;
-const { Fragment, RawHTML }           = wp.element;
-const { __, sprintf }                 = wp.i18n;
+import { Modal, TextControl, Spinner } from '@wordpress/components';
+import { Fragment, RawHTML }           from '@wordpress/element';
+import { __, sprintf }                 from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -11,6 +11,7 @@ const { __, sprintf }                 = wp.i18n;
 import { ActiveUrlPreview } from '../active-url-preview';
 import { Instructions }     from '../instructions';
 import { SearchResults }    from '../search-results/';
+
 
 /**
  * Render the view for the browser incompatibility notice.

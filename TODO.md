@@ -28,9 +28,6 @@ incompat browser error
 		// https://www.hanselman.com/blog/TheWebIsTheNewTerminalAreYouUsingTheWebsKeyboardShortcutsAndHotkeys.aspx
 		// look for more
 
-change to `import { render, createElement } from '@wordpress/element';` style and loading that file automatically instead of manually declaring deps
-
-
 reorganize folder structure similar to compassionate comments
 	don't break back-compat though
 

@@ -1,9 +1,9 @@
 /**
  * WordPress dependencies
  */
-const { Component } = wp.element;
-const { UP, DOWN }  = wp.keycodes;
-const { __ }        = wp.i18n;
+import { Component } from '@wordpress/element';
+import { UP, DOWN }  from '@wordpress/keycodes';
+import { __ }        from '@wordpress/i18n';
 
 /**
  * Internal dependencies

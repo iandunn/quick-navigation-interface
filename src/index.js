@@ -1,13 +1,14 @@
 /**
  * WordPress dependencies
  */
-const { apiFetch }              = wp;
-const { render, createElement } = wp.element;
+import apiFetch                  from '@wordpress/api-fetch';
+import { render, createElement } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
 import { MainController as QuickNavigationInterface } from './main/controller';
+
 
 ( function() {
 	const container = document.createElement( 'div' );
