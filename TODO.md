@@ -1,11 +1,5 @@
 ### 1.0
 
-incompat browser error
-	should stlil show the interface even if can't access fetch/cachestorage, b/c can still get current links on screen
-	probably don't need to show any error,just silently fall back to not fetching+caching remote data, and only showing links on screen
-	still need to detect if it's supported so don't fatal error trying to access something that doesn't exist
-		but don't need to show error msg
-
 * delete cachestorage entry when user logs out, for privacy
 
 * Maybe change command to `[modifier] /` or just `g`

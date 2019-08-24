@@ -21,14 +21,12 @@ import { SearchResults }    from '../search-results/';
 function BrowserIncompatible() {
 	return (
 		<Fragment>
-			<p>
+			<p className="notice notice-warning inline">
 				{ __(
-					"I'm sorry, but your browser doesn't support one of the technologies that this feature requires.",
+					"Posts cannot be searched because your browser is too old; only links from the current page will be displayed.",
 					'quick-navigation-interface'
 				) }
-			</p>
 
-			<p>
 				<RawHTML>
 					{ sprintf(
 						/*
@@ -149,9 +147,7 @@ export function MainView( props ) {
 		return null;
 	}
 
-	if ( ! browserCompatible ) {
-		title = __( 'Incompatible Browser', 'quick-navigation-interface' );
-	} else if ( loading ) {
+	if ( loading ) {
 		modalClasses = [ 'qni-loading' ];
 		title        = __( 'Loading...', 'quick-navigation-interface' );
 	} else if ( error ) {
@@ -159,6 +155,11 @@ export function MainView( props ) {
 	} else {
 		// Without this, the modal would get the focus, preventing the `TextControl.autofocus` from working.
 		focusOnMount = false;
+
+		/*
+		 * The app is still successful even when `browserCompatible` is `false`, because we can still show links
+		 * from the current page.
+		 */
 		success      = true;
 		title        = __( 'Start typing to open any post, menu item, etc', 'quick-navigation-interface' );
 	}
@@ -187,8 +188,6 @@ export function MainView( props ) {
 				// Down key broken after hitting escape --  https://github.com/WordPress/gutenberg/issues/15429.
 				isDismissable={ true }
 			>
-				{ ! browserCompatible && <BrowserIncompatible /> }
-
 				{ loading && <Spinner /> }
 
 				{ error && <Error error={ error } /> }
@@ -203,6 +202,8 @@ export function MainView( props ) {
 						shortcuts={ shortcuts }
 					/>
 				}
+
+				{ ! browserCompatible && <BrowserIncompatible /> }
 			</Modal>
 
 			{ results.hasOwnProperty( activeResultIndex ) &&
