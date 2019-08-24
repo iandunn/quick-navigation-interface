@@ -8,7 +8,8 @@ const { __ }        = wp.i18n;
 /**
  * Internal dependencies
  */
-import { MainView } from './main-view';
+import { MainView } from './view';
+
 
 /**
  * Manage the state for the main interface.
