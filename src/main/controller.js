@@ -300,7 +300,3 @@ export class MainController extends Component {
 		);
 	}
 }
-
-// todo Stop using default exports, named instead
-// Maybe make exception for main controller, bc nice to have that as full name , but maybe more clear to not?
-// import { MainController as QuickNavigationInterface } from "./main/conttolleer";

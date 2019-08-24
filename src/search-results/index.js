@@ -5,12 +5,8 @@
  *
  * @return {Element}
  */
-function Result( props ) {
-	const { active, link }                  = props;
+function Result( { active, link } ) {
 	const { parentTitle, title, type, url } = link;
-
-	// todo Results function should not be aware that SearchResults is a ul. It should wrap return in fragment, and SearchResults should add the li tag
-	// Prob need to.move the key to the li as well
 
 	return (
 		<li className={ active ? 'qni-active-result' : '' }>
@@ -18,7 +14,9 @@ function Result( props ) {
 				{ parentTitle && parentTitle + ' > ' }
 				<a href={ url }>
 					{ title }
-					{/* todo apostrpohes in post titles (but not link titles) should up as &#8217; instead of the character */}
+					{/* todo apostrpohes in post titles (but not link titles) should up as &#8217; instead of the character
+					similar happens in schedule block
+					 */}
 				</a>
 			</span>
 
@@ -36,9 +34,7 @@ function Result( props ) {
  *
  * @return {Element}
  */
-export function SearchResults( props ) {
-	const { activeResultIndex, results } = props;
-
+export function SearchResults( { activeResultIndex, results } ) {
 	return (
 		<ul id="qni-search-results">
 			{ results.map( ( link, index ) => {

@@ -9,9 +9,7 @@
  *
  * @return {Element}
  */
-export function ActiveUrlPreview( props ) {
-	const { url } = props;
-
+export function ActiveUrlPreview( { url } ) {
 	return (
 		<div id="qni-result-preview">
 			{ url }

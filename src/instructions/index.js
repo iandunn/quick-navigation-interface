@@ -12,9 +12,7 @@ import { __, sprintf } from '@wordpress/i18n';
  *
  * @return {Element}
  */
-export function Instructions( props ) {
-	const { shortcuts } = props;
-
+export function Instructions( { shortcuts } ) {
 	return (
 		<p id="qni-instructions">
 			<RawHTML>

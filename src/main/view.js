@@ -51,9 +51,7 @@ function BrowserIncompatible() {
  *
  * @return {Element}
  */
-function Error( props ) {
-	const { error } = props;
-
+function Error( { error } ) {
 	return (
 		<Fragment>
 			<p>
@@ -141,9 +139,6 @@ export function MainView( props ) {
 		activeResultIndex, browserCompatible, handleModalClose, handleNewQuery, handleQueryKeyDown, error,
 		interfaceOpen, loading, results, searchQuery, shortcuts,
 	} = props;
-	// todo use shorter format instead: `ApiKey( { onChange, apiKey } )` ? if so, do for all functions that just reference local props
-		// maybe don't use for big list like this fucntion, but use for smaller functions?
-		// probably can't do for ones that reference this.props and this.state
 
 	let title,
 	    focusOnMount = true,
