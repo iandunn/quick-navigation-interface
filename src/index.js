@@ -62,9 +62,10 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 	function renderApp( container, props ) {
 		render(
 			createElement( QuickNavigationInterface, props ),
-			// todo need createElement here, or just <QuickNavigationInterface ...props> ?
-			// probably just do ^
 			container
+
+			// todo should be able to do something like this instead, and then createElement import?
+			//<QuickNavigationInterface { ...props } />
 		);
 	}
 
@@ -95,7 +96,8 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 	function init() {
 		props = {
 			browserCompatible : 'fetch' in window && 'caches' in window,
-			// todo probably don't need ^ to check fetch b/c G polyfills window.fetch. probably doesn't hurt to leave it. it remove it, document that can assume it exists b/c G polyfill
+			// todo probably don't need ^ to check fetch b/c G polyfills window.fetch. probably doesn't hurt to leave it.
+			// if remove it, document that can assume it exists b/c G polyfill
 			// todo test in older browser that doesn't support fetch and caches, fetch should be polyfilled but lack of `caches` should trigger failure
 
 			error             : false,
@@ -110,7 +112,13 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 
 		document.getElementById( 'wpwrap' ).appendChild( container );
 
-		// todo explain rendering immediately w/ the data we already have on the page, then will render again later when we have more data from the api request
+		/*
+		 * Render immediately with the links we parsed out of the DOM, to that the user can user this as soon as
+		 * possible. We'll render again once the API data has been fetched.
+		 *
+		 * @todo in most cases data will be cached, so maybe refactor this so that it only renders twice if there
+		 * API data isn't cached and we're actually going to make an XHR.
+		 */
 		renderApp( container, props );
 
 		if ( props.browserCompatible ) {
@@ -120,13 +128,17 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 			// it also used the content-index-timestamp as a cachebuster, do we still need that?
 			// i guess not b/c rest api sends headers to not cache?
 
-			// if false maybe show message that can't retrieve all content, link to browse happy, ask to upgarde
-
-
-			// todo document that use pluginver to avoid syntax errors when schema changes, etc
-			// using dbver so content updates when the index changes
-			const cacheName     = `qni-${ qniOptions.plugin_version }-${ qniOptions.user_db_version }`;
-			const url           = `${ qniOptions.root_url }quick-navigation-interface/v1/content-index/`;
+			/*
+			 * Include cachebusters in the cache name.
+			 *
+			 * The cache should be refreshed when the plugin version changes, because that might change the REST
+			 * API response, which would cause a fatal error if the new code were trying to use the old data.
+			 *
+			 * It should also be refreshed when the content in the database changes, so that the user can search
+			 * the new content.
+			 */
+			const cacheName = `qni-${ qniOptions.plugin_version }-${ qniOptions.user_db_version }`;
+			const url       = `${ qniOptions.root_url }quick-navigation-interface/v1/content-index/`;
 
 			caches.open( cacheName ).then( cache => {
 				return cache.match( url ).then( cachedResponse => {
@@ -136,16 +148,24 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 
 					const fetchOptions = {
 						url,
-						parse: false, // todo explain it's b/c need the response to store it
-							// maybe i don't though? do you _have_ to store the full response, or can you just store the body of it?
+						parse: false, // Get the full response so it can be stored in the Cache API.
 					};
 
-					// document that using fetch to get nonce and polyfill, but need to pass full url instead of just path so can use w/ cachestorage api
+					/*
+					 * Using apiFetch for the nonce and polyfill, but we still need to pass the full URL instead
+					 * of just the `path`, so that the URL can be stored in the Cache API.
+					 */
 					return apiFetch( fetchOptions ).then( liveResponse => {
-						// document that have to clone it before put() consumes the body, otherwise can't use it b/c body already consumed
+						/*
+						 * `put()` consumes the body, and it can't be accessed after. We need to return the body
+						 * after using `put()`, though, so we have to clone it.
+						 */
 						const clonedLiveResponse = liveResponse.clone();
 
-						// document that cnat use cache.add because need to use apiFetch to include nonce, polyfill, etc ? were there other reasons?
+						/*
+						 * Using `put()` instead of just `add()` because we're using `apiFetch` instead of
+						 * `fetch()`. See notes above.
+						 */
 						cache.put( url, liveResponse );
 
 						// cache.add() does't store non-200 responses, but cache.put does, so have to validate
