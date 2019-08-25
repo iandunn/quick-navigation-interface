@@ -94,7 +94,18 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 	 * Initialize the app.
 	 */
 	function init() {
-		props = {
+		/*
+		 * Delete all caches when logging out, to prevent leaking anything sensitive to other users of the device.
+		 * Then return because the app wouldn't be useful in the login/logout context.
+		 */
+		const isLoggingOut = -1 !== window.location.pathname.indexOf( 'wp-login.php' ) && -1 !== window.location.search.indexOf( 'loggedout=true');
+
+		if ( isLoggingOut ) {
+			deleteOldCaches( '' ); // Empty string so that `currentCache` will also be deleted.
+			return;
+		}
+
+		const props = {
 			browserCompatible : 'fetch' in window && 'caches' in window,
 			// todo probably don't need ^ to check fetch b/c G polyfills window.fetch. probably doesn't hurt to leave it.
 			// if remove it, document that can assume it exists b/c G polyfill

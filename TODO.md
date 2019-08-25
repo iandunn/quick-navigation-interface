@@ -1,7 +1,5 @@
 ### 1.0
 
-* delete cachestorage entry when user logs out, for privacy
-
 * Maybe change command to `[modifier] /` or just `g`
 	probably add it as an additional for back-compat
 	https://medium.com/@sashika/j-k-or-how-to-choose-keyboard-shortcuts-for-web-applications-a7c3b7b408ee#.cbjvagkdg
@@ -139,6 +137,7 @@ need to test different scenarios where that might break
 	* https://wordpress.org/support/topic/trigger-from-search-iconbutton/
 	* integrate into core's list of keyboard shortcuts?
 * Setup phpunit and jest tests
+	* also e2e test to make sure cache deleted after log out
 * Setup travis
 * setup php codesniffer
 * sourcemap xss issues? remove b/c not useful anyway?

@@ -42,6 +42,20 @@ function qni_requirements_error() {
 	require_once( dirname( __FILE__ ) . '/views/requirements-error.php' );
 }
 
+
+/**
+ * Detect if the current screen is the login screen.
+ *
+ * @see https://wordpress.stackexchange.com/questions/12863/check-if-wp-login-is-current-page#comment506953_225298
+ *
+ * @todo Remove this if https://core.trac.wordpress.org/ticket/19898 provides a canonical solution.
+ *
+ * @return bool
+ */
+function qni_is_login_screen() {
+	return false !== stripos( wp_login_url(), $_SERVER['SCRIPT_NAME'] );
+}
+
 /*
  * Check requirements and load the main class
  *
@@ -54,7 +68,7 @@ if ( qni_requirements_met() ) {
 	 *
 	 * @todo Replace with `wp_doing_rest()` (or whatever) once that's available on minimum required WP version.
 	 */
-	if ( is_admin() || wp_is_json_request() ) {
+	if ( is_admin() || wp_is_json_request() || qni_is_login_screen() ) {
 		require_once( dirname( __FILE__ ) . '/classes/quick-navigation-interface.php' );
 
 		$GLOBALS['Quick_Navigation_Interface'] = new Quick_Navigation_Interface();

@@ -11,6 +11,7 @@ class Quick_Navigation_Interface {
 
 		add_action( 'rest_api_init',             array( $this, 'register_endpoints' ) );
 		add_action( 'admin_enqueue_scripts',     array( $this, 'enqueue_scripts'  ) );
+		add_action( 'login_enqueue_scripts',     array( $this, 'enqueue_scripts'  ) );
 		add_action( 'post_updated',              array( $this, 'update_content_index_expiration_timestamp' ), 10, 3 );
 		add_action( 'transition_post_status',    array( $this, 'update_content_index_expiration_timestamp' ), 10, 3 );
 	}
