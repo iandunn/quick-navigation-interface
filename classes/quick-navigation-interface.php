@@ -30,6 +30,16 @@ class Quick_Navigation_Interface {
 					'code'  => 192,
 					'label' => __( '`',      'quick-navigation-interface' )
 				),
+				'open-interface-alternate' => array(
+					/*
+					 * This would ideally be the primary key, since it's much more intuitive and universal, but
+					 * it needs to be the alternate for backwards-compatibility.
+					 *
+					 * @see https://github.com/iandunn/quick-navigation-interface/issues/1
+					 */
+					'code'  => 71,
+					'label' => __( 'g',      'quick-navigation-interface' )
+				),
 				'next-link' => array(
 					'code'  => 40,
 					'label' => __( 'Down',   'quick-navigation-interface' )

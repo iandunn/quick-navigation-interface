@@ -1,25 +1,5 @@
 ### 1.0
 
-* Maybe change command to `[modifier] /` or just `g`
-	probably add it as an additional for back-compat
-	https://medium.com/@sashika/j-k-or-how-to-choose-keyboard-shortcuts-for-web-applications-a7c3b7b408ee#.cbjvagkdg
-	https://ux.stackexchange.com/questions/76405/what-are-conventions-for-keyboard-shortcuts-in-windows-and-osx
-	http://www.hanselman.com/blog/TheWebIsTheNewTerminalAreYouUsingTheWebsKeyboardShortcutsAndHotkeys.aspx
-	* Maybe use https://github.com/jeresig/jquery.hotkeys if it'd make hotkeys easier. it's already in core
-		* probably new gutenberg components instead
-
-	// maybe fix https://github.com/iandunn/quick-navigation-interface/issues/1 now too, by changing key
-	// primary is now `g` or something else instead of `\`` ? still keep that one as backup though?
-		// if in input field, then modifier-g
-			// cmg-g conflicts with search in firefox
-			// https://docs.google.com/spreadsheets/d/1nK1frKawxV7aboWOJbbslbIqBGoLY7gqKvfwqENj2yE/edit#gid=0
-
-	// search web to see what common ones are, also
-		// `/` for search might also fit, but could conflict w/ jetpack/core search in future
-			// probably just use whatever makes most sense now, then deal with conflicts if they ever come up
-		// https://www.hanselman.com/blog/TheWebIsTheNewTerminalAreYouUsingTheWebsKeyboardShortcutsAndHotkeys.aspx
-		// look for more
-
 reorganize folder structure similar to compassionate comments
 	don't break back-compat though
 
@@ -170,6 +150,7 @@ need to test different scenarios where that might break
 		* Find a good, performant implementation. Maybe https://stackoverflow.com/questions/11919065/sort-an-array-by-the-levenshtein-distance-with-best-performance-in-javascript
 
 * Add a way to search for more content via AJAX if some posts were left out of local index b/c of limit?
+	* if so, update faq
 
 * Add ability to search by additional keywords that are associated w/ each link, not just the title
 	* Can pull the keywords from link title tags, post excerpts, etc

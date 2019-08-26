@@ -15,7 +15,7 @@ Quickly access screens and content within wp-admin just by typing the first few 
 
 Quick Navigation Interface provides a new way to navigate through the Administration Panels, combining the speed of keyboard shortcuts with the ease of a graphical user interface.
 
-Just press \` (above the tab key) to bring up the interface, and then start typing part of the name of any screen, post, page, etc. As you type, you'll be shown a list of matching links. Use the `Up` and `Down` keys to move between them, and press `Enter` to open one.
+Just press `g` or \` -- _the backtick character, usually located above the tab key_ -- to bring up the interface, and then start typing part of the name of any screen, post, page, etc. As you type, you'll be shown a list of matching links. Use the `Up` and `Down` keys to move between them, and press `Enter` to open one.
 
 https://www.youtube.com/watch?v=60iVn94hEIE
 
@@ -24,14 +24,14 @@ This was inspired by Ubuntu's Dash and [HUD](http://www.markshuttleworth.com/arc
 
 == Frequently Asked Questions ==
 
-= I'm pressing the ` key, but nothing happens =
+= I'm pressing `g` or the ` key, but nothing happens =
 
 There are a few likely causes for this:
 
 1. The page hasn't finished loading yet. Make sure you wait until the circle in the title bar has stopped spinning.
 1. The cursor could be focused on an input field (like a text area or a button). Try clicking anywhere outside an input field (like the page's background) to move the focus off of the input field, and then try to open the interface again.
 1. If you're not using an English keyboard, the key might not work. You can pick another key by following the instructions in the FAQ entry below. To help improve this for other non-English users, please [let me know what a good key would be for your language](https://github.com/iandunn/quick-navigation-interface/issues/1).
-1. You might be mistaking the \` (backtick) key for the ' (single-quote) key. You need to press the backtick key, which is normally located above the `tab` key and left of the `1` key.
+1. You might be mistaking the \` (backtick) key for the ' (single-quote) key. You need to press the backtick key, which is normally located above the `tab` key and left of the `1` key. You can also try using the `g` key instead.
 1. JavaScript execution might have been halted because of errors on the page, which would most likely be caused by the theme or another plugin. You can check your browser's error console for details, and send the error to the plugin's developer. To work around it, try disabling all other plugins temporarily, and switching to one of the Core themes, and see if that solves the problem. If it does, turn them back on one-by-one until you isolate which one is causing the problem.
 
 
@@ -59,7 +59,7 @@ I've done my best to ensure that it is, but just in case I missed anything [I al
 
 == Screenshots ==
 
-1. Pressing \` (above the tab key) brings up the interface
+1. Pressing `g` or \` -- _the backtick character, usually located above the tab key_ -- brings up the interface
 2. Matches are displayed and filtered as you type
 
 
@@ -67,6 +67,7 @@ I've done my best to ensure that it is, but just in case I missed anything [I al
 
 = v1.0 (2019-??-??) =
 
+* [NEW] The `g` key now also opens the interface, in addition to the \` (backtick) key.
 * [NEW] Highlighting a link shows a preview of its URL, so you can know where it will take you.
 * [NEW] Links for menu items include their parent menu title, if applicable.
 * [NEW] The type of link is now displayed (post, page, menu item, etc).

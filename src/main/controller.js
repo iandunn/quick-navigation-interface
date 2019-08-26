@@ -48,15 +48,15 @@ export class MainController extends Component {
 	componentDidMount() {
 		/*
 		 * This (and its counterpart in `componentWillUnmount`) need to listen on `window` instead of just within
-		 * this component in order to catch the backtick and open the interface. If it weren't for that, we could
-		 * use the KeyboardShortcuts component to do all this. Since we're already doing it for the backtick,
+		 * this component in order to catch the g/backtick and open the interface. If it weren't for that, we could
+		 * use the KeyboardShortcuts component to do all this. Since we're already doing it for the g/backtick,
 		 * though, it's simpler to just use this to catch the other keys too.
 		 *
 		 * There might be some benefit to using Mousetrap (a dependency of KeyboardShortcuts) directly, but this
 		 * is simple enough that it doesn't seem worth looking into.
 		 *
 		 * `keydown` is potentially better here, to allow for holding down up/down keys, but also has some
-		 * side-effects, like how pressing the backtick opens the interface and then adds a backtick character to
+		 * side-effects, like how pressing the g/backtick opens the interface and then adds a g/backtick character to
 		 * the text input field.
 		 *
 		 * See https://stackoverflow.com/questions/3396754/onkeypress-vs-onkeyup-and-onkeydown for more
@@ -78,6 +78,8 @@ export class MainController extends Component {
 	handleKeyboardEvents( event ) {
 		const { interfaceOpen } = this.state;
 		const { shortcuts }     = this.props;
+		const openInterfaceCode    = shortcuts[ 'open-interface' ].code;
+		const openInterfaceAltCode = shortcuts[ 'open-interface-alternate' ].code;
 
 		/*
 		 * This property is deprecated, but `event.key` is still not a viable alternative, because IE11 and Edge18
@@ -95,12 +97,13 @@ export class MainController extends Component {
 		const { which } = event;
 
 		// Ignore events when the interface is closed, except to open the interface.
-		if ( ! interfaceOpen && which !== shortcuts[ 'open-interface' ].code ) {
+		if ( ! interfaceOpen && which !== openInterfaceCode && which !== openInterfaceAltCode ) {
 			return;
 		}
 
 		switch ( which ) {
-			case shortcuts[ 'open-interface' ].code:
+			case openInterfaceCode:
+			case openInterfaceAltCode:
 				this.openInterface( event );
 				break;
 
