@@ -1,9 +1,5 @@
 ### 1.0
 
-reorganize folder structure similar to compassionate comments
-	don't break back-compat though
-
-
 * Switch to SASS once wp-scripts supports it
 	* https://github.com/WordPress/gutenberg/issues/14801
 	* Can do it now like wordcamp.org did? See https://github.com/WordPress/wordcamp.org/pull/157/
@@ -19,6 +15,8 @@ reorganize folder structure similar to compassionate comments
 
 * rest api + storagecache api
 	* any security/privacy issues with this new setup?
+
+* lint php, css, js
 
 * test that everything in php side still works as expected, caching, expiring cache, etc
 

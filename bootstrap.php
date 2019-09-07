@@ -39,7 +39,7 @@ function qni_requirements_met() {
 function qni_requirements_error() {
 	global $wp_version;
 
-	require_once( dirname( __FILE__ ) . '/views/requirements-error.php' );
+	require_once( dirname( __FILE__ ) . '/requirements-error.php' );
 }
 
 
@@ -69,9 +69,7 @@ if ( qni_requirements_met() ) {
 	 * @todo Replace with `wp_doing_rest()` (or whatever) once that's available on minimum required WP version.
 	 */
 	if ( is_admin() || wp_is_json_request() || qni_is_login_screen() ) {
-		require_once( dirname( __FILE__ ) . '/classes/quick-navigation-interface.php' );
-
-		$GLOBALS['Quick_Navigation_Interface'] = new Quick_Navigation_Interface();
+		require_once( dirname( __FILE__ ) . '/components/main/controller.php' );
 	}
 } else {
 	add_action( 'admin_notices', 'qni_requirements_error' );
