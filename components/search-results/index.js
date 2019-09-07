@@ -1,4 +1,10 @@
 /**
+ * Internal dependencies
+ */
+import './style.scss';
+
+
+/**
  * Render an individual search result item.
  *
  * @param {Array} props

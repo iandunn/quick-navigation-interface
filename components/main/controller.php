@@ -45,7 +45,7 @@ function register_endpoints() {
 function enqueue_scripts() {
 	wp_enqueue_style(
 		'quick-navigation-interface',
-		plugins_url( "css/quick-navigation-interface.css", dirname( __DIR__ ) ),
+		plugins_url( "build/quick-navigation-interface.min.css", dirname( __DIR__ ) ),
 		array( 'wp-components' ),
 		QNI_VERSION,
 		'all'
@@ -53,8 +53,8 @@ function enqueue_scripts() {
 
 	wp_enqueue_script(
 		'quick-navigation-interface',
-		plugins_url( 'build/index.js', dirname( __DIR__ ) ),
-		json_decode( file_get_contents( dirname( dirname( __DIR__ ) ) . '/build/index.deps.json' ) ),
+		plugins_url( 'build/quick-navigation-interface.min.js', dirname( __DIR__ ) ),
+		json_decode( file_get_contents( dirname( dirname( __DIR__ ) ) . '/build/quick-navigation-interface.min.deps.json' ) ),
 		QNI_VERSION,
 		true
 	);

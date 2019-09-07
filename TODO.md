@@ -1,9 +1,5 @@
 ### 1.0
 
-* Switch to SASS once wp-scripts supports it
-	* https://github.com/WordPress/gutenberg/issues/14801
-	* Can do it now like wordcamp.org did? See https://github.com/WordPress/wordcamp.org/pull/157/
-
 * change all css classes to BEMish convention
 	er, but what abiout back-compat?
 	that'll break anyway b/c of changing the containers etc?

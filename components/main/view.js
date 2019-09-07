@@ -11,6 +11,7 @@ import { __, sprintf }                 from '@wordpress/i18n';
 import { ActiveUrlPreview } from '../active-url-preview';
 import { Instructions }     from '../instructions';
 import { SearchResults }    from '../search-results/';
+import './style.scss';
 
 
 /**

@@ -4,6 +4,11 @@
 import { RawHTML }     from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
 
+/**
+ * Internal dependencies
+ */
+import './style.scss';
+
 
 /**
  * Render usage instructions for the user.

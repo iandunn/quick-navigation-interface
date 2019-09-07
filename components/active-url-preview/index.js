@@ -1,4 +1,10 @@
 /**
+ * Internal dependencies
+ */
+import './style.scss';
+
+
+/**
  * Render a preview of the active result.
  *
  * Otherwise, the user would have to use their mouse and hover over the link in order to see where it would take

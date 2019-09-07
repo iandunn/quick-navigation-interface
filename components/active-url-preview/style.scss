@@ -1,0 +1,18 @@
+/*
+ * The Modal that contains most of the markup creates its own div at the root of the DOM, so the result preview is
+ * the only thing that actually gets rendered in the root container.
+ */
+#qni-container {
+	position: fixed;
+	bottom: 0;
+	z-index: 999999;
+}
+
+#qni-result-preview {
+	margin-top: 20px;
+	padding: 6px 12px;
+	border-radius: 7px;
+	font-style: italic;
+	background-color: #D7E1EC;
+	color: #424242;
+}
