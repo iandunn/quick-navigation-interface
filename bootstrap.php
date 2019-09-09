@@ -9,7 +9,7 @@ Author:      Ian Dunn
 Author URI:  https://iandunn.name
 */
 
-defined( 'WPINC' ) or die;
+defined( 'WPINC' ) || die;
 
 define( 'QNI_VERSION',              '1.0' );
 define( 'QNI_REQUIRED_PHP_VERSION', '5.6' );  // Because of WordPress minimum requirements.
@@ -17,6 +17,7 @@ define( 'QNI_REQUIRED_WP_VERSION',  '5.0' );  // Because of Gutenberg components
 
 /**
  * Checks if the system requirements are met
+ *
  * @return bool True if system requirements are met, false if not
  */
 function qni_requirements_met() {

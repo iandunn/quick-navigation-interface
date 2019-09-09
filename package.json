@@ -32,7 +32,7 @@
 		"start": "wp-scripts start components/index.js",
 		"build": "wp-scripts build components/index.js",
 		"lint:css": "wp-scripts lint-style '**/*.css'",
-		"lint:js": "wp-scripts lint-js .",
-		"lint:pkg-json": "wp-scripts lint-pkg-json ."
+		"lint:js": "wp-scripts lint-js",
+		"lint:pkg-json": "wp-scripts lint-pkg-json"
 	}
 }

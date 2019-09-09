@@ -20,6 +20,7 @@ function Result( { active, link } ) {
 				{ parentTitle && parentTitle + ' > ' }
 				<a href={ url } className="qni-search-results__item-link">
 					{ title }
+
 					{/* todo apostrpohes in post titles (but not link titles) show up as &#8217; instead of the character
 					same as https://github.com/WordPress/wordcamp.org/issues/227
 					 */}

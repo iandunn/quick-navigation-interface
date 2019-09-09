@@ -3,6 +3,7 @@
 #### Cleanup / launch
 
 * look for todo remaining comments
+	done the ones i'm gonna do, except for components/index.js
 
 * rest api + storagecache api
 	* any security/privacy issues with this new setup?

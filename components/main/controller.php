@@ -34,7 +34,7 @@ function register_endpoints() {
 			 */
 			'permission_callback' => function() {
 				return current_user_can( 'read' );
-			}
+			},
 		)
 	);
 }
@@ -45,7 +45,7 @@ function register_endpoints() {
 function enqueue_scripts() {
 	wp_enqueue_style(
 		'quick-navigation-interface',
-		plugins_url( "build/quick-navigation-interface.min.css", dirname( __DIR__ ) ),
+		plugins_url( 'build/quick-navigation-interface.min.css', dirname( __DIR__ ) ),
 		array( 'wp-components' ),
 		QNI_VERSION,
 		'all'
@@ -136,7 +136,9 @@ function get_options() {
  * @return int
  */
 function get_content_index_timestamp() {
-	if ( ! $index_timestamp = get_user_meta( get_current_user_id(), 'qni_content_index_timestamp', true ) ) {
+	$index_timestamp = get_user_meta( get_current_user_id(), 'qni_content_index_timestamp', true );
+
+	if ( ! $index_timestamp ) {
 		get_content_index();  // Rebuild the index.
 		$index_timestamp = get_user_meta( get_current_user_id(), 'qni_content_index_timestamp', true );
 	}
@@ -163,18 +165,18 @@ function get_content_index_timestamp() {
 function update_content_index_expiration_timestamp() {
 	$current_filter = current_filter();
 
-	// We only need to update the timestamp when called manually, a title changes, or a new post is added
-	if ( 'post_updated' == $current_filter ) {
+	// We only need to update the timestamp when called manually, a title changes, or a new post is added.
+	if ( 'post_updated' === $current_filter ) {
 		$post_after  = func_get_arg( 1 );
 		$post_before = func_get_arg( 2 );
 
-		if ( $post_before->post_title == $post_after->post_title ) {
+		if ( $post_before->post_title === $post_after->post_title ) {
 			return;
 		}
-	} elseif( 'transition_post_status' == $current_filter ) {
+	} elseif ( 'transition_post_status' === $current_filter ) {
 		$old_status = func_get_arg( 1 );
 
-		if ( 'auto-draft' != $old_status ) {
+		if ( 'auto-draft' !== $old_status ) {
 			return;
 		}
 	}
@@ -209,15 +211,15 @@ function get_content_index() {
 
 	$current_user_id = get_current_user_id();
 
-	// Return the cached index if it's not stale
+	// Return the cached index if it's not stale.
 	if ( ! content_index_expired() ) {
 		return get_user_meta( $current_user_id, 'qni_content_index', true );
 	}
 
-	// Build fresh index
+	// Build fresh index.
 	$index = array();
 
-	$content_params = apply_filters( 'qni_content_index_params', array(
+	$content_params = array(
 		'post_type'   => 'any',
 		'post_status' => 'any',
 		'numberposts' => 500,
@@ -225,9 +227,10 @@ function get_content_index() {
 		// We may reach the limit and exclude some posts, and the user is more likely to want new posts than older ones.
 		'orderby'     => 'date',
 		'order'       => 'DESC',
-	) );
+	);
 
-	$content = get_posts( $content_params );
+	$content_params = apply_filters( 'qni_content_index_params', $content_params );
+	$content        = get_posts( $content_params );
 
 	foreach ( $content as $item ) {
 		if ( current_user_can( 'edit_post', $item->ID ) ) {
@@ -271,7 +274,9 @@ function content_index_expired() {
 	 * invalidate the cache for most users in most cases, so it's simpler to invalidate all that trying to only
 	 * invalidate those actually affected.
 	 */
-	if ( ! $expiration_timestamp = get_option( 'qni_content_index_expiration_timestamp' ) ) {
+	$expiration_timestamp = get_option( 'qni_content_index_expiration_timestamp' );
+
+	if ( ! $expiration_timestamp ) {
 		update_content_index_expiration_timestamp();
 		$expiration_timestamp = get_option( 'qni_content_index_expiration_timestamp' );
 	}
