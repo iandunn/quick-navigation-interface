@@ -36,10 +36,10 @@ update youtube video - have nicer mic now too. maybe do a quick "hi i'm ian, bui
 
 ### Next minor version
 
-// todo "33 plugin links" when 3 plugins need updating
-	// probably throw out the text in `ab-label`
-	// or maybe shouldn't be searching for .ab-label above?
-	// related https://github.com/iandunn/quick-navigation-interface/issues/2
+"33 plugin links" when 3 plugins need updating
+	probably throw out the text in `ab-label`
+	or maybe shouldn't be searching for .ab-label above?
+	related https://github.com/iandunn/quick-navigation-interface/issues/2
 		fix ^ too if not same thing
 
 * reduce build size

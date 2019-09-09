@@ -140,34 +140,40 @@ export function MainView( props ) {
 	} = props;
 
 	let title,
+	    content,
 	    focusOnMount = true,
-	    modalClasses = [ 'qni-main' ],
-		success      = false;
+	    modalClasses = [ 'qni-main' ];
 
 	if ( ! interfaceOpen ) {
 		return null;
 	}
 
 	if ( loading ) {
+		title   = __( 'Loading...', 'quick-navigation-interface' );
+		content = <Spinner />;
+
 		modalClasses.push( 'is-loading' );
-		title = __( 'Loading...', 'quick-navigation-interface' );
+
 	} else if ( error ) {
-		title = __( 'Error', 'quick-navigation-interface' );
+		title   = __( 'Error', 'quick-navigation-interface' );
+		content = <Error error={ error } />;
+
 	} else {
 		// Without this, the modal would get the focus, preventing the `TextControl.autofocus` from working.
 		focusOnMount = false;
-
-		/*
-		 * The app is still successful even when `browserCompatible` is `false`, because we can still show links
-		 * from the current page.
-		 */
-		success      = true;
 		title        = __( 'Start typing to open any post, menu item, etc', 'quick-navigation-interface' );
+
+		content = <Success
+			activeResultIndex={ activeResultIndex }
+			handleNewQuery={ handleNewQuery }
+			handleQueryKeyDown={ handleQueryKeyDown }
+			results={ results }
+			searchQuery={ searchQuery }
+			shortcuts={ shortcuts }
+		/>;
 	}
 
 
-	// todo Prob move mainview stuff into "content" var rather than reproducing the if...else with awful jsx limitations
-	//
 	// Why is instructions a separate file but browserCompatible error loading isn't? They don't have any logic in them. Maybe look at "thinking in react" for advice
 	//
 	// What's balance between creating separate file for every little thing, and
@@ -189,20 +195,7 @@ export function MainView( props ) {
 				// Down key broken after hitting escape --  https://github.com/WordPress/gutenberg/issues/15429.
 				isDismissable={ true }
 			>
-				{ loading && <Spinner /> }
-
-				{ error && <Error error={ error } /> }
-
-				{ success &&
-					<Success
-						activeResultIndex={ activeResultIndex }
-						handleNewQuery={ handleNewQuery }
-						handleQueryKeyDown={ handleQueryKeyDown }
-						results={ results }
-						searchQuery={ searchQuery }
-						shortcuts={ shortcuts }
-					/>
-				}
+				{ content }
 
 				{ ! browserCompatible && <BrowserIncompatible /> }
 			</Modal>
