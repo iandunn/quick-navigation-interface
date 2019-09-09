@@ -15,18 +15,18 @@ function Result( { active, link } ) {
 	const { parentTitle, title, type, url } = link;
 
 	return (
-		<li className={ active ? 'qni-active-result' : '' }>
-			<span className="qni-result-title">
+		<li className={ active ? 'qni-search-results__item is-active' : 'qni-search-results__item' }>
+			<span className="qni-search-results__item-title">
 				{ parentTitle && parentTitle + ' > ' }
-				<a href={ url }>
+				<a href={ url } className="qni-search-results__item-link">
 					{ title }
-					{/* todo apostrpohes in post titles (but not link titles) should up as &#8217; instead of the character
-					similar happens in schedule block
+					{/* todo apostrpohes in post titles (but not link titles) show up as &#8217; instead of the character
+					same as https://github.com/WordPress/wordcamp.org/issues/227
 					 */}
 				</a>
 			</span>
 
-			<span className="qni-link-type">
+			<span className="qni-search-results__item-link-type">
 				[{ type }]
 			</span>
 		</li>

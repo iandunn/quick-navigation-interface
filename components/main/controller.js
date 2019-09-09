@@ -272,7 +272,7 @@ export class MainController extends Component {
 	 * a way around that?
 	 */
 	openActiveResult() {
-		const activeResult = document.getElementById( 'qni-search-results' ).querySelector( 'li.qni-active-result a' );
+		const activeResult = document.getElementById( 'qni-search-results' ).querySelector( '.qni-search-results__item.is-active a' );
 
 		if ( 'object' === typeof activeResult ) {
 			activeResult.click();

@@ -1,13 +1,8 @@
 ### 1.0
 
-* change all css classes to BEMish convention
-	er, but what abiout back-compat?
-	that'll break anyway b/c of changing the containers etc?
-	but things like qni-search-results haven't changed, right?
-	so few uesrs, unlikely anybody has customized, just go ahead and change it. it's a 1.0 release anyway
-
-
 #### Cleanup / launch
+
+* look for todo remaining comments
 
 * rest api + storagecache api
 	* any security/privacy issues with this new setup?
@@ -17,6 +12,9 @@
 * test that everything in php side still works as expected, caching, expiring cache, etc
 
 finish readme
+
+commit build files, not start files
+bump version numbers, tag new version, etc
 
 * write post announcing new version - mention react convert but focus on features
 	https://iandunn.name/wordpress/wp-admin/post.php?post=2437&action=edit

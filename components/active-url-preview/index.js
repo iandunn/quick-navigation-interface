@@ -17,8 +17,8 @@ import './style.scss';
  */
 export function ActiveUrlPreview( { url } ) {
 	return (
-		<div id="qni-result-preview">
+		<span className="qni-active-url-preview__url">
 			{ url }
-		</div>
+		</span>
 	);
 }

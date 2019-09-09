@@ -141,7 +141,7 @@ export function MainView( props ) {
 
 	let title,
 	    focusOnMount = true,
-	    modalClasses = [],
+	    modalClasses = [ 'qni-main' ],
 		success      = false;
 
 	if ( ! interfaceOpen ) {
@@ -149,8 +149,8 @@ export function MainView( props ) {
 	}
 
 	if ( loading ) {
-		modalClasses = [ 'qni-loading' ];
-		title        = __( 'Loading...', 'quick-navigation-interface' );
+		modalClasses.push( 'is-loading' );
+		title = __( 'Loading...', 'quick-navigation-interface' );
 	} else if ( error ) {
 		title = __( 'Error', 'quick-navigation-interface' );
 	} else {

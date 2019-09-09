@@ -1,40 +1,40 @@
 #qni-search-results {
 	margin-top: 20px;
 	margin-bottom: 0;
+}
 
-	li {
-		display: flex;
-		padding: 3px 10px;
-		border-radius: 10px;
-		font-size: 1.1em;
+.qni-search-results__item {
+	display: flex;
+	padding: 3px 10px;
+	border-radius: 10px;
+	font-size: 1.1em;
 
-		/* Simulate `list-style: disc` because that property can't apply to a `display: flex` list item. */
-		&::before {
-			position: relative;
-			left: -1px;
-			margin-right: 5px;
-			content: "\2022";
-		}
+	/* Simulate `list-style: disc` because that property can't apply to a `display: flex` list item. */
+	&::before {
+		position: relative;
+		left: -1px;
+		margin-right: 5px;
+		content: "\2022";
+	}
 
-		&:last-child {
-			margin-bottom: 0;
-		}
+	&:last-child {
+		margin-bottom: 0;
+	}
 
-		&.qni-active-result {
-			background-color: #DFEEFF;
-		}
+	&.is-active {
+		background-color: #DFEEFF;
 	}
 }
 
-#qni-search-results a {
+.qni-search-results__item-link {
 	text-decoration: none;
 }
 
-.qni-result-title {
+.qni-search-results__item-title {
 	flex-basis: 100%;
 }
 
-.qni-link-type {
+.qni-search-results__item-link-type {
 	flex-basis: 100px;
 	text-align: right;
 }

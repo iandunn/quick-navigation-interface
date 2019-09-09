@@ -118,8 +118,12 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 				// also don't want to pass in things like nonce and root-url
 		};
 
+		/*
+		 * The Modal that contains most of the markup creates its own div at the root of the DOM, so the result preview is
+		 * the only thing that actually gets rendered in the root container.
+		 */
+		container.id  = 'qni-active-url-preview';
 		props.loading = props.browserCompatible;
-		container.id  = 'qni-container';
 
 		document.getElementById( 'wpwrap' ).appendChild( container );
 
