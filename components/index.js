@@ -93,7 +93,7 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 	/**
 	 * Initialize the app.
 	 */
-	function init() {
+	async function init() {
 		/*
 		 * Delete all caches when logging out, to prevent leaking anything sensitive to other users of the device.
 		 * Then return because the app wouldn't be useful in the login/logout context.
@@ -112,12 +112,13 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 			return;
 		}
 
-		const props = {
-			browserCompatible : 'fetch' in window && 'caches' in window,
+		const canFetchContentIndex = 'fetch' in window && 'caches' in window;
 			// todo probably don't need ^ to check fetch b/c G polyfills window.fetch. probably doesn't hurt to leave it.
 			// if remove it, document that can assume it exists b/c G polyfill
 			// todo test in older browser that doesn't support fetch and caches, fetch should be polyfilled but lack of `caches` should trigger failure
 
+		let props = {
+			browserCompatible : canFetchContentIndex,
 			error             : false,
 			links             : getCurrentPageLinks(),
 			...qniOptions,
@@ -130,7 +131,7 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 		 * the only thing that actually gets rendered in the root container.
 		 */
 		container.id  = 'qni-active-url-preview';
-		props.loading = props.browserCompatible;
+		props.loading = canFetchContentIndex;
 
 		document.getElementById( 'wpwrap' ).appendChild( container );
 
@@ -143,103 +144,117 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 		 */
 		renderApp( container, props );
 
-		if ( props.browserCompatible ) {
-			// todo the old ajax query included `'user'   => get_current_user_id(),` in the url, should this do that too?
-				// should always be the current user, don't want to see other users content, espec if logged out
-				// maybe
-			// it also used the content-index-timestamp as a cachebuster, do we still need that?
-			// i guess not b/c rest api sends headers to not cache?
+		if ( canFetchContentIndex ) {
+			const links = await fetchContentIndex( qniOptions );
+			props.loading = false;
+			props.links.push( ...links );
 
-			/*
-			 * Include cachebusters in the cache name.
-			 *
-			 * The cache should be refreshed when the plugin version changes, because that might change the REST
-			 * API response, which would cause a fatal error if the new code were trying to use the old data.
-			 *
-			 * It should also be refreshed when the content in the database changes, so that the user can search
-			 * the new content.
-			 */
-			const cacheName = `qni-${ qniOptions.plugin_version }-${ qniOptions.user_db_version }`;
-			const url       = `${ qniOptions.root_url }quick-navigation-interface/v1/content-index/`;
+			renderApp( container, props );
+		}
+	}
 
-			caches.open( cacheName ).then( cache => {
-				return cache.match( url ).then( cachedResponse => {
-					if ( cachedResponse && cachedResponse.ok ) {
-						return cachedResponse.json();
-					}
+	/**
+	 * Fetch the links from the content index
+	 *
+	 * @param {object} qniOptions
+	 */
+	async function fetchContentIndex( qniOptions ) {
+		// todo the old ajax query included `'user'   => get_current_user_id(),` in the url, should this do that too?
+			// should always be the current user, don't want to see other users content, espec if logged out
+			// maybe
+		// it also used the content-index-timestamp as a cachebuster, do we still need that?
+		// i guess not b/c rest api sends headers to not cache?
 
-					const fetchOptions = {
-						url,
-						parse: false, // Get the full response so it can be stored in the Cache API.
-					};
+		/*
+		 * Include cachebusters in the cache name.
+		 *
+		 * The cache should be refreshed when the plugin version changes, because that might change the REST
+		 * API response, which would cause a fatal error if the new code were trying to use the old data.
+		 *
+		 * It should also be refreshed when the content in the database changes, so that the user can search
+		 * the new content.
+		 */
+		const cacheName = `qni-${ qniOptions.plugin_version }-${ qniOptions.user_db_version }`;
+		const url       = `${ qniOptions.root_url }quick-navigation-interface/v1/content-index/`;
+
+		let links = await caches.open( cacheName ).then( cache => {
+			return cache.match( url ).then( cachedResponse => {
+				if ( cachedResponse && cachedResponse.ok ) {
+					return cachedResponse.json();
+				}
+
+				const fetchOptions = {
+					url,
+					parse: false, // Get the full response so it can be stored in the Cache API.
+				};
+
+				/*
+				 * Using apiFetch for the nonce and polyfill, but we still need to pass the full URL instead
+				 * of just the `path`, so that the URL can be stored in the Cache API.
+				 */
+				return apiFetch( fetchOptions ).then( liveResponse => {
+					/*
+					 * `put()` consumes the body, and it can't be accessed after. We need to return the body
+					 * after using `put()`, though, so we have to clone it.
+					 */
+					const clonedLiveResponse = liveResponse.clone();
 
 					/*
-					 * Using apiFetch for the nonce and polyfill, but we still need to pass the full URL instead
-					 * of just the `path`, so that the URL can be stored in the Cache API.
+					 * Using `put()` instead of just `add()` because we're using `apiFetch` instead of
+					 * `fetch()`. See notes above.
 					 */
-					return apiFetch( fetchOptions ).then( liveResponse => {
-						/*
-						 * `put()` consumes the body, and it can't be accessed after. We need to return the body
-						 * after using `put()`, though, so we have to clone it.
-						 */
-						const clonedLiveResponse = liveResponse.clone();
+					cache.put( url, liveResponse );
 
-						/*
-						 * Using `put()` instead of just `add()` because we're using `apiFetch` instead of
-						 * `fetch()`. See notes above.
-						 */
-						cache.put( url, liveResponse );
+					// cache.add() does't store non-200 responses, but cache.put does, so have to validate
+						// don't wanna store an 500 error
+						// also wanna make sure that the json body is valid b/c don't wanna store an application-level error message
 
-						// cache.add() does't store non-200 responses, but cache.put does, so have to validate
-							// don't wanna store an 500 error
-							// also wanna make sure that the json body is valid b/c don't wanna store an application-level error message
-
-						return clonedLiveResponse.json();
-							// maybe return the full response here and above, let the then() below handle calling .json()?
-							// that'd be a bit more DRY
-							// probably wait until after refactor to use `await`
-					} );
-
-				} ).then ( data => {
-					props.links.push( ...data );
-
-					deleteOldCaches( cacheName );
-					// todo whch cache is this being deleted? why? need to add some docs once await makes this easyer to understand
-
-					// todo convert all this nasty crap to use `await` instead of this chain hell
-					// modularize it into a function too, waaaaaay to much crap going on here to be inside init()
-
-					// todo
-
-					// todo test that a post title isn't available before this resolves, but then it automatically becomes available as soon as it resolves
-						// have to artifically slow it down to test
+					return clonedLiveResponse.json();
+						// maybe return the full response here and above, let the then() below handle calling .json()?
+						// that'd be a bit more DRY
+						// probably wait until after refactor to use `await`
 				} );
 
-			} ).catch( error => {
-				console.log( 'caught error', {error} );
-				//props.error = `${error.data.status} ${error.code}: ${error.message}`;
-					// todo need to redo ^ based on types of errors receiving now after it was refactored
-				// todo is it possible that error will ever just be a string rather than this object?
-				// todo test after all the refactoring
+			} ).then ( data => {
+				console.log( { data } );
 
+				deleteOldCaches( cacheName );
 
-				// "Note that an HTTP error response (e.g., 404) will not trigger an exception. It will return a normal response object that has the appropriate error code."
+				return data;
 
-				//	console.log( 'Quick Navigation Interface error:', exception );
-				//	// handle error. what to do? just log it to be aware?
-				//	// just let it happen instead? does that actually braek all script executeion for everything else? or is it fine these days?
+				// todo whch cache is this being deleted? why? need to add some docs once await makes this easyer to understand
 
-				// todo test when data empty, when server endpoint returns string or WP_Error
+				// todo convert all this nasty crap to use `await` instead of this chain hell
+					// test when it's empty b/c of failure, test when success, test when browser incompat
 
-			} ).finally( () => {
-				props.loading = false;
-				renderApp( container, props );
+				// todo test that a post title isn't available before this resolves, but then it automatically becomes available as soon as it resolves
+					// have to artifically slow it down to test
 			} );
-		}
+
+		} ).catch( error => {
+			console.log( 'caught error', {error} );
+			//props.error = `${error.data.status} ${error.code}: ${error.message}`;
+				// todo need to redo ^ based on types of errors receiving now after it was refactored
+			// todo is it possible that error will ever just be a string rather than this object?
+			// todo test after all the refactoring
+
+
+			// "Note that an HTTP error response (e.g., 404) will not trigger an exception. It will return a normal response object that has the appropriate error code."
+
+			//	console.log( 'Quick Navigation Interface error:', exception );
+			//	// handle error. what to do? just log it to be aware?
+			//	// just let it happen instead? does that actually braek all script executeion for everything else? or is it fine these days?
+
+			// todo test when data empty, when server endpoint returns string or WP_Error
+
+		} );
+
+		return links;
+		// todo need to handle when this isn't success, like the catch above, but maybe also implicit errors? need to set to empty array?
 
 		// todo test that caching expiration works as expected, shouldn't fetch new index unless current one is expired
-		/*
 
+		/*
 		test updates to cache on server side get pulled in immediately. need to have a version of the db for each user, and add that as url cachebuster?
 			or etags?
 				// " The caching API doesn't honor HTTP caching headers."
@@ -249,8 +264,6 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 			 // don't want to delete things that WP or other plugins cache, though, so make sure only deleting stuff w/ our prefix or something
 			 // use caches.keys() to search for other `qni-` prefixed cache objects, and remove any that don't match the current pluginversion/userdbversion
 		 */
-
-
 	}
 
 	init();
