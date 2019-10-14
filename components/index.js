@@ -74,20 +74,18 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 	 *
 	 * @param {string} currentCache
 	 */
-	function deleteOldCaches( currentCache ) {
-		return caches.keys().then( function ( keyList ) {
-			return Promise.all( keyList.map( function ( key ) {
-				const isQniCache = 'qni-' === key.substr( 0, 4 );
+	async function deleteOldCaches( currentCache ) {
+		const keys = await caches.keys();
 
-				if ( currentCache === key || ! isQniCache ) {
-					return;
-				}
+		for ( const key of keys ) {
+			let isQniCache = 'qni-' === key.substr( 0, 4 );
 
-				return caches.delete( key );
-			} ) );
-		} );
+			if ( currentCache === key || ! isQniCache ) {
+				continue;
+			}
 
-		// todo convert to use `await` instead, for better readability
+			caches.delete( key );
+		}
 	}
 
 	/**
@@ -145,11 +143,17 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 		renderApp( container, props );
 
 		if ( canFetchContentIndex ) {
-			const links = await fetchContentIndex( qniOptions );
-			props.loading = false;
-			props.links.push( ...links );
+			try {
+				const links = await fetchContentIndex( qniOptions );
+				props.links.push( ...links );
 
-			renderApp( container, props );
+			} catch ( error ) {
+				const errorMessage = getErrorMessage( error );
+
+			} finally {
+				props.loading = false;
+				renderApp( container, props );
+			}
 		}
 	}
 
@@ -174,83 +178,59 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 		 * It should also be refreshed when the content in the database changes, so that the user can search
 		 * the new content.
 		 */
-		const cacheName = `qni-${ qniOptions.plugin_version }-${ qniOptions.user_db_version }`;
-		const url       = `${ qniOptions.root_url }quick-navigation-interface/v1/content-index/`;
+		const cacheName  = `qni-${ qniOptions.plugin_version }-${ qniOptions.user_db_version }`;
+		const url        = `${ qniOptions.root_url }quick-navigation-interface/v1/content-index/`;
+		const indexLinks = [];
 
-		let links = await caches.open( cacheName ).then( cache => {
-			return cache.match( url ).then( cachedResponse => {
-				if ( cachedResponse && cachedResponse.ok ) {
-					return cachedResponse.json();
-				}
+		const qniCache       = await caches.open( cacheName );
+		const cachedResponse = await qniCache.match( url );
 
-				const fetchOptions = {
-					url,
-					parse: false, // Get the full response so it can be stored in the Cache API.
-				};
+		if ( cachedResponse && cachedResponse.ok ) {
+			const cachedLinks = await cachedResponse.json();
+			indexLinks.push( ...cachedLinks );
 
-				/*
-				 * Using apiFetch for the nonce and polyfill, but we still need to pass the full URL instead
-				 * of just the `path`, so that the URL can be stored in the Cache API.
-				 */
-				return apiFetch( fetchOptions ).then( liveResponse => {
-					/*
-					 * `put()` consumes the body, and it can't be accessed after. We need to return the body
-					 * after using `put()`, though, so we have to clone it.
-					 */
-					const clonedLiveResponse = liveResponse.clone();
+			return indexLinks;
+		}
 
-					/*
-					 * Using `put()` instead of just `add()` because we're using `apiFetch` instead of
-					 * `fetch()`. See notes above.
-					 */
-					cache.put( url, liveResponse );
+		// todo maybe modularize this into two deeper functions: one for fetching catched links, and another for fetching live ones
 
-					// cache.add() does't store non-200 responses, but cache.put does, so have to validate
-						// don't wanna store an 500 error
-						// also wanna make sure that the json body is valid b/c don't wanna store an application-level error message
+		/*
+		 * This uses `apiFetch` instead of `fetch` to take advantage of the nonce and polyfill, but we still need
+		 * to pass the full URL instead of just the `path`, and get the full response, in order to use the Cache
+		 * API.
+		 */
+		const fetchOptions = {
+			url,
+			parse: false,
+		};
 
-					return clonedLiveResponse.json();
-						// maybe return the full response here and above, let the then() below handle calling .json()?
-						// that'd be a bit more DRY
-						// probably wait until after refactor to use `await`
-				} );
+		const liveResponse = await apiFetch( fetchOptions );
 
-			} ).then ( data => {
-				console.log( { data } );
+		/*
+		 * `put()` consumes the body, and it can't be accessed afterwards. We need to return the body
+		 * after using `put()`, though, so we have to clone it.
+		 */
+		const clonedLiveResponse = liveResponse.clone();
 
-				deleteOldCaches( cacheName );
+		/*
+		 * Using `put()` instead of just `add()` because we're using `apiFetch` instead of
+		 * `fetch()`. See notes above.
+		 */
+		qniCache.put( url, liveResponse );
 
-				return data;
+		// cache.add() does't store non-200 responses, but cache.put does, so have to validate
+		// don't wanna store an 500 error
+		// also wanna make sure that the json body is valid b/c don't wanna store an application-level error message
 
-				// todo whch cache is this being deleted? why? need to add some docs once await makes this easyer to understand
+		// "Note that an HTTP error response (e.g., 404) will not trigger an exception. It will return a normal response object that has the appropriate error code."
+			// um, but it does trigger an exception... ?
 
-				// todo convert all this nasty crap to use `await` instead of this chain hell
-					// test when it's empty b/c of failure, test when success, test when browser incompat
+		const liveLinks = await clonedLiveResponse.json();
+		indexLinks.push( ...liveLinks );
 
-				// todo test that a post title isn't available before this resolves, but then it automatically becomes available as soon as it resolves
-					// have to artifically slow it down to test
-			} );
+		deleteOldCaches( cacheName );
 
-		} ).catch( error => {
-			console.log( 'caught error', {error} );
-			//props.error = `${error.data.status} ${error.code}: ${error.message}`;
-				// todo need to redo ^ based on types of errors receiving now after it was refactored
-			// todo is it possible that error will ever just be a string rather than this object?
-			// todo test after all the refactoring
-
-
-			// "Note that an HTTP error response (e.g., 404) will not trigger an exception. It will return a normal response object that has the appropriate error code."
-
-			//	console.log( 'Quick Navigation Interface error:', exception );
-			//	// handle error. what to do? just log it to be aware?
-			//	// just let it happen instead? does that actually braek all script executeion for everything else? or is it fine these days?
-
-			// todo test when data empty, when server endpoint returns string or WP_Error
-
-		} );
-
-		return links;
-		// todo need to handle when this isn't success, like the catch above, but maybe also implicit errors? need to set to empty array?
+		return indexLinks;
 
 		// todo test that caching expiration works as expected, shouldn't fetch new index unless current one is expired
 
@@ -264,6 +244,32 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 			 // don't want to delete things that WP or other plugins cache, though, so make sure only deleting stuff w/ our prefix or something
 			 // use caches.keys() to search for other `qni-` prefixed cache objects, and remove any that don't match the current pluginversion/userdbversion
 		 */
+	}
+
+	/**
+	 * Safely extract an error message from a variety of inputs.
+	 *
+	 * @param {mixed} error
+	 *
+	 * @return {string}
+	 */
+	function getErrorMessage( error ) {
+		let message;
+
+		if ( 'string' === typeof error ) {
+			message = error;
+
+		} else if ( 'object' === typeof error && 'statusText' in error ) {
+			message = error.statusText;
+
+		} else if ( 'object' === typeof error && 'message' in error ) {
+			message = error.message;
+
+		} else {
+			message = JSON.stringify( error );
+		}
+
+		return message;
 	}
 
 	init();

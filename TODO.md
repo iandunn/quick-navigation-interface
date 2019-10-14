@@ -136,6 +136,11 @@ need to test different scenarios where that might break
 		* Maybe detect append last part of url? only if conflict, or maybe always?
 	* Remove any links that are just # or javascript: b/c the handlers are setup based on ID and won't do anything here
 	* Don't add links that aren't visible?
+	* if url and title are identical, but type is different -- e.g. one is a post, the other is a link -- then should only keep one of them, not both. 
+		* this happens when a new post shows up in the `activity` metabox, or a draft in the `quick draft` metabox.
+		* might be solved by some of the above
+	* maybe clarify in `type` that http://wp.test/?p=418 is a front end preview and http://wp.test/wordpress/wp-admin/post.php?post=418&action=edit is editor, b/c they have the same title
+		* the former is a link in the `activity` metabox
 
 * More sophisticated search if above tweaks don't make it good enough
 	* Get list of specific examples where current isn't good enough
