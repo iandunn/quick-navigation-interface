@@ -22,8 +22,8 @@ bump version numbers, tag new version, etc
 * write another blog post on how to build react app in wp that isn't a block, but uses G's components and abstraction layer
 	https://iandunn.name/wordpress/wp-admin/post.php?post=2393&action=edit
 * then consider doing a seattle wp dev meetup presentation
+	* compassionate comments would be better example since it's a normal admin screen rather than a modal that appears on all screens
 * then consider doing a seattle wordcamp talk
-	* #262-meta would be better example since it's a normal admin screen rather than a modal that appears on all screens
 
 update screenshots - have to do after pushing stable
 	on w.org and in readme.md
@@ -36,6 +36,8 @@ update youtube video - have nicer mic now too. maybe do a quick "hi i'm ian, bui
 
 
 ### Next minor version
+
+* Listen for new links added to DOM after initial page render, like in the News dashboard widget
 
 "33 plugin links" when 3 plugins need updating
 	probably throw out the text in `ab-label`
@@ -65,8 +67,6 @@ should load the script sooner.
 * css no longer minified b/c not using grunt anymore and wp-scripts doesn't support it
 when it does, scss files inside each component folder, and have wp-scripts build a single minified/concat'd file in `build/`
 https://github.com/WordPress/gutenberg/issues/14801
-
-* Listen for new links added by asyncronously, like News dashboard widget
 
 * doesn't work inside customizer?
 

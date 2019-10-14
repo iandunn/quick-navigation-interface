@@ -1,6 +1,7 @@
 <?php
 
 namespace Quick_Navigation_Interface;
+use WP_Post;
 
 defined( 'WPINC' ) || die();
 
@@ -161,6 +162,11 @@ function get_content_index_timestamp() {
  * This can also be called manually, like in the case of content_index_expired(). Because it can be called from varied
  * sources, the parameters are accessed dynamically based on context, rather than being explicitly declared in
  * the function definition.
+ *
+ * @param WP_Post|string $1 The `post_updated` hook passes the the post object _after_ the updated. The
+ *                       `transition_post_status` hook passes the previous status of the post, before it changed.
+ * @param WP_Post|null $1 The `post_updated` hook passes the the post object _before_ the updated. Parameter is
+ *                     not used for any other hooks.
  */
 function update_content_index_expiration_timestamp() {
 	$current_filter = current_filter();

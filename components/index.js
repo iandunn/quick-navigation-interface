@@ -64,7 +64,7 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 			createElement( QuickNavigationInterface, props ),
 			container
 
-			// todo should be able to do something like this instead, and then createElement import?
+			// todo should be able to do something like this instead, and then remove createElement import?
 			//<QuickNavigationInterface { ...props } />
 		);
 	}
@@ -97,8 +97,15 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 		/*
 		 * Delete all caches when logging out, to prevent leaking anything sensitive to other users of the device.
 		 * Then return because the app wouldn't be useful in the login/logout context.
+		 *
+		 * @todo This feels kind of fragile, it might not detect alternate logout mechanisms, like a themed login
+		 * page with alternate URL params, or a misguided security plugin renaming `wp-login.php`, or a custom
+		 * logout flow where the user is redirected to the front end after logging out instead of hitting
+		 * `wp-login.php`. Instead of this, maybe run a small JS function on every page -- back, front,
+		 * login/logout, everywhere -- that detects if the user is logged in or not. If they aren't, then call the
+		 * `deleteOldCache()`. Enqueue it before the main controller, so that it can also be called from there?
 		 */
-		const isLoggingOut = -1 !== window.location.pathname.indexOf( 'wp-login.php' ) && -1 !== window.location.search.indexOf( 'loggedout=true');
+		const isLoggingOut = -1 !== window.location.pathname.indexOf( 'wp-login.php' ) && -1 !== window.location.search.indexOf( 'loggedout=true' );
 
 		if ( isLoggingOut ) {
 			deleteOldCaches( '' ); // Empty string so that `currentCache` will also be deleted.
@@ -131,7 +138,7 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 		 * Render immediately with the links we parsed out of the DOM, to that the user can user this as soon as
 		 * possible. We'll render again once the API data has been fetched.
 		 *
-		 * @todo in most cases data will be cached, so maybe refactor this so that it only renders twice if there
+		 * @todo in most cases data will be cached, so maybe refactor this so that it only renders twice if the
 		 * API data isn't cached and we're actually going to make an XHR.
 		 */
 		renderApp( container, props );
@@ -197,6 +204,7 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 					props.links.push( ...data );
 
 					deleteOldCaches( cacheName );
+					// todo whch cache is this being deleted? why? need to add some docs once await makes this easyer to understand
 
 					// todo convert all this nasty crap to use `await` instead of this chain hell
 					// modularize it into a function too, waaaaaay to much crap going on here to be inside init()
