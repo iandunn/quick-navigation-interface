@@ -284,13 +284,11 @@ export class MainController extends Component {
 
 	render() {
 		const { activeResultIndex, interfaceOpen, results, searchQuery } = this.state;
-		const { browserCompatible, error, loading, shortcuts }           = this.props;
+		const { loading, shortcuts, warning }                            = this.props;
 
 		return (
 			<MainView
 				activeResultIndex={ activeResultIndex }
-				browserCompatible={ browserCompatible }
-				error={ error }
 				handleNewQuery={ this.handleNewQuery }
 				handleQueryKeyDown={ MainController.handleQueryKeyDown }
 				handleModalClose={ this.closeInterface }
@@ -299,6 +297,7 @@ export class MainController extends Component {
 				results={ results }
 				searchQuery={ searchQuery }
 				shortcuts={ shortcuts }
+				warning={ warning }
 			/>
 		);
 	}

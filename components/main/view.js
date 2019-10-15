@@ -2,8 +2,8 @@
  * WordPress dependencies
  */
 import { Modal, TextControl, Spinner } from '@wordpress/components';
-import { Fragment, RawHTML }           from '@wordpress/element';
-import { __, sprintf }                 from '@wordpress/i18n';
+import { Fragment }                    from '@wordpress/element';
+import { __ }                          from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -15,76 +15,29 @@ import './style.scss';
 
 
 /**
- * Render the view for the browser incompatibility notice.
+ * Render the view for the warning notice.
  *
  * @return {Element}
  */
-function BrowserIncompatible() {
-	return (
-		<Fragment>
-			<p className="notice notice-warning inline">
-				{ __(
-					"Posts cannot be searched because your browser is too old; only links from the current page will be displayed.",
-					'quick-navigation-interface'
-				) }
+function Warning( props ) {
+	const { warning } = props;
 
-				<RawHTML>
-					{ sprintf(
-						/*
-						 * SECURITY WARNING: This string is intentionally not internationalized.
-						 * See Instructions component for details.
-						 */
-						'If you can, please <a href="%s">upgrade to a newer version</a>.',
-						'https://browsehappy.com/'
-					) }
-				</RawHTML>
-			</p>
-		</Fragment>
+	return (
+		<div className="notice notice-warning inline">
+			{ warning }
+		</div>
 	);
 }
 
 /**
- * Render the view for the error notice notice.
+ * Render the view for the Success notice.
  *
  * @param {Array} props
  *
  * @return {Element}
  */
-function Error( { error } ) {
-	return (
-		<Fragment>
-			<p>
-				{ __(
-					"I'm sorry, but there was an unrecoverable error while trying to retrieve your site's content.",
-					'quick-navigation-interface'
-				) }
-			</p>
-
-			<p>
-				<RawHTML>
-					{ sprintf(
-						/*
-						 * SECURITY WARNING: This string is intentionally not internationalized.
-						 * See Instructions component for details.
-						 */
-						'The exact error was: <code>%s</code>.',
-						error
-					) }
-				</RawHTML>
-			</p>
-		</Fragment>
-	);
-}
-
-/**
- * Render the view for the error notice notice.
- *
- * @param {Array} props
- *
- * @return {Element}
- */
-function Success( props ) {
-	const { activeResultIndex, handleNewQuery, handleQueryKeyDown, results, searchQuery, shortcuts } = props;
+function Loaded( props ) {
+	const { activeResultIndex, handleNewQuery, handleQueryKeyDown, results, searchQuery, shortcuts, warning } = props;
 
 	return (
 		<Fragment>
@@ -113,6 +66,8 @@ function Success( props ) {
 
 			<Instructions shortcuts={ shortcuts } />
 
+			{ warning && <Warning warning={ warning } /> }
+
 			<SearchResults
 				activeResultIndex={ activeResultIndex }
 				results={ results }
@@ -135,8 +90,8 @@ function Success( props ) {
  */
 export function MainView( props ) {
 	const {
-		activeResultIndex, browserCompatible, handleModalClose, handleNewQuery, handleQueryKeyDown, error,
-		interfaceOpen, loading, results, searchQuery, shortcuts,
+		activeResultIndex, handleModalClose, handleNewQuery, handleQueryKeyDown,
+		interfaceOpen, loading, results, searchQuery, shortcuts, warning
 	} = props;
 
 	let title,
@@ -154,34 +109,29 @@ export function MainView( props ) {
 
 		modalClasses.push( 'is-loading' );
 
-	} else if ( error ) {
-		title   = __( 'Error', 'quick-navigation-interface' );
-		content = <Error error={ error } />;
-
 	} else {
 		// Without this, the modal would get the focus, preventing the `TextControl.autofocus` from working.
 		focusOnMount = false;
 		title        = __( 'Start typing to open any post, menu item, etc', 'quick-navigation-interface' );
 
-		content = <Success
+		content = <Loaded
 			activeResultIndex={ activeResultIndex }
 			handleNewQuery={ handleNewQuery }
 			handleQueryKeyDown={ handleQueryKeyDown }
 			results={ results }
 			searchQuery={ searchQuery }
 			shortcuts={ shortcuts }
+			warning={ warning }
 		/>;
 	}
 
 
-	// Why is instructions a separate file but browserCompatible error loading isn't? They don't have any logic in them. Maybe look at "thinking in react" for advice
+	// Why is instructions a separate file but Success/warning/loading isn't? They don't have any logic in them. Maybe look at "thinking in react" for advice
 	//
 	// What's balance between creating separate file for every little thing, and
 	//
 	// Decompose something if it has subcomponents, if it will be reused, if it's subjectively long or complex
 	// maybe create separate files (but not folders) for some of those things? not sure
-
-
 
 	return (
 		<Fragment>
@@ -196,8 +146,6 @@ export function MainView( props ) {
 				isDismissable={ true }
 			>
 				{ content }
-
-				{ ! browserCompatible && <BrowserIncompatible /> }
 			</Modal>
 
 			{ results.hasOwnProperty( activeResultIndex ) &&

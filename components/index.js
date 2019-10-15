@@ -2,7 +2,9 @@
  * WordPress dependencies
  */
 import apiFetch                  from '@wordpress/api-fetch';
+import { Fragment, RawHTML }     from '@wordpress/element';
 import { render, createElement } from '@wordpress/element';
+import { __, sprintf }           from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -116,20 +118,44 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 			// todo test in older browser that doesn't support fetch and caches, fetch should be polyfilled but lack of `caches` should trigger failure
 
 		let props = {
-			browserCompatible : canFetchContentIndex,
-			error             : false,
 			links             : getCurrentPageLinks(),
+			loading : canFetchContentIndex,
 			...qniOptions,
 				// todo should have an `options` key instead of cluttering the root level?
 				// also don't want to pass in things like nonce and root-url
 		};
+
+		if ( ! canFetchContentIndex ) {
+			props.warning = (
+				<Fragment>
+					<p>
+						{ __(
+							'Posts cannot be searched because your browser is too old; only links from the current page will be available.',
+							'quick-navigation-interface'
+						) }
+					</p>
+
+					<p>
+						<RawHTML>
+							{ sprintf(
+								/*
+								 * SECURITY WARNING: This string is intentionally not internationalized.
+								 * See Instructions component for details.
+								 */
+								'If you can, please <a href="%s">upgrade to a newer version</a>.',
+								'https://browsehappy.com/'
+							) }
+						</RawHTML>
+					</p>
+				</Fragment>
+			);
+		}
 
 		/*
 		 * The Modal that contains most of the markup creates its own div at the root of the DOM, so the result preview is
 		 * the only thing that actually gets rendered in the root container.
 		 */
 		container.id  = 'qni-active-url-preview';
-		props.loading = canFetchContentIndex;
 
 		document.getElementById( 'wpwrap' ).appendChild( container );
 
@@ -149,6 +175,32 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 
 			} catch ( error ) {
 				const errorMessage = getErrorMessage( error );
+
+				console.error( 'Quick Navigation Interface error:', error );
+
+				props.warning = (
+					<Fragment>
+						<p>
+							{ __(
+								'Posts cannot be searched because an error occured; only links from the current page will be available.',
+								'quick-navigation-interface'
+							) }
+						</p>
+
+						<p>
+							<RawHTML>
+								{ sprintf(
+									/*
+									 * SECURITY WARNING: This string is intentionally not internationalized.
+									 * See Instructions component for details.
+									 */
+									'Details: <code>%s</code>',
+									errorMessage
+								) }
+							</RawHTML>
+						</p>
+					</Fragment>
+				);
 
 			} finally {
 				props.loading = false;
