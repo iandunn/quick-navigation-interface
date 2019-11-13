@@ -1,20 +1,21 @@
 /**
  * WordPress dependencies
  */
-import apiFetch                  from '@wordpress/api-fetch';
-import { Fragment, RawHTML }     from '@wordpress/element';
-import { render, createElement } from '@wordpress/element';
-import { __, sprintf }           from '@wordpress/i18n';
+import apiFetch                                     from '@wordpress/api-fetch';
+import { createElement, Fragment, RawHTML, render } from '@wordpress/element';
+import { __, sprintf }                              from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
 import { MainController as QuickNavigationInterface } from './main/controller';
 
+/* global qniOptions:false */
+/* global caches:false */
+
 
 ( function() {
 	const container = document.createElement( 'div' );
-	let props;
 
 	/**
 	 * Get all links on the current page
@@ -27,7 +28,8 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 
 		for ( const link of document.getElementsByTagName( 'a' ) ) {
 			parentTitle = '';
-				// todo ideally don't want to create an empty value in the object, takes up room in memory and cache storage. if there isn't a parent title just don't add that property
+				// todo ideally don't want to create an empty value in the object, takes up room in memory
+				// and cache storage. if there isn't a parent title just don't add that property.
 			type        = 'link';
 			title       = link.textContent;
 			url         = link.getAttribute( 'href' );
@@ -80,7 +82,7 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 		const keys = await caches.keys();
 
 		for ( const key of keys ) {
-			let isQniCache = 'qni-' === key.substr( 0, 4 );
+			const isQniCache = 'qni-' === key.substr( 0, 4 );
 
 			if ( currentCache === key || ! isQniCache ) {
 				continue;
@@ -113,12 +115,14 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 		}
 
 		const canFetchContentIndex = 'fetch' in window && 'caches' in window;
-			// todo probably don't need ^ to check fetch b/c G polyfills window.fetch. probably doesn't hurt to leave it.
+			// todo probably don't need ^ to check fetch b/c G polyfills window.fetch. probably doesn't hurt to
+			// leave it.
 			// if remove it, document that can assume it exists b/c G polyfill
-			// todo test in older browser that doesn't support fetch and caches, fetch should be polyfilled but lack of `caches` should trigger failure
+			// todo test in older browser that doesn't support fetch and caches, fetch should be polyfilled but
+			// lack of `caches` should trigger failure.
 
-		let props = {
-			links             : getCurrentPageLinks(),
+		const props = {
+			links   : getCurrentPageLinks(),
 			loading : canFetchContentIndex,
 			...qniOptions,
 				// todo should have an `options` key instead of cluttering the root level?
@@ -168,6 +172,8 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 		 */
 		renderApp( container, props );
 
+		// todo modularize this function. can split off the `canfetchcontentindex` block below, maybe some other stuff above too.
+
 		if ( canFetchContentIndex ) {
 			try {
 				const links = await fetchContentIndex( qniOptions );
@@ -215,12 +221,6 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 	 * @param {object} qniOptions
 	 */
 	async function fetchContentIndex( qniOptions ) {
-		// todo the old ajax query included `'user'   => get_current_user_id(),` in the url, should this do that too?
-			// should always be the current user, don't want to see other users content, espec if logged out
-			// maybe
-		// it also used the content-index-timestamp as a cachebuster, do we still need that?
-		// i guess not b/c rest api sends headers to not cache?
-
 		/*
 		 * Include cachebusters in the cache name.
 		 *
@@ -252,8 +252,8 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 		 * API.
 		 */
 		const fetchOptions = {
-			url,
-			parse: false,
+			url   : url,
+			parse : false,
 		};
 
 		const liveResponse = await apiFetch( fetchOptions );
@@ -271,7 +271,7 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 		qniCache.put( url, liveResponse );
 
 		// cache.add() does't store non-200 responses, but cache.put does, so have to validate
-		// don't wanna store an 500 error
+		// don't wanna store a 500 error
 		// also wanna make sure that the json body is valid b/c don't wanna store an application-level error message
 
 		// "Note that an HTTP error response (e.g., 404) will not trigger an exception. It will return a normal response object that has the appropriate error code."

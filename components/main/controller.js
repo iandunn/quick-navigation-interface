@@ -3,7 +3,6 @@
  */
 import { Component } from '@wordpress/element';
 import { UP, DOWN }  from '@wordpress/keycodes';
-import { __ }        from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -15,6 +14,11 @@ import { MainView } from './view';
  * Manage the state for the main interface.
  */
 export class MainController extends Component {
+	/**
+	 * Initialize the component.
+	 *
+	 * @param {Array} props
+	 */
 	constructor( props ) {
 		super( props );
 
@@ -45,6 +49,9 @@ export class MainController extends Component {
 		MainController.handleQueryKeyDown = MainController.handleQueryKeyDown.bind( this );
 	}
 
+	/**
+	 * Initialization that can't be done until the component is mounted.
+	 */
 	componentDidMount() {
 		/*
 		 * This (and its counterpart in `componentWillUnmount`) need to listen on `window` instead of just within
@@ -65,6 +72,9 @@ export class MainController extends Component {
 		window.addEventListener( 'keyup', this.handleKeyboardEvents );
 	}
 
+	/**
+	 * Clean up things before the component is unmounted.
+	 */
 	componentWillUnmount() {
 		// See notes in corresponding `addEventListener() call`.
 		window.removeEventListener( 'keyup', this.handleKeyboardEvents );
@@ -134,7 +144,7 @@ export class MainController extends Component {
 
 		const textInputTypes = [
 			'text', 'color', 'date', 'datetime', 'datetime-local', 'email', 'month',
-			'number', 'password', 'search', 'tel', 'time', 'url', 'week'
+			'number', 'password', 'search', 'tel', 'time', 'url', 'week',
 		];
 
 		// Gutenberg uses `control+backtick` to navigate through the editor, so ignore those events (and similar cases).
@@ -282,6 +292,11 @@ export class MainController extends Component {
 		}
 	}
 
+	/**
+	 * Render the component.
+	 *
+	 * @return {Element}
+	 */
 	render() {
 		const { activeResultIndex, interfaceOpen, results, searchQuery } = this.state;
 		const { loading, shortcuts, warning }                            = this.props;

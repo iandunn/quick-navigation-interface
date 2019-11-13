@@ -11,7 +11,7 @@ module.exports = {
      */
 	output : {
 		...defaultConfig.output,
-		filename: 'quick-navigation-interface.min.js',
+		filename : 'quick-navigation-interface.min.js',
 	},
 
 	/*

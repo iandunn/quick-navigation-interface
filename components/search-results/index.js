@@ -21,11 +21,11 @@ function Result( { active, link } ) {
 				<a href={ url } className="qni-search-results__item-link">
 					{ title }
 
-					{/* todo apostrpohes in post titles (but not link titles) show up as &#8217; instead of the character
+					{ /* todo apostrpohes in post titles (but not link titles) show up as &#8217; instead of the character
 					same as https://github.com/WordPress/wordcamp.org/issues/227
 
 					maybe do `import { stripTagsAndEncodeText } from '@wordpress/sanitize';` and use that?
-					 */}
+					*/ }
 				</a>
 			</span>
 

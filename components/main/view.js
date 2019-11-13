@@ -17,6 +17,8 @@ import './style.scss';
 /**
  * Render the view for the warning notice.
  *
+ * @param {Array} props
+ *
  * @return {Element}
  */
 function Warning( props ) {
@@ -37,7 +39,9 @@ function Warning( props ) {
  * @return {Element}
  */
 function Loaded( props ) {
-	const { activeResultIndex, handleNewQuery, handleQueryKeyDown, results, searchQuery, shortcuts, warning } = props;
+	const {
+		activeResultIndex, handleNewQuery, handleQueryKeyDown, results, searchQuery, shortcuts, warning,
+	} = props;
 
 	return (
 		<Fragment>
@@ -78,7 +82,7 @@ function Loaded( props ) {
 	);
 }
 
-// import { withInstanceId, compose } from '@wordpress/compose';
+// todo import { withInstanceId, compose } from '@wordpress/compose';
 //const ComposedCard = compose( withInstanceId )( Card );
 //export { ComposedCard as Card };
 
@@ -93,13 +97,14 @@ function Loaded( props ) {
 export function MainView( props ) {
 	const {
 		activeResultIndex, handleModalClose, handleNewQuery, handleQueryKeyDown,
-		interfaceOpen, loading, results, searchQuery, shortcuts, warning
+		interfaceOpen, loading, results, searchQuery, shortcuts, warning,
 	} = props;
 
 	let title,
-	    content,
-	    focusOnMount = true,
-	    modalClasses = [ 'qni-main' ];
+		content,
+		focusOnMount = true;
+
+	const modalClasses = [ 'qni-main' ];
 
 	if ( ! interfaceOpen ) {
 		return null;
