@@ -2,13 +2,6 @@
 
 #### Cleanup / launch
 
-* test that everything in php side still works as expected, caching, expiring cache, etc
-
-finish readme
-
-commit build files, not start files
-bump version numbers, tag new version, etc
-
 * write post announcing new version - mention react convert but focus on features
 	https://iandunn.name/wordpress/wp-admin/post.php?post=2437&action=edit
 * write another blog post on how to build react app in wp that isn't a block, but uses G's components and abstraction layer
@@ -17,10 +10,8 @@ bump version numbers, tag new version, etc
 	* compassionate comments would be better example since it's a normal admin screen rather than a modal that appears on all screens
 * then consider doing a seattle wordcamp talk
 
-update screenshots - have to do after pushing stable
-	on w.org and in readme.md
-update w.org banner - have to do after pushing stable
-update youtube video - have nicer mic now too. maybe do a quick "hi i'm ian, built this because... but 5 seconds max, then get to the point". set video poster to be the interface not your face.
+update youtube video - have nicer mic now too. maybe do a quick "hi i'm ian, built this because..." but 5 seconds max, then get to the point.
+set video poster to be the interface not your face.
 
 
 

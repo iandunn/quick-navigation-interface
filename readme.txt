@@ -4,8 +4,8 @@ Donate link:       https://www.debian.org/donations
 Tags:              keyboard,navigation,shortcuts,wp-admin
 Requires at least: 5.0
 Requires PHP:      5.6
-Tested up to:      5.2
-Stable tag:        0.7
+Tested up to:      5.3
+Stable tag:        1.0
 License:           GPLv2
 
 Quickly access screens and content within wp-admin just by typing the first few letters of the name.
@@ -59,13 +59,13 @@ I've done my best to ensure that it is, but just in case I missed anything [I al
 
 == Screenshots ==
 
-1. Pressing `g` or \` -- _the backtick character, usually located above the tab key_ -- brings up the interface
+1. Pressing `g` or \` brings up the interface
 2. Matches are displayed and filtered as you type
 
 
 == Changelog ==
 
-= v1.0 (2019-??-??) =
+= v1.0 (2019-11-13) =
 
 * [NEW] The `g` key now also opens the interface, in addition to the \` (backtick) key.
 * [NEW] Highlighting a link shows a preview of its URL, so you can know where it will take you.
