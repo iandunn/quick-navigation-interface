@@ -64,7 +64,9 @@ function Loaded( props ) {
 				onKeyDown={ handleQueryKeyDown }
 			/>
 
-			<Instructions shortcuts={ shortcuts } />
+			{ searchQuery &&
+				<Instructions shortcuts={ shortcuts } />
+			}
 
 			{ warning && <Warning warning={ warning } /> }
 
