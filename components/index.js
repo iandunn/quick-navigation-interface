@@ -273,6 +273,7 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 		// cache.add() does't store non-200 responses, but cache.put does, so have to validate
 		// don't wanna store a 500 error
 		// also wanna make sure that the json body is valid b/c don't wanna store an application-level error message
+		// caller has a try/catch and some error handling, should probably move that down here and then avoid caching errors
 
 		// "Note that an HTTP error response (e.g., 404) will not trigger an exception. It will return a normal response object that has the appropriate error code."
 			// um, but it does trigger an exception... ?

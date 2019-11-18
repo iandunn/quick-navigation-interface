@@ -19,7 +19,7 @@ import './style.scss';
  */
 export function Instructions( { shortcuts } ) {
 	return (
-		<p id="qni-instructions">
+		<div id="qni-instructions">
 			<RawHTML>
 				{ sprintf(
 					/*
@@ -36,6 +36,6 @@ export function Instructions( { shortcuts } ) {
 					__( 'Escape', 'quick-navigation-interface' ),
 				) }
 			</RawHTML>
-		</p>
+		</div>
 	);
 }
