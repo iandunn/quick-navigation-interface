@@ -61,7 +61,7 @@ function Loaded( props ) {
 				 * See https://ux.stackexchange.com/a/60027/13828.
 				 */
 				// eslint-disable-next-line jsx-a11y/no-autofocus
-				autoFocus="true"
+				autoFocus={ true }
 				placeholder={ __( 'e.g., Posts, Settings, Plugins, Comments, etc', 'quick-navigation-interface' ) }
 				value={ searchQuery }
 				onChange={ handleNewQuery }
