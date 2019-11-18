@@ -1,24 +1,29 @@
+/**
+ * External dependencies
+ */
 const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
-const defaultConfig        = require( '@wordpress/scripts/config/webpack.config' );
+
+/**
+ * WordPress dependencies
+ */
+const defaultConfig = require( '@wordpress/scripts/config/webpack.config' );
+
 
 module.exports = {
 	...defaultConfig,
 
-	/*
-	 * Override the default filename.
-	 *
-	 * @todo Can this be done via CLI param instead? If not open an issue for that and add URL here.
-     */
-	output : {
-		...defaultConfig.output,
-		filename : 'quick-navigation-interface.min.js',
-	},
+	plugins : [
+		...defaultConfig.plugins,
+		new MiniCssExtractPlugin( {
+			filename : 'quick-navigation-interface.min.css',
+		} ),
+	],
 
 	/*
 	 * Compile SCSS to vanilla CSS.
 	 *
 	 * @todo Remove this when https://github.com/WordPress/gutenberg/issues/14801 is resolved.
-     */
+	 */
 	module : {
 		...defaultConfig.module,
 
@@ -32,10 +37,14 @@ module.exports = {
 		],
 	},
 
-	plugins : [
-		...defaultConfig.plugins,
-		new MiniCssExtractPlugin( {
-			filename : 'quick-navigation-interface.min.css',
-		} ),
-	],
+	/*
+	 * Override the default filename.
+	 *
+	 * @todo Can this be done via CLI param instead? If not open an issue for that and add URL here.
+	 * or maybe rename index.js to quick-navigation-interface.js for better semantics? and then could remove this section?
+	 */
+	output : {
+		...defaultConfig.output,
+		filename : 'quick-navigation-interface.min.js',
+	},
 };
