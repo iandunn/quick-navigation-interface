@@ -2,7 +2,7 @@ Quick Navigation Interface provides a new way to navigate through the Administra
 
 Just press `g` or ``` ` ``` -- _the backtick character, usually located above the tab key_ -- to bring up the interface, and then start typing part of the name of any screen, post, page, etc. As you type, you'll be shown a list of matching links. Use the `Up` and `Down` keys to move between them, and press `Enter` to open one.
 
-<a href="http://www.youtube.com/watch?v=60iVn94hEIE"><img src="https://ps.w.org/quick-navigation-interface/assets/screenshot-2.png?rev=1166854" /></a>
+<a href="http://www.youtube.com/watch?v=60iVn94hEIE"><img src="https://ps.w.org/quick-navigation-interface/assets/screenshot-2.png?rev=2192997" /></a>
 
 This was inspired by Ubuntu's Dash and [HUD](http://www.markshuttleworth.com/archives/939), and is also similar to the Spotlight feature in OS X.
 

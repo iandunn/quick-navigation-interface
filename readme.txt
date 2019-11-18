@@ -81,8 +81,7 @@ I've done my best to ensure that it is, but just in case I missed anything [I al
 * [REMOVED] The `['shortcuts']['close-interface']` item in the array passed to the `qni_options` filter has been removed. QNI now uses the `Modal` component provided by Gutenberg, which only uses the `Escape` key to close it.
 * [REMOVED] The `qni_template_path` and `qni_template_content` filters have been removed, and files like `qni-interface.php` in your theme will no longer be used. This is because the plugin now declares the templates in React. There aren't currently any plans to make them customizable.
 
-
-[Full changelog](https://github.com/iandunn/quick-navigation-interface/compare/?...?)
+[Full changelog](https://github.com/iandunn/quick-navigation-interface/compare/eb9e78a...be3346a3)
 
 
 = v0.7 (2019-02-14) =
