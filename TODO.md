@@ -20,9 +20,6 @@ set video poster to be the interface not your face.
 
 ### Next minor version bugs
 
-* wtf aren't source maps working?
-	* work for comcom, and package.json/webpack configs are identical in all the relevant places
-
 * http://wp.test/wordpress/wp-admin/options-discussion.php and probably all pages
 	Posts cannot be searched because an error occured; only links from the current page will be available. Details: The operation is insecure.
 	it's not consistent, though.
@@ -45,47 +42,16 @@ set video poster to be the interface not your face.
 	maybe just leave the debugging code in place locally -- but don't commit -- and hopefully you'll catch it again sometime in the future
 	but move on to stuff you can fix for now
 
-error on login screen
-	document.getElementById( 'wpwrap' ).appendChild( container );
-	shouldn't assume that exists
-	has to be loaded on login pages now, in order to clear caches on logout
-		but should return early or something
-	test that still clears caches on logout
 
-	index.js:167 Uncaught (in promise) TypeError: Cannot read property 'appendChild' of null
-	    at _callee2$ (index.js:167)
-	    at l (components.min.js?ver=8.3.2:6)
-	    at Generator._invoke (components.min.js?ver=8.3.2:6)
-	    at Generator.forEach.e.<computed> [as next] (components.min.js?ver=8.3.2:6)
-	    at asyncGeneratorStep (asyncToGenerator.js:3)
-	    at _next (asyncToGenerator.js:25)
-	    at asyncToGenerator.js:32
-	    at new Promise (<anonymous>)
-	    at asyncToGenerator.js:21
-	    at _init (index.js:17)
-	    at init (index.js:17)
-	    at index.js:354
-	    at Module../components/index.js (index.js:17)
-	    at __webpack_require__ (bootstrap:19)
-	    at bootstrap:83
-	    at bootstrap:83
-	_callee2$ @ index.js:167
-	l @ components.min.js?ver=8.3.2:6
-	(anonymous) @ components.min.js?ver=8.3.2:6
-	forEach.e.<computed> @ components.min.js?ver=8.3.2:6
-	asyncGeneratorStep @ asyncToGenerator.js:3
-	_next @ asyncToGenerator.js:25
-	(anonymous) @ asyncToGenerator.js:32
-	(anonymous) @ asyncToGenerator.js:21
-	_init @ index.js:17
-	init @ index.js:17
-	(anonymous) @ index.js:354
-	./components/index.js @ index.js:17
-	__webpack_require__ @ bootstrap:19
-	(anonymous) @ bootstrap:83
-	(anonymous) @ bootstrap:83
-	Show 4 more frames
+* chrome shows the link url preview in the lower left corner, but FF doesn't
+	* how to detect if browser is going to, and only show custom one when browser doesn't?
+	* maybe just tweak css so that it's completely hidden, match the sizing/etc of chrome
+	* or maybe use js to set the link as active/focused/hovered and/or some a11y/aria stuff?
+	* maybe move the cursor on top, but use css to set cursor as hidden?
+	* if figure out, post on those unanswered stack overflow questions
 
+
+### next next minor bugs
 
 * https://iandunn.name/wordpress/wp-admin/post.php?post=2490&action=edit
 	and other recent posts don't show up in index at all, but only 336 posts, so not hitting the 500 limit
@@ -96,12 +62,8 @@ error on login screen
 	related https://github.com/iandunn/quick-navigation-interface/issues/2
 		fix ^ too if not same thing
 
-* chrome shows the link url preview in the lower left corner, but FF doesn't
-	* how to detect if browser is going to, and only show custom one when browser doesn't?
-	* maybe just tweak css so that it's completely hidden, match the sizing/etc of chrome
-	* or maybe use js to set the link as active/focused/hovered and/or some a11y/aria stuff?
-	* maybe move the cursor on top, but use css to set cursor as hidden?
-	* if figure out, post on those unanswered stack overflow questions
+* wtf aren't source maps working?
+	* work for comcom, and package.json/webpack configs are identical in all the relevant places
 
 * doesn't work inside customizer?
 

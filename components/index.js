@@ -79,6 +79,10 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 	 * @param {string} currentCache
 	 */
 	async function deleteOldCaches( currentCache ) {
+		if ( ! canUseCache() ) {
+			return;
+		}
+
 		const keys = await caches.keys();
 
 		for ( const key of keys ) {
@@ -113,16 +117,15 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 		const onLoginPage = -1 !== window.location.pathname.indexOf( 'wp-login.php' );
 
 		if ( onLoginPage ) {
-			deleteOldCaches( '' ); // Empty string so that `currentCache` will also be deleted.
+			await deleteOldCaches( '' ); // Empty string so that `currentCache` will also be deleted.
 			return;
 		}
 
-		const canFetchContentIndex = 'fetch' in window && 'caches' in window;
+		const canFetchContentIndex = 'fetch' in window;
 			// todo probably don't need ^ to check fetch b/c G polyfills window.fetch. probably doesn't hurt to
 			// leave it.
 			// if remove it, document that can assume it exists b/c G polyfill
-			// todo test in older browser that doesn't support fetch and caches, fetch should be polyfilled but
-			// lack of `caches` should trigger failure.
+			// todo test in older browser that doesn't support fetch, should be polyfilled
 
 		const props = {
 			links   : getCurrentPageLinks(),
@@ -182,8 +185,7 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 
 		if ( canFetchContentIndex ) {
 			try {
-				const links = await fetchContentIndex( qniOptions );
-				props.links.push( ...links );
+				props.links.push( ...await fetchContentIndex( qniOptions ) );
 
 			} catch ( error ) {
 				const errorMessage = getErrorMessage( error );
@@ -225,6 +227,8 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 	 * Fetch the links from the content index
 	 *
 	 * @param {object} qniOptions
+	 *
+	 * @return {Array}
 	 */
 	async function fetchContentIndex( qniOptions ) {
 		/*
@@ -238,22 +242,13 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 		 */
 		const cacheName  = `qni-${ qniOptions.plugin_version }-${ qniOptions.user_db_version }`;
 		const url        = `${ qniOptions.root_url }quick-navigation-interface/v1/content-index/`;
-		const indexLinks = [];
 
-		const qniCache       = await caches.open( cacheName );
-		const cachedResponse = await qniCache.match( url );
 
-		if ( cachedResponse && cachedResponse.ok ) {
-			const cachedLinks = await cachedResponse.json();
-			indexLinks.push( ...cachedLinks );
+		const cachedIndex = await getCachedIndex( cacheName, url );
 
-			// v1.0 added the `type` item, so don't use an old cached index that doesn't have that populated.
-			if ( indexLinks[0].type ) {
-				return indexLinks;
-			}
+		if ( cachedIndex ) {
+			return cachedIndex;
 		}
-
-		// todo maybe modularize this into two deeper functions: one for fetching catched links, and another for fetching live ones
 
 		/*
 		 * This uses `apiFetch` instead of `fetch` to take advantage of the nonce and polyfill, but we still need
@@ -265,47 +260,107 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 			parse : false,
 		};
 
-		const liveResponse = await apiFetch( fetchOptions );
+		const response = await apiFetch( fetchOptions );
 
 		/*
-		 * `put()` consumes the body, and it can't be accessed afterwards. We need to return the body
-		 * after using `put()`, though, so we have to clone it.
+		 * Passing a clone because `cache.put()` consumes the body, and it can't be accessed afterwards. If we
+		 * passed the original object, then we couldn't call `response.json()` below.
 		 */
-		const clonedLiveResponse = liveResponse.clone();
-
-		/*
-		 * Using `put()` instead of just `add()` because we're using `apiFetch` instead of
-		 * `fetch()`. See notes above.
-		 */
-		qniCache.put( url, liveResponse );
-
-		// cache.add() does't store non-200 responses, but cache.put does, so have to validate
-		// don't wanna store a 500 error
-		// also wanna make sure that the json body is valid b/c don't wanna store an application-level error message
-		// caller has a try/catch and some error handling, should probably move that down here and then avoid caching errors
+		await cacheIndex( cacheName, url, response.clone() );
 
 		// "Note that an HTTP error response (e.g., 404) will not trigger an exception. It will return a normal response object that has the appropriate error code."
 			// um, but it does trigger an exception... ?
 
-		const liveLinks = await clonedLiveResponse.json();
-		indexLinks.push( ...liveLinks );
 
-		deleteOldCaches( cacheName );
-
-		return indexLinks;
-
-		// todo test that caching expiration works as expected, shouldn't fetch new index unless current one is expired
+		return [ ...await response.json() ];
 
 		/*
 		test updates to cache on server side get pulled in immediately. need to have a version of the db for each user, and add that as url cachebuster?
 			or etags?
 				// " The caching API doesn't honor HTTP caching headers."
 		if use cachebuster, would want to remove the other versno from cache
+		*/
+	}
 
-		// "The code also deletes all caches that aren't named in CURRENT_CACHES."
-			 // don't want to delete things that WP or other plugins cache, though, so make sure only deleting stuff w/ our prefix or something
-			 // use caches.keys() to search for other `qni-` prefixed cache objects, and remove any that don't match the current pluginversion/userdbversion
+	/**
+	 * Check if the browser supports the `CacheStorage` API.
+	 *
+	 * All modern browsers should, but Blink- and WebKit-based browsers -- Chrome, Safari, etc -- mistakenly hide
+	 * the API when accessed over HTTP, because it's related to service workers, even though it can be used
+	 * independently in browsers which properly implement it, like Firefox. Trying to access `window.caches` over
+	 * HTTP in Chrome will result in an exception being thrown.
+	 *
+	 * Unfortunately, this means that `fetchContentIndex()` will trigger an HTTP request every time an admin page
+	 * loads, if the site doesn't have an SSL certificate and the user is using a buggy browser.
+	 *
+	 * @see https://bugs.chromium.org/p/chromium/issues/detail?id=1026063.
+	 *
+	 * It's worth having a wrapper function for this, even though it's just a single line, because it's used in
+	 * many places. This keeps the logic, and important notes above, DRY.
+	 *
+	 * @return {boolean}
+	 */
+	function canUseCache() {
+		return 'caches' in window;
+	}
+
+	/**
+	 * Retrieve the cached index, if one is available.
+	 *
+	 * @param {string} cacheName
+	 * @param {string} url
+	 *
+	 * @return {mixed} `false` when no cache available; `Array` when cache successfully retrieved.
+	 */
+	async function getCachedIndex( cacheName, url ) {
+		if ( ! canUseCache() ) {
+			return false;
+		}
+
+		const qniCache       = await caches.open( cacheName );
+		const cachedResponse = await qniCache.match( url );
+		const indexLinks     = [];
+
+		if ( ! cachedResponse || ! cachedResponse.ok ) {
+			return false;
+		}
+
+		indexLinks.push( ...await cachedResponse.json() );
+
+		// v1.0 added the `type` item, so don't use an old cached index that doesn't have that populated.
+		if ( ! indexLinks[ 0 ].type ) {
+			return false;
+		}
+
+		return indexLinks;
+	}
+
+	/**
+	 * Store the content index in the browser cache.
+	 *
+	 * @param {string}   cacheName
+	 * @param {string}   url
+	 * @param {Response} response
+	 */
+	async function cacheIndex( cacheName, url, response ) {
+		if ( ! canUseCache() ) {
+			return;
+		}
+
+		const qniCache = await caches.open( cacheName );
+
+		/*
+		 * Using `put()` instead of just `add()` because we're using `apiFetch()` instead of
+		 * `fetch()`. See notes in `fetchContentIndex()`.
 		 */
+		qniCache.put( url, response );
+
+		// cache.add() does't store non-200 responses, but cache.put does, so have to validate
+		// don't wanna store a 500 error
+		// also wanna make sure that the json body is valid b/c don't wanna store an application-level error message
+		// caller has a try/catch and some error handling, should probably move that down here and then avoid caching errors
+
+		await deleteOldCaches( cacheName );
 	}
 
 	/**
