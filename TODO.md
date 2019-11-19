@@ -70,8 +70,11 @@ set video poster to be the interface not your face.
 
 ### next minor features
 
-______these don't seem very important, maybe convert to the eisenhower matrix like comcon's todo________
 
+______most of these don't seem very important, maybe convert to the eisenhower matrix like comcon's todo________
+
+* prop drilling is getting pretty bad, may refactor to use Context or something?
+	* don't like HOCs though, would hooks or portals or slots of some other fancy thing allow components to grab from a global state tree w/out HOCs?
 
 * Listen for new links added to DOM after initial page render, like in the News dashboard widget
 

@@ -299,11 +299,13 @@ export class MainController extends Component {
 	 */
 	render() {
 		const { activeResultIndex, interfaceOpen, results, searchQuery } = this.state;
-		const { loading, shortcuts, warning }                            = this.props;
+		const { canFetchContentIndex, fetchError, loading, shortcuts }   = this.props;
 
 		return (
 			<MainView
 				activeResultIndex={ activeResultIndex }
+				canFetchContentIndex={ canFetchContentIndex }
+				fetchError={ fetchError }
 				handleNewQuery={ this.handleNewQuery }
 				handleQueryKeyDown={ MainController.handleQueryKeyDown }
 				handleModalClose={ this.closeInterface }
@@ -312,7 +314,6 @@ export class MainController extends Component {
 				results={ results }
 				searchQuery={ searchQuery }
 				shortcuts={ shortcuts }
-				warning={ warning }
 			/>
 		);
 	}

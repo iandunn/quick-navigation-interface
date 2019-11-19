@@ -2,8 +2,8 @@
  * WordPress dependencies
  */
 import { Modal, TextControl, Spinner } from '@wordpress/components';
-import { Fragment }                    from '@wordpress/element';
-import { __ }                          from '@wordpress/i18n';
+import { Fragment, RawHTML }           from '@wordpress/element';
+import { __, sprintf }                 from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -21,12 +21,10 @@ import './style.scss';
  *
  * @return {Element}
  */
-function Warning( props ) {
-	const { warning } = props;
-
+function Warning( { children } ) {
 	return (
 		<div className="notice notice-warning inline">
-			{ warning }
+			{ children }
 		</div>
 	);
 }
@@ -40,7 +38,8 @@ function Warning( props ) {
  */
 function Loaded( props ) {
 	const {
-		activeResultIndex, handleNewQuery, handleQueryKeyDown, results, searchQuery, shortcuts, warning,
+		activeResultIndex, canFetchContentIndex, fetchError, handleNewQuery, handleQueryKeyDown, results,
+		searchQuery, shortcuts,
 	} = props;
 
 	return (
@@ -72,12 +71,16 @@ function Loaded( props ) {
 				<Instructions shortcuts={ shortcuts } />
 			}
 
-			{ warning && <Warning warning={ warning } /> }
-
 			<SearchResults
 				activeResultIndex={ activeResultIndex }
 				results={ results }
 			/>
+
+			{ canFetchContentIndex || <CantFetchWarning /> }
+
+			{ fetchError &&
+				<FetchErrorWarning fetchError={ fetchError } />
+			}
 		</Fragment>
 	);
 }
@@ -86,6 +89,67 @@ function Loaded( props ) {
 //const ComposedCard = compose( withInstanceId )( Card );
 //export { ComposedCard as Card };
 
+/**
+ * Render a warning that the browser isn't capable of fetching the content index.
+ *
+ * @return {Element}
+ */
+function CantFetchWarning() {
+	return (
+		<Warning>
+			<p>
+				{ __(
+					'Posts cannot be searched because your browser is too old; only links from the current page will be available.',
+					'quick-navigation-interface'
+				) }
+			</p>
+
+			<p>
+				<RawHTML>
+					{ sprintf(
+						/*
+						 * SECURITY WARNING: This string is intentionally not internationalized.
+						 * See Instructions component for details.
+						 */
+						'If you can, please <a href="%s">upgrade to a newer version</a>.',
+						'https://browsehappy.com/'
+					) }
+				</RawHTML>
+			</p>
+		</Warning>
+	);
+}
+
+/**
+ * Render a warning notice that there was an error fetching the content index.
+ *
+ * @return {Element}
+ */
+function FetchErrorWarning( { fetchError } ) {
+	return (
+		<Warning>
+			<p>
+				{ __(
+					'Posts cannot be searched because an error occured; only links from the current page will be available.',
+					'quick-navigation-interface'
+				) }
+			</p>
+
+			<p>
+				<RawHTML>
+					{ sprintf(
+						/*
+						 * SECURITY WARNING: This string is intentionally not internationalized.
+						 * See Instructions component for details.
+						 */
+						'Details: <code>%s</code>',
+						fetchError
+					) }
+				</RawHTML>
+			</p>
+		</Warning>
+	);
+}
 
 /**
  * Render the view for the main interface.
@@ -96,8 +160,8 @@ function Loaded( props ) {
  */
 export function MainView( props ) {
 	const {
-		activeResultIndex, handleModalClose, handleNewQuery, handleQueryKeyDown,
-		interfaceOpen, loading, results, searchQuery, shortcuts, warning,
+		activeResultIndex, canFetchContentIndex, fetchError, handleModalClose, handleNewQuery, handleQueryKeyDown,
+		interfaceOpen, loading, results, searchQuery, shortcuts,
 	} = props;
 
 	let title,
@@ -123,12 +187,13 @@ export function MainView( props ) {
 
 		content = <Loaded
 			activeResultIndex={ activeResultIndex }
+			canFetchContentIndex={ canFetchContentIndex }
+			fetchError={ fetchError }
 			handleNewQuery={ handleNewQuery }
 			handleQueryKeyDown={ handleQueryKeyDown }
 			results={ results }
 			searchQuery={ searchQuery }
 			shortcuts={ shortcuts }
-			warning={ warning }
 		/>;
 	}
 

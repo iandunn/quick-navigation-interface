@@ -2,8 +2,7 @@
  * WordPress dependencies
  */
 import apiFetch                                     from '@wordpress/api-fetch';
-import { createElement, Fragment, RawHTML, render } from '@wordpress/element';
-import { __, sprintf }                              from '@wordpress/i18n';
+import { createElement, render } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -132,39 +131,12 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 		const props = {
 			links   : getCurrentPageLinks(),
 			loading : canFetchContentIndex,
+			canFetchContentIndex : canFetchContentIndex,
+			fetchError           : false,
 			...options,
 				// todo should have an `options` key instead of cluttering the root level?
 				// also don't want to pass in things like nonce and root-url, so maybe just pass specific things instead?
 		};
-
-		if ( ! canFetchContentIndex ) {
-			// it feels kind of weird to 1) be creating markup in a controller file; and 2) be setting markup to a property
-			// should maybe instead do something like `props.canFetchContentIndex = false` here, and then in the mainview component
-			// call a functional component that renders this
-			props.warning = (
-				<Fragment>
-					<p>
-						{ __(
-							'Posts cannot be searched because your browser is too old; only links from the current page will be available.',
-							'quick-navigation-interface'
-						) }
-					</p>
-
-					<p>
-						<RawHTML>
-							{ sprintf(
-								/*
-								 * SECURITY WARNING: This string is intentionally not internationalized.
-								 * See Instructions component for details.
-								 */
-								'If you can, please <a href="%s">upgrade to a newer version</a>.',
-								'https://browsehappy.com/'
-							) }
-						</RawHTML>
-					</p>
-				</Fragment>
-			);
-		}
 
 		/*
 		 * The Modal that contains most of the markup creates its own div at the root of the DOM, so the result preview is
@@ -192,33 +164,9 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 				);
 
 			} catch ( error ) {
-				const errorMessage = getErrorMessage( error );
+				props.fetchError = getErrorMessage( error );
 
 				console.error( 'Quick Navigation Interface error:', error );
-
-				props.warning = (
-					<Fragment>
-						<p>
-							{ __(
-								'Posts cannot be searched because an error occured; only links from the current page will be available.',
-								'quick-navigation-interface'
-							) }
-						</p>
-
-						<p>
-							<RawHTML>
-								{ sprintf(
-									/*
-									 * SECURITY WARNING: This string is intentionally not internationalized.
-									 * See Instructions component for details.
-									 */
-									'Details: <code>%s</code>',
-									errorMessage
-								) }
-							</RawHTML>
-						</p>
-					</Fragment>
-				);
 
 			} finally {
 				props.loading = false;
