@@ -42,6 +42,8 @@ set video poster to be the interface not your face.
 	maybe just leave the debugging code in place locally -- but don't commit -- and hopefully you'll catch it again sometime in the future
 	but move on to stuff you can fix for now
 
+	still can't reproduce, maybe fixed by some of the 1.0.1 fixes?
+
 
 ### next next minor bugs
 

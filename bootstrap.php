@@ -4,14 +4,14 @@
 Plugin Name: Quick Navigation Interface
 Plugin URI:  https://wordpress.org/plugins/quick-navigation-interface
 Description: Quickly access screens and content within wp-admin just by typing the first few letters of the name.
-Version:     1.0
+Version:     1.0.1
 Author:      Ian Dunn
 Author URI:  https://iandunn.name
 */
 
 defined( 'WPINC' ) || die;
 
-define( 'QNI_VERSION',              '1.0' );
+define( 'QNI_VERSION',              '1.0.1' );
 define( 'QNI_REQUIRED_PHP_VERSION', '5.6' );  // Because of WordPress minimum requirements.
 define( 'QNI_REQUIRED_WP_VERSION',  '5.0' );  // Because of Gutenberg components.
 

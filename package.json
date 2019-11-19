@@ -1,6 +1,6 @@
 {
 	"name": "quick-navigation-interface",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Allows you to quickly access links within wp-admin just by typing the first few letters.",
 	"author": "Ian Dunn",
 	"license": "GPL-2.0-or-later",

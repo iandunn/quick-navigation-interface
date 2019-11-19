@@ -5,7 +5,7 @@ Tags:              keyboard,navigation,shortcuts,wp-admin
 Requires at least: 5.0
 Requires PHP:      5.6
 Tested up to:      5.3
-Stable tag:        1.0
+Stable tag:        1.0.1
 License:           GPLv2
 
 Quickly access screens and content within wp-admin just by typing the first few letters of the name.
@@ -65,6 +65,15 @@ I've done my best to ensure that it is, but just in case I missed anything [I al
 
 == Changelog ==
 
+= v1.0.1 (2019-11-19) =
+
+* [FIX] Restore ability to search posts for users in Chrome/Safari on sites without SSL certificates.q
+* [FIX] Expire stale cached content indexes that are missing the `type` field added in v1.0.
+* [FIX] Fix several minor errors in browser console.
+
+[Full changelog](https://github.com/iandunn/quick-navigation-interface/compare/be3346a3...4de4f97c)
+
+
 = v1.0 (2019-11-13) =
 
 * [NEW] The `g` key now also opens the interface, in addition to the \` (backtick) key.
@@ -120,6 +129,12 @@ I've done my best to ensure that it is, but just in case I missed anything [I al
 
 
 == Upgrade Notice ==
+
+= 1.0.1 =
+Version 1.0.1 fixes several minor bugs in the 1.0 release. If you're experiencing any problems, please update.
+
+= 1.0 =
+Version 1.0 adds many new features and fixes some bugs.
 
 = 0.6 =
 Version 0.6 adds compatibility with the upcoming WordPress 4.5 release.
