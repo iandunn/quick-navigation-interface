@@ -100,6 +100,9 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 		 * Delete all caches when logging out, to prevent leaking anything sensitive to other users of the device.
 		 * Then return because the app wouldn't be useful in the login/logout context.
 		 *
+		 * This also intentionally runs for all actions on the login page, because we should already return early
+		 * in those cases, and it doesn't hurt to delete the caches.
+		 *
 		 * @todo This feels kind of fragile, it might not detect alternate logout mechanisms, like a themed login
 		 * page with alternate URL params, or a misguided security plugin renaming `wp-login.php`, or a custom
 		 * logout flow where the user is redirected to the front end after logging out instead of hitting
@@ -107,9 +110,9 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 		 * login/logout, everywhere -- that detects if the user is logged in or not. If they aren't, then call the
 		 * `deleteOldCache()`. Enqueue it before the main controller, so that it can also be called from there?
 		 */
-		const isLoggingOut = -1 !== window.location.pathname.indexOf( 'wp-login.php' ) && -1 !== window.location.search.indexOf( 'loggedout=true' );
+		const onLoginPage = -1 !== window.location.pathname.indexOf( 'wp-login.php' );
 
-		if ( isLoggingOut ) {
+		if ( onLoginPage ) {
 			deleteOldCaches( '' ); // Empty string so that `currentCache` will also be deleted.
 			return;
 		}
