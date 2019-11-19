@@ -86,8 +86,8 @@ export class MainController extends Component {
 	 * @param {Object} event
 	 */
 	handleKeyboardEvents( event ) {
-		const { interfaceOpen } = this.state;
-		const { shortcuts }     = this.props;
+		const { interfaceOpen }    = this.state;
+		const { shortcuts }        = this.props;
 		const openInterfaceCode    = shortcuts[ 'open-interface' ].code;
 		const openInterfaceAltCode = shortcuts[ 'open-interface-alternate' ].code;
 

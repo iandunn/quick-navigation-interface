@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import apiFetch                                     from '@wordpress/api-fetch';
+import apiFetch                  from '@wordpress/api-fetch';
 import { createElement, render } from '@wordpress/element';
 
 /**
@@ -129,8 +129,8 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 			// todo test in older browser that doesn't support fetch, should be polyfilled
 
 		const props = {
-			links   : getCurrentPageLinks(),
-			loading : canFetchContentIndex,
+			links                : getCurrentPageLinks(),
+			loading              : canFetchContentIndex,
 			canFetchContentIndex : canFetchContentIndex,
 			fetchError           : false,
 			...options,
