@@ -98,8 +98,10 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 
 	/**
 	 * Initialize the app.
+	 *
+	 * @param {Array} options
 	 */
-	async function init() {
+	async function init( options ) {
 		/*
 		 * Delete all caches when logging out, to prevent leaking anything sensitive to other users of the device.
 		 * Then return because the app wouldn't be useful in the login/logout context.
@@ -130,9 +132,9 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 		const props = {
 			links   : getCurrentPageLinks(),
 			loading : canFetchContentIndex,
-			...qniOptions,
+			...options,
 				// todo should have an `options` key instead of cluttering the root level?
-				// also don't want to pass in things like nonce and root-url
+				// also don't want to pass in things like nonce and root-url, so maybe just pass specific things instead?
 		};
 
 		if ( ! canFetchContentIndex ) {
@@ -185,7 +187,9 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 
 		if ( canFetchContentIndex ) {
 			try {
-				props.links.push( ...await fetchContentIndex( qniOptions ) );
+				props.links.push(
+					...await fetchContentIndex( options.plugin_version, options.user_db_version, options.root_url )
+				);
 
 			} catch ( error ) {
 				const errorMessage = getErrorMessage( error );
@@ -226,11 +230,13 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 	/**
 	 * Fetch the links from the content index
 	 *
-	 * @param {object} qniOptions
+	 * @param {string} pluginVersion
+	 * @param {string} userDbVersion Timestamp when the user's content index was generated.
+	 * @param {string} apiRootUrl
 	 *
 	 * @return {Array}
 	 */
-	async function fetchContentIndex( qniOptions ) {
+	async function fetchContentIndex( pluginVersion, userDbVersion, apiRootUrl ) {
 		/*
 		 * Include cachebusters in the cache name.
 		 *
@@ -240,8 +246,8 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 		 * It should also be refreshed when the content in the database changes, so that the user can search
 		 * the new content.
 		 */
-		const cacheName  = `qni-${ qniOptions.plugin_version }-${ qniOptions.user_db_version }`;
-		const url        = `${ qniOptions.root_url }quick-navigation-interface/v1/content-index/`;
+		const cacheName  = `qni-${ pluginVersion }-${ userDbVersion }`;
+		const url        = `${ apiRootUrl }quick-navigation-interface/v1/content-index/`;
 
 
 		const cachedIndex = await getCachedIndex( cacheName, url );
@@ -389,5 +395,5 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 		return message;
 	}
 
-	init();
+	init( qniOptions );
 }() );
