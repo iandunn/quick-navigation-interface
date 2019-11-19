@@ -38,7 +38,7 @@ function Warning( { children } ) {
  */
 function Loaded( props ) {
 	const {
-		activeResultIndex, canFetchContentIndex, fetchError, handleNewQuery, handleQueryKeyDown, results,
+		activeResultIndex, children, handleNewQuery, handleQueryKeyDown, results,
 		searchQuery, shortcuts,
 	} = props;
 
@@ -76,11 +76,7 @@ function Loaded( props ) {
 				results={ results }
 			/>
 
-			{ canFetchContentIndex || <CantFetchWarning /> }
-
-			{ fetchError &&
-				<FetchErrorWarning fetchError={ fetchError } />
-			}
+			{ children }
 		</Fragment>
 	);
 }
@@ -194,7 +190,13 @@ export function MainView( props ) {
 			results={ results }
 			searchQuery={ searchQuery }
 			shortcuts={ shortcuts }
-		/>;
+		>
+			{ canFetchContentIndex || <CantFetchWarning /> }
+
+			{ fetchError &&
+				<FetchErrorWarning fetchError={ fetchError } />
+			}
+		</Loaded>;
 	}
 
 

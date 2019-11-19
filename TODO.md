@@ -47,14 +47,18 @@ set video poster to be the interface not your face.
 
 ### next next minor bugs
 
-* https://iandunn.name/wordpress/wp-admin/post.php?post=2490&action=edit
-	and other recent posts don't show up in index at all, but only 336 posts, so not hitting the 500 limit
-
 "33 plugin links" when 3 plugins need updating
 	probably throw out the text in `ab-label`
 	or maybe shouldn't be searching for .ab-label above?
 	related https://github.com/iandunn/quick-navigation-interface/issues/2
 		fix ^ too if not same thing
+
+* search for user display name / username results in them being combined
+	its the menu item link to wp-admin/network/profile.php
+
+* entities in post title displaying encoded
+	e.g., `Accessing Post Meta and More Via $post-&gt;meta_key` instead of the `>` character 
+	https://iandunn.name/wordpress/wp-admin/post.php?post=2098&action=edit
 
 * wtf aren't source maps working?
 	* work for comcom, and package.json/webpack configs are identical in all the relevant places
@@ -68,7 +72,15 @@ set video poster to be the interface not your face.
 ______most of these don't seem very important, maybe convert to the eisenhower matrix like comcon's todo________
 
 * prop drilling is getting pretty bad, may refactor to use Context or something?
-	* don't like HOCs though, would hooks or portals or slots of some other fancy thing allow components to grab from a global state tree w/out HOCs?
+	* it used to be pretty awful, but hooks make it much better now
+	* need to bump to 5.3 to get necessary version of react?
+		* hooks introduced in 16.8
+		* 5.3 ships 16.9
+		* what did 5.2 and lower ship?
+
+	er, wait, should try using composition first?
+		https://medium.com/the-non-traditional-developer/how-to-avoid-prop-drilling-with-composition-6862cd4e253a
+		see how far you get with that, and then re-evaluate if you still need context(+hooks)
 
 * Listen for new links added to DOM after initial page render, like in the News dashboard widget
 
