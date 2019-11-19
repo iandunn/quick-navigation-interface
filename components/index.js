@@ -130,6 +130,9 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 		};
 
 		if ( ! canFetchContentIndex ) {
+			// it feels kind of weird to 1) be creating markup in a controller file; and 2) be setting markup to a property
+			// should maybe instead do something like `props.canFetchContentIndex = false` here, and then in the mainview component
+			// call a functional component that renders this
 			props.warning = (
 				<Fragment>
 					<p>
@@ -159,7 +162,7 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 		 * The Modal that contains most of the markup creates its own div at the root of the DOM, so the result preview is
 		 * the only thing that actually gets rendered in the root container.
 		 */
-		container.id  = 'qni-active-url-preview';
+		container.id = 'qni-active-url-preview';
 
 		document.getElementById( 'wpwrap' ).appendChild( container );
 
@@ -241,7 +244,10 @@ import { MainController as QuickNavigationInterface } from './main/controller';
 			const cachedLinks = await cachedResponse.json();
 			indexLinks.push( ...cachedLinks );
 
-			return indexLinks;
+			// v1.0 added the `type` item, so don't use an old cached index that doesn't have that populated.
+			if ( indexLinks[0].type ) {
+				return indexLinks;
+			}
 		}
 
 		// todo maybe modularize this into two deeper functions: one for fetching catched links, and another for fetching live ones

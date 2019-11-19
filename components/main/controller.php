@@ -269,6 +269,13 @@ function get_content_index() {
  * @return bool
  */
 function content_index_expired() {
+	$cached_index = get_user_meta( get_current_user_id(), 'qni_content_index', true );
+
+	// v1.0 added the `type` item, so indexes missing that are expired and need to be rebuilt.
+	if ( empty( $cached_index[0]['type'] ) ) {
+		return true;
+	}
+
 	$expired         = true;
 	$index_timestamp = get_user_meta( get_current_user_id(), 'qni_content_index_timestamp', time() );
 
