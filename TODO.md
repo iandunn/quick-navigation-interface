@@ -43,14 +43,6 @@ set video poster to be the interface not your face.
 	but move on to stuff you can fix for now
 
 
-* chrome shows the link url preview in the lower left corner, but FF doesn't
-	* how to detect if browser is going to, and only show custom one when browser doesn't?
-	* maybe just tweak css so that it's completely hidden, match the sizing/etc of chrome
-	* or maybe use js to set the link as active/focused/hovered and/or some a11y/aria stuff?
-	* maybe move the cursor on top, but use css to set cursor as hidden?
-	* if figure out, post on those unanswered stack overflow questions
-
-
 ### next next minor bugs
 
 * https://iandunn.name/wordpress/wp-admin/post.php?post=2490&action=edit

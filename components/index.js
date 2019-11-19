@@ -16,62 +16,6 @@ import { fetchContentIndex, deleteOldCaches }         from './content-index';
 	const container = document.createElement( 'div' );
 
 	/**
-	 * Get all links on the current page
-	 *
-	 * @returns {Array}
-	 */
-	function getCurrentPageLinks() {
-		const links = [];
-		let parentTitle, type, title, url;
-
-		for ( const link of document.getElementsByTagName( 'a' ) ) {
-			parentTitle = '';
-				// todo ideally don't want to create an empty value in the object, takes up room in memory
-				// and cache storage. if there isn't a parent title just don't add that property.
-			type        = 'link';
-			title       = link.textContent;
-			url         = link.getAttribute( 'href' );
-
-			// This can be simplified if JS ever provides an alternative to jQuery.closest().
-				// todo wait, there is one? see wp-polyfill-element-closest
-			if ( link.parentNode.parentNode.classList.contains( 'wp-submenu' ) ) {
-				parentTitle = link.parentNode.parentNode.parentNode.querySelector( '.wp-menu-name' ).textContent;
-				type = 'menu item';
-			} else if ( 'wp-admin-bar-new-content-default' === link.parentNode.parentNode.getAttribute( 'id' ) ) {
-				title = document.querySelector( '#wp-admin-bar-new-content' ).querySelector( '.ab-label' ).textContent + ' ' + title;
-
-				type = 'menu item';
-			} else if ( -1 !== link.parentNode.id.indexOf( 'wp-admin-bar' ) ) {
-				type = 'menu item';
-			}
-
-			// Overwrite duplicate items to create a unique list.
-			const item  = { type, title, parentTitle, url };
-			const id    = JSON.stringify( Object.values( item ) ).replace( /[^\w]/g, '' );
-			links[ id ] = item;
-		}
-
-		// Return a simple array so it's smaller and easier to work with.
-		return Object.values( links );
-	}
-
-	/**
-	 * Render the app.
-	 *
-	 * @param {Element} container
-	 * @param {Array}   props
-	 */
-	function renderApp( container, props ) {
-		render(
-			createElement( QuickNavigationInterface, props ),
-			container
-
-			// todo should be able to do something like this instead, and then remove createElement import?
-			//<QuickNavigationInterface { ...props } />
-		);
-	}
-
-	/**
 	 * Initialize the app.
 	 *
 	 * @param {Array} options
@@ -149,6 +93,62 @@ import { fetchContentIndex, deleteOldCaches }         from './content-index';
 				renderApp( container, props );
 			}
 		}
+	}
+
+	/**
+	 * Get all links on the current page
+	 *
+	 * @returns {Array}
+	 */
+	function getCurrentPageLinks() {
+		const links = [];
+		let parentTitle, type, title, url;
+
+		for ( const link of document.getElementsByTagName( 'a' ) ) {
+			parentTitle = '';
+				// todo ideally don't want to create an empty value in the object, takes up room in memory
+				// and cache storage. if there isn't a parent title just don't add that property.
+			type        = 'link';
+			title       = link.textContent;
+			url         = link.getAttribute( 'href' );
+
+			// This can be simplified if JS ever provides an alternative to jQuery.closest().
+				// todo wait, there is one? see wp-polyfill-element-closest
+			if ( link.parentNode.parentNode.classList.contains( 'wp-submenu' ) ) {
+				parentTitle = link.parentNode.parentNode.parentNode.querySelector( '.wp-menu-name' ).textContent;
+				type = 'menu item';
+			} else if ( 'wp-admin-bar-new-content-default' === link.parentNode.parentNode.getAttribute( 'id' ) ) {
+				title = document.querySelector( '#wp-admin-bar-new-content' ).querySelector( '.ab-label' ).textContent + ' ' + title;
+
+				type = 'menu item';
+			} else if ( -1 !== link.parentNode.id.indexOf( 'wp-admin-bar' ) ) {
+				type = 'menu item';
+			}
+
+			// Overwrite duplicate items to create a unique list.
+			const item  = { type, title, parentTitle, url };
+			const id    = JSON.stringify( Object.values( item ) ).replace( /[^\w]/g, '' );
+			links[ id ] = item;
+		}
+
+		// Return a simple array so it's smaller and easier to work with.
+		return Object.values( links );
+	}
+
+	/**
+	 * Render the app.
+	 *
+	 * @param {Element} container
+	 * @param {Array}   props
+	 */
+	function renderApp( container, props ) {
+		render(
+			createElement( QuickNavigationInterface, props ),
+			container
+
+			// todo should be able to do something like this instead, and then remove createElement import?
+			//<QuickNavigationInterface { ...props } />
+		);
 	}
 
 	/**
