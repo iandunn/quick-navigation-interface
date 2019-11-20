@@ -80,6 +80,11 @@ ______most of these don't seem very important, maybe convert to the eisenhower m
 		* 5.3 ships 16.9
 		* what did 5.2 and lower ship?
 
+	* should wrap mainview in the controller, or have mainview wrap its children?
+	* should have multiple contexts, or just 1?
+		if single, then whole tree will re-render anytime anything in the context changes, even if it otherwise shouldn't?
+
+
 	er, wait, should try using composition first?
 		https://medium.com/the-non-traditional-developer/how-to-avoid-prop-drilling-with-composition-6862cd4e253a
 		see how far you get with that, and then re-evaluate if you still need context(+hooks)

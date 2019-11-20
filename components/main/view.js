@@ -15,139 +15,6 @@ import './style.scss';
 
 
 /**
- * Render the view for the warning notice.
- *
- * @param {Array} props
- *
- * @return {Element}
- */
-function Warning( { children } ) {
-	return (
-		<div className="notice notice-warning inline">
-			{ children }
-		</div>
-	);
-}
-
-/**
- * Render the view for the Success notice.
- *
- * @param {Array} props
- *
- * @return {Element}
- */
-function Loaded( props ) {
-	const {
-		activeResultIndex, children, handleNewQuery, handleQueryKeyDown, results,
-		searchQuery, shortcuts,
-	} = props;
-
-	return (
-		<Fragment>
-			<TextControl
-				/*
-				 * We should grab the label ID programmatically, but I'm not sure that's possible. This should
-				 * always work in practice, though, unless there's another modal on the page. If that happens,
-				 * we have bigger problems :)
-				 *
-				 * todo actually, can maybe use ${ instanceId } like `modal/index.js` in G does?
-				 * yeah, see `compose( withInstanceId )( Card );` in Compassionate Comments
-				 */
-				aria-labelledby="components-modal-header-0"
-
-				/*
-				 * Autofocus is appropriate in this situation.
-				 * See https://ux.stackexchange.com/a/60027/13828.
-				 */
-				// eslint-disable-next-line jsx-a11y/no-autofocus
-				autoFocus={ true }
-				placeholder={ __( 'e.g., Posts, Settings, Plugins, Comments, etc', 'quick-navigation-interface' ) }
-				value={ searchQuery }
-				onChange={ handleNewQuery }
-				onKeyDown={ handleQueryKeyDown }
-			/>
-
-			{ searchQuery &&
-				<Instructions shortcuts={ shortcuts } />
-			}
-
-			<SearchResults
-				activeResultIndex={ activeResultIndex }
-				results={ results }
-			/>
-
-			{ children }
-		</Fragment>
-	);
-}
-
-// todo import { withInstanceId, compose } from '@wordpress/compose';
-//const ComposedCard = compose( withInstanceId )( Card );
-//export { ComposedCard as Card };
-
-/**
- * Render a warning that the browser isn't capable of fetching the content index.
- *
- * @return {Element}
- */
-function CantFetchWarning() {
-	return (
-		<Warning>
-			<p>
-				{ __(
-					'Posts cannot be searched because your browser is too old; only links from the current page will be available.',
-					'quick-navigation-interface'
-				) }
-			</p>
-
-			<p>
-				<RawHTML>
-					{ sprintf(
-						/*
-						 * SECURITY WARNING: This string is intentionally not internationalized.
-						 * See Instructions component for details.
-						 */
-						'If you can, please <a href="%s">upgrade to a newer version</a>.',
-						'https://browsehappy.com/'
-					) }
-				</RawHTML>
-			</p>
-		</Warning>
-	);
-}
-
-/**
- * Render a warning notice that there was an error fetching the content index.
- *
- * @return {Element}
- */
-function FetchErrorWarning( { error } ) {
-	return (
-		<Warning>
-			<p>
-				{ __(
-					'Posts cannot be searched because an error occured; only links from the current page will be available.',
-					'quick-navigation-interface'
-				) }
-			</p>
-
-			<p>
-				<RawHTML>
-					{ sprintf(
-						/*
-						 * SECURITY WARNING: This string is intentionally not internationalized.
-						 * See Instructions component for details.
-						 */
-						'Details: <code>%s</code>',
-						error
-					) }
-				</RawHTML>
-			</p>
-		</Warning>
-	);
-}
-
-/**
  * Render the view for the main interface.
  *
  * @param {Array} props
@@ -228,5 +95,138 @@ export function MainView( props ) {
 				<ActiveUrlPreview url={ results[ activeResultIndex ].url } />
 			}
 		</Fragment>
+	);
+}
+
+/**
+ * Render the view for the Success notice.
+ *
+ * @param {Array} props
+ *
+ * @return {Element}
+ */
+function Loaded( props ) {
+	const {
+		activeResultIndex, children, handleNewQuery, handleQueryKeyDown, results,
+		searchQuery, shortcuts,
+	} = props;
+
+	return (
+		<Fragment>
+			<TextControl
+				/*
+				 * We should grab the label ID programmatically, but I'm not sure that's possible. This should
+				 * always work in practice, though, unless there's another modal on the page. If that happens,
+				 * we have bigger problems :)
+				 *
+				 * todo actually, can maybe use ${ instanceId } like `modal/index.js` in G does?
+				 * yeah, see `compose( withInstanceId )( Card );` in Compassionate Comments
+				 *
+				 * todo import { withInstanceId, compose } from '@wordpress/compose';
+				 * const ComposedCard = compose( withInstanceId )( Card );
+				 * export { ComposedCard as Card };
+				 */
+				aria-labelledby="components-modal-header-0"
+
+				/*
+				 * Autofocus is appropriate in this situation.
+				 * See https://ux.stackexchange.com/a/60027/13828.
+				 */
+				// eslint-disable-next-line jsx-a11y/no-autofocus
+				autoFocus={ true }
+				placeholder={ __( 'e.g., Posts, Settings, Plugins, Comments, etc', 'quick-navigation-interface' ) }
+				value={ searchQuery }
+				onChange={ handleNewQuery }
+				onKeyDown={ handleQueryKeyDown }
+			/>
+
+			{ searchQuery &&
+				<Instructions shortcuts={ shortcuts } />
+			}
+
+			<SearchResults
+				activeResultIndex={ activeResultIndex }
+				results={ results }
+			/>
+
+			{ children }
+		</Fragment>
+	);
+}
+
+/**
+ * Render the view for the warning notice.
+ *
+ * @param {Array} props
+ *
+ * @return {Element}
+ */
+function Warning( { children } ) {
+	return (
+		<div className="notice notice-warning inline">
+			{ children }
+		</div>
+	);
+}
+
+/**
+ * Render a warning that the browser isn't capable of fetching the content index.
+ *
+ * @return {Element}
+ */
+function CantFetchWarning() {
+	return (
+		<Warning>
+			<p>
+				{ __(
+					'Posts cannot be searched because your browser is too old; only links from the current page will be available.',
+					'quick-navigation-interface'
+				) }
+			</p>
+
+			<p>
+				<RawHTML>
+					{ sprintf(
+						/*
+						 * SECURITY WARNING: This string is intentionally not internationalized.
+						 * See Instructions component for details.
+						 */
+						'If you can, please <a href="%s">upgrade to a newer version</a>.',
+						'https://browsehappy.com/'
+					) }
+				</RawHTML>
+			</p>
+		</Warning>
+	);
+}
+
+/**
+ * Render a warning notice that there was an error fetching the content index.
+ *
+ * @return {Element}
+ */
+function FetchErrorWarning( { error } ) {
+	return (
+		<Warning>
+			<p>
+				{ __(
+					'Posts cannot be searched because an error occured; only links from the current page will be available.',
+					'quick-navigation-interface'
+				) }
+			</p>
+
+			<p>
+				<RawHTML>
+					{ sprintf(
+						/*
+						 * SECURITY WARNING: This string is intentionally not internationalized.
+						 * See Instructions component for details.
+						 */
+						'Details: <code>%s</code>',
+						error
+					) }
+				</RawHTML>
+			</p>
+		</Warning>
 	);
 }
