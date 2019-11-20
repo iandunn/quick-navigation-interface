@@ -121,7 +121,7 @@ function CantFetchWarning() {
  *
  * @return {Element}
  */
-function FetchErrorWarning( { fetchError } ) {
+function FetchErrorWarning( { error } ) {
 	return (
 		<Warning>
 			<p>
@@ -139,7 +139,7 @@ function FetchErrorWarning( { fetchError } ) {
 						 * See Instructions component for details.
 						 */
 						'Details: <code>%s</code>',
-						fetchError
+						error
 					) }
 				</RawHTML>
 			</p>
@@ -218,7 +218,7 @@ export function MainView( props ) {
 						{ canFetchContentIndex || <CantFetchWarning /> }
 
 						{ fetchError &&
-							<FetchErrorWarning fetchError={ fetchError } />
+							<FetchErrorWarning error={ fetchError } />
 						}
 					</Loaded>
 				}
