@@ -113,27 +113,25 @@ function Loaded( props ) {
 
 	return (
 		<Fragment>
-			<TextControl
-				/*
-				 * We should grab the label ID programmatically, but I'm not sure that's possible. This should
-				 * always work in practice, though, unless there's another modal on the page. If that happens,
-				 * we have bigger problems :)
-				 *
-				 * todo actually, can maybe use ${ instanceId } like `modal/index.js` in G does?
-				 * yeah, see `compose( withInstanceId )( Card );` in Compassionate Comments
-				 *
-				 * todo import { withInstanceId, compose } from '@wordpress/compose';
-				 * const ComposedCard = compose( withInstanceId )( Card );
-				 * export { ComposedCard as Card };
-				 */
-				aria-labelledby="components-modal-header-0"
+			{ /*
+			   * This label is only needed for screen readers, because the `<Modal>`'s `h1#components-modal-header-{n}`
+			   * title describes the search input for sighted users. `aria-labelledby` isn't used because that ID
+			   * contains an instance ID, which is difficult (impossible?) to obtain from within this context,
+			   * even using `compose() / withInstanceId()`. This is a much simpler solution.
+			   */ }
+			<label htmlFor="qni-main__search-query" className="screen-reader-text">
+				{ __( 'Search:', 'quick-navigation-interface' ) }
+			</label>
 
+			<TextControl
 				/*
 				 * Autofocus is appropriate in this situation.
 				 * See https://ux.stackexchange.com/a/60027/13828.
 				 */
 				// eslint-disable-next-line jsx-a11y/no-autofocus
 				autoFocus={ true }
+
+				id="qni-main__search-query"
 				placeholder={ __( 'e.g., Posts, Settings, Plugins, Comments, etc', 'quick-navigation-interface' ) }
 				value={ searchQuery }
 				onChange={ handleNewQuery }

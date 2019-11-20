@@ -68,6 +68,11 @@ set video poster to be the interface not your face.
 * switch <Fragment> to <>
 	* looks like it works fine in 5.0, so don't need to bump required version
 
+* fix i18n crap?
+	https://github.com/WordPress/gutenberg/issues/9846#issuecomment-555583946
+
+
+
 ### next minor features
 
 
