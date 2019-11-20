@@ -64,7 +64,12 @@ import { fetchContentIndex, deleteOldCaches }         from './content-index';
 		 */
 		container.id = 'qni-active-url-preview';
 
-		document.getElementById( 'wpwrap' ).appendChild( container );
+		// The Customizer "controls" pane has a different container than most wp-admin pages.
+		const pageContentContainer = wp.customize
+			? document.getElementsByClassName( 'wp-customizer' )[0]
+			: document.getElementById( 'wpwrap' );
+
+		pageContentContainer.appendChild( container );
 
 		/*
 		 * Render immediately with the links we parsed out of the DOM, to that the user can user this as soon as

@@ -1,3 +1,5 @@
+@import '../_partials.scss';
+
 .qni-main {
 	&.is-loading .components-spinner {
 		display: block;
@@ -9,4 +11,8 @@
 	.notice {
 		margin-top: 1em;
 	}
+}
+
+body.wp-customizer.modal-open .components-modal__screen-overlay {
+	z-index: $modal-z-index;
 }

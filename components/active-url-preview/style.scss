@@ -1,7 +1,9 @@
+@import '../_partials.scss';
+
 #qni-active-url-preview {
 	position: fixed;
 	bottom: 0;
-	z-index: 999999;
+	z-index: $modal-z-index + 1;
 }
 
 .qni-active-url-preview__url {
