@@ -18,7 +18,12 @@ set video poster to be the interface not your face.
 
 
 
-### Next minor version bugs
+### Next minor version
+
+* doesn't work inside customizer?
+	nope, throws a fatal too
+
+
 
 * http://wp.test/wordpress/wp-admin/options-discussion.php and probably all pages
 	Posts cannot be searched because an error occured; only links from the current page will be available. Details: The operation is insecure.
@@ -44,9 +49,6 @@ set video poster to be the interface not your face.
 
 	still can't reproduce, maybe fixed by some of the 1.0.1 fixes?
 
-
-### next next minor bugs
-
 "33 plugin links" when 3 plugins need updating
 	probably throw out the text in `ab-label`
 	or maybe shouldn't be searching for .ab-label above?
@@ -63,36 +65,18 @@ set video poster to be the interface not your face.
 * wtf aren't source maps working?
 	* work for comcom, and package.json/webpack configs are identical in all the relevant places
 
-* doesn't work inside customizer?
-
 * switch <Fragment> to <>
 	* looks like it works fine in 5.0, so don't need to bump required version
 
 * fix i18n crap?
 	https://github.com/WordPress/gutenberg/issues/9846#issuecomment-555583946
 
+* look at using https://reactjs.org/docs/hooks-state.html ?
 
 
 ### next minor features
 
-
 ______most of these don't seem very important, maybe convert to the eisenhower matrix like comcon's todo________
-
-* prop drilling is getting pretty bad, may refactor to use Context or something?
-	* it used to be pretty awful, but hooks make it much better now
-	* need to bump to 5.3 to get necessary version of react?
-		* hooks introduced in 16.8
-		* 5.3 ships 16.9
-		* what did 5.2 and lower ship?
-
-	* should wrap mainview in the controller, or have mainview wrap its children?
-	* should have multiple contexts, or just 1?
-		if single, then whole tree will re-render anytime anything in the context changes, even if it otherwise shouldn't?
-
-
-	er, wait, should try using composition first?
-		https://medium.com/the-non-traditional-developer/how-to-avoid-prop-drilling-with-composition-6862cd4e253a
-		see how far you get with that, and then re-evaluate if you still need context(+hooks)
 
 * Listen for new links added to DOM after initial page render, like in the News dashboard widget
 

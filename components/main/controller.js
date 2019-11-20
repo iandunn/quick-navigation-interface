@@ -1,13 +1,42 @@
 /**
  * WordPress dependencies
  */
-import { Component } from '@wordpress/element';
-import { UP, DOWN }  from '@wordpress/keycodes';
+import { Component, createContext } from '@wordpress/element';
+import { UP, DOWN }                 from '@wordpress/keycodes';
 
 /**
  * Internal dependencies
  */
 import { MainView } from './view';
+
+/*
+ * How this app uses composition and Context:
+ *
+ * Composition and Context are common ways to avoid prop drilling. Often times people argue for one or the other
+ * as an exclusive solution, but a more nuanced view is that both should be understood and used. They serve
+ * different use cases, rather than being mutually exclusive. Composition should be used in some cases, and
+ * Context in others.
+ *
+ * In this app, what seems to work best is using composition for components that are lower in the tree, and
+ * Context for ones that are higher. The lower-level components -- e.g., `ActiveUrlPreview` and `SearchResults`
+ * -- tend to be more generic and reusable, and it makes sense to pass their data in as props, so that they can
+ * remain unaware of the global state. Composition also makes sense to have specialized versions of generic
+ * components, like with `Warning` and `FetchErrorWarning`.
+ *
+ * Composition _doesn't_ make sense for something like `Loaded`, though. It _could_ be pulled up into `MainView`
+ * in order to avoid an extra level in the hierarchy, but that would result in `MainView` being very cluttered
+ * and doing too many things. `Loaded` should be encapsulated to increase readability and maintainability.
+ *
+ * Since `MainView` and `Loaded` are both "controller views" -- stitching together generic components like `Modal`
+ * and `SearchResults` -- and high in the tree, it makes sense for them to use Context, since they're not likely
+ * to be reused, and are inherently more aware of the app's "business logic" than the lower-level components.
+ *
+ * This avoids prop drilling while keeping the higher-level components simple, and the lower-level components
+ * reusable.
+ *
+ * @see https://www.youtube.com/watch?v=3XaXKiXtNjw&lc=Ugzndub90f7kTvwD9dR4AaABAg
+ */
+export const MainViewContext = createContext();
 
 
 /**
@@ -298,23 +327,29 @@ export class MainController extends Component {
 	 * @return {Element}
 	 */
 	render() {
-		const { activeResultIndex, interfaceOpen, results, searchQuery } = this.state;
-		const { canFetchContentIndex, fetchError, loading, shortcuts }   = this.props;
+		const MainViewData = {
+			// Props
+			canFetchContentIndex : this.props.canFetchContentIndex,
+			fetchError           : this.props.fetchError,
+			loading              : this.props.loading,
+			shortcuts            : this.props.shortcuts,
+
+			// State
+			activeResultIndex : this.state.activeResultIndex,
+			interfaceOpen     : this.state.interfaceOpen,
+			results           : this.state.results,
+			searchQuery       : this.state.searchQuery,
+
+			// Handlers
+			handleNewQuery     : this.handleNewQuery,
+			handleQueryKeyDown : MainController.handleQueryKeyDown,
+			handleModalClose   : this.closeInterface,
+		};
 
 		return (
-			<MainView
-				activeResultIndex={ activeResultIndex }
-				canFetchContentIndex={ canFetchContentIndex }
-				fetchError={ fetchError }
-				handleNewQuery={ this.handleNewQuery }
-				handleQueryKeyDown={ MainController.handleQueryKeyDown }
-				handleModalClose={ this.closeInterface }
-				interfaceOpen={ interfaceOpen }
-				loading={ loading }
-				results={ results }
-				searchQuery={ searchQuery }
-				shortcuts={ shortcuts }
-			/>
+			<MainViewContext.Provider value={ MainViewData }>
+				<MainView />
+			</MainViewContext.Provider>
 		);
 	}
 }

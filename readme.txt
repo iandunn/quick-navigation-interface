@@ -2,7 +2,7 @@
 Contributors:      iandunn
 Donate link:       https://www.debian.org/donations
 Tags:              keyboard,navigation,shortcuts,wp-admin
-Requires at least: 5.0
+Requires at least: 5.2
 Requires PHP:      5.6
 Tested up to:      5.3
 Stable tag:        1.0.1

@@ -1,13 +1,14 @@
 /**
  * WordPress dependencies
  */
-import { Modal, TextControl, Spinner } from '@wordpress/components';
-import { Fragment, RawHTML }           from '@wordpress/element';
-import { __, sprintf }                 from '@wordpress/i18n';
+import { Modal, TextControl, Spinner }   from '@wordpress/components';
+import { Fragment, RawHTML, useContext } from '@wordpress/element';
+import { __, sprintf }                   from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
+import { MainViewContext }  from './controller';
 import { ActiveUrlPreview } from '../active-url-preview';
 import { Instructions }     from '../instructions';
 import { SearchResults }    from '../search-results/';
@@ -23,9 +24,8 @@ import './style.scss';
  */
 export function MainView( props ) {
 	const {
-		activeResultIndex, canFetchContentIndex, fetchError, handleModalClose, handleNewQuery, handleQueryKeyDown,
-		interfaceOpen, loading, results, searchQuery, shortcuts,
-	} = props;
+		activeResultIndex, handleModalClose, interfaceOpen, loading, results,
+	} = useContext( MainViewContext );
 
 	let title,
 		focusOnMount = true;
@@ -54,6 +54,8 @@ export function MainView( props ) {
 	//
 	// Decompose something if it has subcomponents, if it will be reused, if it's subjectively long or complex
 	// maybe create separate files (but not folders) for some of those things? not sure
+	//
+	// maybe warnings should be moved to a separate file?
 
 	return (
 		<Fragment>
@@ -67,28 +69,9 @@ export function MainView( props ) {
 				// Down key broken after hitting escape        - see https://github.com/WordPress/gutenberg/issues/15429.
 				isDismissable={ true }
 			>
-				{ loading &&
-					<Spinner />
-				}
+				{ loading && <Spinner /> }
 
-				{ ! loading &&
-					<Loaded
-						activeResultIndex={ activeResultIndex }
-						canFetchContentIndex={ canFetchContentIndex }
-						fetchError={ fetchError }
-						handleNewQuery={ handleNewQuery }
-						handleQueryKeyDown={ handleQueryKeyDown }
-						results={ results }
-						searchQuery={ searchQuery }
-						shortcuts={ shortcuts }
-					>
-						{ canFetchContentIndex || <CantFetchWarning /> }
-
-						{ fetchError &&
-							<FetchErrorWarning error={ fetchError } />
-						}
-					</Loaded>
-				}
+				{ ! loading && <Loaded /> }
 			</Modal>
 
 			{ results.hasOwnProperty( activeResultIndex ) &&
@@ -107,9 +90,9 @@ export function MainView( props ) {
  */
 function Loaded( props ) {
 	const {
-		activeResultIndex, children, handleNewQuery, handleQueryKeyDown, results,
-		searchQuery, shortcuts,
-	} = props;
+		activeResultIndex, canFetchContentIndex, fetchError, handleNewQuery, handleQueryKeyDown,
+		results, searchQuery, shortcuts,
+	} = useContext( MainViewContext );
 
 	return (
 		<Fragment>
@@ -147,7 +130,11 @@ function Loaded( props ) {
 				results={ results }
 			/>
 
-			{ children }
+			{ canFetchContentIndex || <CantFetchWarning /> }
+
+			{ fetchError &&
+				<FetchErrorWarning error={ fetchError } />
+			}
 		</Fragment>
 	);
 }
