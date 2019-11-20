@@ -161,7 +161,6 @@ export function MainView( props ) {
 	} = props;
 
 	let title,
-		content,
 		focusOnMount = true;
 
 	const modalClasses = [ 'qni-main' ];
@@ -172,7 +171,6 @@ export function MainView( props ) {
 
 	if ( loading ) {
 		title   = __( 'Loading...', 'quick-navigation-interface' );
-		content = <Spinner />;
 
 		modalClasses.push( 'is-loading' );
 
@@ -180,23 +178,6 @@ export function MainView( props ) {
 		// Without this, the modal would get the focus, preventing the `TextControl.autofocus` from working.
 		focusOnMount = false;
 		title        = __( 'Start typing to open any post, menu item, etc', 'quick-navigation-interface' );
-
-		content = <Loaded
-			activeResultIndex={ activeResultIndex }
-			canFetchContentIndex={ canFetchContentIndex }
-			fetchError={ fetchError }
-			handleNewQuery={ handleNewQuery }
-			handleQueryKeyDown={ handleQueryKeyDown }
-			results={ results }
-			searchQuery={ searchQuery }
-			shortcuts={ shortcuts }
-		>
-			{ canFetchContentIndex || <CantFetchWarning /> }
-
-			{ fetchError &&
-				<FetchErrorWarning fetchError={ fetchError } />
-			}
-		</Loaded>;
 	}
 
 
@@ -215,11 +196,32 @@ export function MainView( props ) {
 				onRequestClose={ handleModalClose }
 				focusOnMount={ focusOnMount }
 
-				// Focusing on close button creates scrollbars -- https://github.com/WordPress/gutenberg/issues/15434.
-				// Down key broken after hitting escape --  https://github.com/WordPress/gutenberg/issues/15429.
+				// Focusing on close button creates scrollbars - see https://github.com/WordPress/gutenberg/issues/15434.
+				// Down key broken after hitting escape        - see https://github.com/WordPress/gutenberg/issues/15429.
 				isDismissable={ true }
 			>
-				{ content }
+				{ loading &&
+					<Spinner />
+				}
+
+				{ ! loading &&
+					<Loaded
+						activeResultIndex={ activeResultIndex }
+						canFetchContentIndex={ canFetchContentIndex }
+						fetchError={ fetchError }
+						handleNewQuery={ handleNewQuery }
+						handleQueryKeyDown={ handleQueryKeyDown }
+						results={ results }
+						searchQuery={ searchQuery }
+						shortcuts={ shortcuts }
+					>
+						{ canFetchContentIndex || <CantFetchWarning /> }
+
+						{ fetchError &&
+							<FetchErrorWarning fetchError={ fetchError } />
+						}
+					</Loaded>
+				}
 			</Modal>
 
 			{ results.hasOwnProperty( activeResultIndex ) &&

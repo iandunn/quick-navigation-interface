@@ -65,6 +65,8 @@ set video poster to be the interface not your face.
 
 * doesn't work inside customizer?
 
+* switch <Fragment> to <>
+	* looks like it works fine in 5.0, so don't need to bump required version
 
 ### next minor features
 
