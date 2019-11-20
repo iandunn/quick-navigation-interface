@@ -5,6 +5,29 @@ import './style.scss';
 
 
 /**
+ * Render the list of search results.
+ *
+ * @param {Array} props
+ *
+ * @return {Element}
+ */
+export function SearchResults( { activeResultIndex, results } ) {
+	return (
+		<ul id="qni-search-results">
+			{ results.map( ( link, index ) => {
+				return (
+					<Result
+						key={ JSON.stringify( link ) }
+						link={ link }
+						active={ index === activeResultIndex }
+					/>
+				);
+			} ) }
+		</ul>
+	);
+}
+
+/**
  * Render an individual search result item.
  *
  * @param {Array} props
@@ -33,28 +56,5 @@ function Result( { active, link } ) {
 				[{ type }]
 			</span>
 		</li>
-	);
-}
-
-/**
- * Render the list of search results.
- *
- * @param {Array} props
- *
- * @return {Element}
- */
-export function SearchResults( { activeResultIndex, results } ) {
-	return (
-		<ul id="qni-search-results">
-			{ results.map( ( link, index ) => {
-				return (
-					<Result
-						key={ JSON.stringify( link ) }
-						link={ link }
-						active={ index === activeResultIndex }
-					/>
-				);
-			} ) }
-		</ul>
 	);
 }
