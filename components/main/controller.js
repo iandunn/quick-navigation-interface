@@ -186,7 +186,7 @@ export class MainController extends Component {
 			case shortcuts[ 'next-link' ].code:
 			case shortcuts[ 'previous-link' ].code:
 				const direction = shortcuts[ 'next-link' ].code === which ? 'next' : 'previous';
-				this.setActiveResult( event, direction );
+				this.setActiveResult( direction );
 				break;
 
 			case shortcuts[ 'open-link' ].code:
@@ -314,10 +314,9 @@ export class MainController extends Component {
 	/**
 	 * Change the active result when the user navigates through the list.
 	 *
-	 * @param {object} event
 	 * @param {string} direction
 	 */
-	setActiveResult( event, direction ) {
+	setActiveResult( direction ) {
 		const { activeResultIndex, results } = this.state;
 		let newResultIndex                   = null;
 
