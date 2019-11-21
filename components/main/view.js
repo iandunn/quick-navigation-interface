@@ -169,7 +169,7 @@ function CantFetchWarning() {
 				) }
 			</p>
 
-			<p>
+			<div>
 				<RawHTML>
 					{ sprintf(
 						/*
@@ -180,7 +180,7 @@ function CantFetchWarning() {
 						'https://browsehappy.com/'
 					) }
 				</RawHTML>
-			</p>
+			</div>
 		</Warning>
 	);
 }
@@ -200,7 +200,7 @@ function FetchErrorWarning( { error } ) {
 				) }
 			</p>
 
-			<p>
+			<div>
 				<RawHTML>
 					{ sprintf(
 						/*
@@ -211,7 +211,7 @@ function FetchErrorWarning( { error } ) {
 						error
 					) }
 				</RawHTML>
-			</p>
+			</div>
 		</Warning>
 	);
 }
