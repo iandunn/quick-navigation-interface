@@ -71,8 +71,9 @@ export class MainController extends Component {
 			searchQuery       : '',
 		};
 
-		// todo use experimental syntax for this to avoid these calls
+		// todo use experimental syntax for this to avoid these calls - is there a wp-scripts issue to support that?
 		this.handleKeyboardEvents         = this.handleKeyboardEvents.bind( this );
+		this.proxyPreviewerKeyboardEvents = this.proxyPreviewerKeyboardEvents.bind( this );
 		this.closeInterface               = this.closeInterface.bind( this );
 		this.handleNewQuery               = this.handleNewQuery.bind( this );
 		MainController.handleQueryKeyDown = MainController.handleQueryKeyDown.bind( this );
@@ -99,6 +100,38 @@ export class MainController extends Component {
 		 * considerations.
 		 */
 		window.addEventListener( 'keyup', this.handleKeyboardEvents );
+
+		// Handle events inside the Customizer's preview pane.
+		if ( wp.customize ) {
+			wp.customize.bind( 'ready', () => {
+				wp.customize.previewer.bind( 'ready', this.proxyPreviewerKeyboardEvents );
+			} );
+		}
+	}
+
+	/**
+	 * Listen for keyboard events inside the Customizer's Preview pane, and send them to the normal handler.
+	 *
+	 * The preview is loaded inside an iframe, so normally the parent frame isn't aware of anything happening
+	 * inside it, and we aren't able to open the interface in response to the `g` / backtick keys. We can
+	 * send `postMessage`s back and forth between the frames though.
+	 *
+	 * `wp.customize.Messenger()` makes that a bit easier, and takes care of the security considerations.
+	 *
+	 * See `print_customizer_preview_scripts()` for the corresponding sender.
+	 */
+	proxyPreviewerKeyboardEvents() {
+		const iframe = document.getElementById( 'customize-preview' ).getElementsByTagName( 'iframe' )[0];
+
+		const messenger = new wp.customize.Messenger( {
+			channel      : 'quick-navigation-interface',
+			targetWindow : iframe.contentWindow,
+			url          : wp.customize.settings.url.allowed[ 0 ],
+		} );
+
+		messenger.bind( 'qni-previewer-keyup', event => {
+			this.handleKeyboardEvents( event );
+		} );
 	}
 
 	/**
@@ -107,6 +140,10 @@ export class MainController extends Component {
 	componentWillUnmount() {
 		// See notes in corresponding `addEventListener() call`.
 		window.removeEventListener( 'keyup', this.handleKeyboardEvents );
+
+		if ( wp.customize ) {
+			wp.customize.previewer.unbind( 'ready', this.proxyPreviewerKeyboardEvents );
+		}
 	}
 
 	/**

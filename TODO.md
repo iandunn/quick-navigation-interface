@@ -20,11 +20,6 @@ set video poster to be the interface not your face.
 
 ### Next minor version
 
-* doesn't work inside customizer?
-	nope, throws a fatal too
-
-
-
 * http://wp.test/wordpress/wp-admin/options-discussion.php and probably all pages
 	Posts cannot be searched because an error occured; only links from the current page will be available. Details: The operation is insecure.
 	it's not consistent, though.
@@ -48,6 +43,11 @@ set video poster to be the interface not your face.
 	but move on to stuff you can fix for now
 
 	still can't reproduce, maybe fixed by some of the 1.0.1 fixes?
+
+	happened again, maybe when plugin installed for first time, before first refresh
+		or maybe only when updating to .7 -> 1.x on first load, before first refresh
+	also happened on updated site when opening customizer, but only 1 out of 50 times, not sure what's different. it was re-opening browser after closing, so auto opened new tab.
+		maybe sometimes the code is loading too soon, and it needs to wait until
 
 "33 plugin links" when 3 plugins need updating
 	probably throw out the text in `ab-label`

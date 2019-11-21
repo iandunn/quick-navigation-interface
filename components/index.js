@@ -64,7 +64,10 @@ import { fetchContentIndex, deleteOldCaches }         from './content-index';
 		 */
 		container.id = 'qni-active-url-preview';
 
-		// The Customizer "controls" pane has a different container than most wp-admin pages.
+		/*
+		 * The Customizer "Controls" pane has a different container than most wp-admin pages. This doesn't load
+		 * it inside the "Preview" pane, though, that's done by `proxyPreviewerKeyboardEvents()`.
+		 */
 		const pageContentContainer = wp.customize
 			? document.getElementsByClassName( 'wp-customizer' )[0]
 			: document.getElementById( 'wpwrap' );

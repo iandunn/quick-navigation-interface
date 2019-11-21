@@ -13,7 +13,7 @@ defined( 'WPINC' ) || die;
 
 define( 'QNI_VERSION',              '1.0.1' );
 define( 'QNI_REQUIRED_PHP_VERSION', '5.6' );  // Because of WordPress minimum requirements.
-define( 'QNI_REQUIRED_WP_VERSION',  '5.0' );  // Because of Gutenberg components.
+define( 'QNI_REQUIRED_WP_VERSION',  '5.2' );  // Because of React Context.
 
 /**
  * Checks if the system requirements are met
@@ -72,6 +72,10 @@ if ( qni_requirements_met() ) {
 	if ( is_admin() || wp_is_json_request() || qni_is_login_screen() ) {
 		require_once( dirname( __FILE__ ) . '/components/main/controller.php' );
 	}
+
+	add_action( 'customize_preview_init', function() {
+		require_once( dirname( __FILE__ ) . '/components/main/previewer.php' );
+	}, 9 ); // Before the `customize_preview_init` callback in `previewer.php`.
 } else {
 	add_action( 'admin_notices', 'qni_requirements_error' );
 }
