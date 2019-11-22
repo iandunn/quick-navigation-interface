@@ -82,7 +82,7 @@ export function MainView( props ) {
 }
 
 /**
- * Render the view for the Success notice.
+ * Render the view for the when the interface has been loaded.
  *
  * @param {Array} props
  *

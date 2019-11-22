@@ -363,18 +363,20 @@ export class MainController extends Component {
 	 * @return {Element}
 	 */
 	render() {
+		const { props, state } = this;
+
 		const MainViewData = {
 			// Props
-			canFetchContentIndex : this.props.canFetchContentIndex,
-			fetchError           : this.props.fetchError,
-			loading              : this.props.loading,
-			shortcuts            : this.props.shortcuts,
+			canFetchContentIndex : props.canFetchContentIndex,
+			fetchError           : props.fetchError,
+			loading              : props.loading,
+			shortcuts            : props.shortcuts,
 
 			// State
-			activeResultIndex : this.state.activeResultIndex,
-			interfaceOpen     : this.state.interfaceOpen,
-			results           : this.state.results,
-			searchQuery       : this.state.searchQuery,
+			activeResultIndex : state.activeResultIndex,
+			interfaceOpen     : state.interfaceOpen,
+			results           : state.results,
+			searchQuery       : state.searchQuery,
 
 			// Handlers
 			handleNewQuery     : this.handleNewQuery,
