@@ -68,9 +68,11 @@ import { fetchContentIndex, deleteOldCaches }         from './content-index';
 		 * The Customizer "Controls" pane has a different container than most wp-admin pages. This doesn't load
 		 * it inside the "Preview" pane, though, that's done by `proxyPreviewerKeyboardEvents()`.
 		 */
-		const pageContentContainer = wp.customize
-			? document.getElementsByClassName( 'wp-customizer' )[0]
-			: document.getElementById( 'wpwrap' );
+		let pageContentContainer = document.getElementById( 'wpwrap' );
+
+		if ( ! pageContentContainer && wp.customize ) {
+			pageContentContainer = document.getElementsByClassName( 'wp-customizer' )[ 0 ];
+		}
 
 		pageContentContainer.appendChild( container );
 
