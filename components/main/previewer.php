@@ -45,7 +45,11 @@ function print_customizer_preview_scripts() {
 					url          : wp.customize.settings.url.allowed[ 0 ],
 				} );
 
-				// See `proxyPreviewerKeyboardEvents()` for the receiver.
+				/*
+				 * Send a `postMessage` to the Controls pane, so it can handle the event.
+				 *
+				 * See `proxyPreviewerKeyboardEvents()` for the receiver.
+				 */
 				messenger.send( 'qni-previewer-keyup', minimalEvent );
 			} );
 		} );

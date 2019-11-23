@@ -12,6 +12,10 @@ import './style.scss';
  * @return {Element}
  */
 export function SearchResults( { activeResultIndex, results } ) {
+	if ( ! results.length ) {
+		return null;
+	}
+
 	return (
 		<ul id="qni-search-results">
 			{ results.map( ( link, index ) => {

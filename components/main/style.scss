@@ -7,16 +7,13 @@
 		margin-left: auto;
 		margin-right: auto;
 	}
-
-	.notice {
-		margin-top: 1em;
-
-		div {
-			margin-bottom: 0.5em
-		}
-	}
 }
 
 body.wp-customizer.modal-open .components-modal__screen-overlay {
 	z-index: $modal-z-index;
+}
+
+#qni-instructions {
+	margin-top: .5em;
+	font-style: italic;
 }

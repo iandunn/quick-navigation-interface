@@ -10,8 +10,8 @@ import { __, sprintf }                   from '@wordpress/i18n';
  */
 import { MainViewContext }  from './controller';
 import { ActiveUrlPreview } from '../active-url-preview';
-import { Instructions }     from '../instructions';
 import { SearchResults }    from '../search-results/';
+import { CantFetchWarning, FetchErrorWarning } from '../warnings';
 import './style.scss';
 
 
@@ -46,16 +46,6 @@ export function MainView( props ) {
 		focusOnMount = false;
 		title        = __( 'Start typing to open any post, menu item, etc', 'quick-navigation-interface' );
 	}
-
-
-	// Why is instructions a separate file but Success/warning/loading isn't? They don't have any logic in them. Maybe look at "thinking in react" for advice
-	//
-	// What's balance between creating separate file for every little thing, and
-	//
-	// Decompose something if it has subcomponents, if it will be reused, if it's subjectively long or complex
-	// maybe create separate files (but not folders) for some of those things? not sure
-	//
-	// maybe warnings should be moved to a separate file?
 
 	return (
 		<Fragment>
@@ -140,78 +130,31 @@ function Loaded( props ) {
 }
 
 /**
- * Render the view for the warning notice.
+ * Render usage instructions for the user.
  *
  * @param {Array} props
  *
  * @return {Element}
  */
-function Warning( { children } ) {
+function Instructions( { shortcuts } ) {
 	return (
-		<div className="notice notice-warning inline">
-			{ children }
+		<div id="qni-instructions">
+			<RawHTML>
+				{ sprintf(
+					/*
+					 * SECURITY WARNING: This string is intentionally not internationalized, because there
+					 * isn't a secure way to do that yet.
+					 *
+					 * See https://github.com/WordPress/gutenberg/issues/9846.
+					 * See https://github.com/WordPress/gutenberg/issues/13156.
+					 */
+					'Use <code>%1$s</code> and <code>%2$s</code> to navigate links, <code>%3$s</code> to open one, and <code>%4$s</code> to quit.',
+					shortcuts[ 'previous-link' ].label,
+					shortcuts[ 'next-link' ].label,
+					shortcuts[ 'open-link' ].label,
+					__( 'Escape', 'quick-navigation-interface' ),
+				) }
+			</RawHTML>
 		</div>
-	);
-}
-
-/**
- * Render a warning that the browser isn't capable of fetching the content index.
- *
- * @return {Element}
- */
-function CantFetchWarning() {
-	return (
-		<Warning>
-			<p>
-				{ __(
-					'Posts cannot be searched because your browser is too old; only links from the current page will be available.',
-					'quick-navigation-interface'
-				) }
-			</p>
-
-			<div>
-				<RawHTML>
-					{ sprintf(
-						/*
-						 * SECURITY WARNING: This string is intentionally not internationalized.
-						 * See Instructions component for details.
-						 */
-						'If you can, please <a href="%s">upgrade to a newer version</a>.',
-						'https://browsehappy.com/'
-					) }
-				</RawHTML>
-			</div>
-		</Warning>
-	);
-}
-
-/**
- * Render a warning notice that there was an error fetching the content index.
- *
- * @return {Element}
- */
-function FetchErrorWarning( { error } ) {
-	return (
-		<Warning>
-			<p>
-				{ __(
-					'Posts cannot be searched because an error occured; only links from the current page will be available.',
-					'quick-navigation-interface'
-				) }
-			</p>
-
-			<div>
-				<RawHTML>
-					{ sprintf(
-						/*
-						 * SECURITY WARNING: This string is intentionally not internationalized.
-						 * See Instructions component for details.
-						 */
-						'Details: <code>%s</code>',
-						error
-					) }
-				</RawHTML>
-			</div>
-		</Warning>
 	);
 }

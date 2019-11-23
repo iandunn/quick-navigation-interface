@@ -67,15 +67,19 @@ export async function fetchContentIndex( pluginVersion, userDbVersion, apiRootUr
 /**
  * Check if the browser supports the `CacheStorage` API.
  *
- * All modern browsers should, but Blink- and WebKit-based browsers -- Chrome, Safari, etc -- mistakenly hide
- * the API when accessed over HTTP, because it's related to service workers, even though it can be used
- * independently in browsers which properly implement it, like Firefox. Trying to access `window.caches` over
- * HTTP in Chrome will result in an exception being thrown.
+ * All modern browsers do, but IE11 doesn't. Additionally, Blink- and WebKit-based browsers -- Chrome, Safari, etc
+ * -- don't expose the API when accessed over HTTP, because it's related to service workers. It can be used
+ * independently, and Firefox allows usage over HTTP, but technically the spec requires HTTPS. Trying to access
+ * `window.caches` over HTTP in Chrome will result in an exception being thrown.
  *
- * Unfortunately, this means that `fetchContentIndex()` will trigger an HTTP request every time an admin page
- * loads, if the site doesn't have an SSL certificate and the user is using a buggy browser.
+ * Unfortunately, this means that in those browsers, `fetchContentIndex()` will trigger an HTTP request every time
+ * an admin page loads, unless the site has an SSL certificate.
  *
  * @see https://bugs.chromium.org/p/chromium/issues/detail?id=1026063.
+ *
+ * In hindsight, it might have been better to use IndexDb for this. Now that it's done, though, and works for a
+ * large percentage (and growing) of users, it's probably not worth redoing.
+ * @see https://developers.google.com/web/fundamentals/instant-and-offline/web-storage/offline-for-pwa#recommendation
  *
  * It's worth having a wrapper function for this, even though it's just a single line, because it's used in
  * many places. This keeps the logic, and important notes above, DRY.

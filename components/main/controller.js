@@ -35,6 +35,7 @@ import { MainView } from './view';
  * reusable.
  *
  * @see https://www.youtube.com/watch?v=3XaXKiXtNjw&lc=Ugzndub90f7kTvwD9dR4AaABAg
+ * @see https://iandunn.name/?p=2497
  */
 export const MainViewContext = createContext();
 
@@ -59,10 +60,6 @@ export class MainController extends Component {
 		 * https://reactjs.org/docs/thinking-in-react.html#step-3-identify-the-minimal-but-complete-representation-of-ui-state
 		 * https://github.com/reduxjs/redux/issues/1287#issuecomment-175351978 (written in another context, but
 		 * still applicable here)
-		 *
-		 * Somewhat related, this may be a situation where a state management API would be beneficial, but it still
-		 * feels like overkill for a small app like this. Redux is awful, though, so if I did set that up then I'd
-		 * probably want to use Context or maybe even MobX.
 		 */
 		this.state = {
 			activeResultIndex : null,
