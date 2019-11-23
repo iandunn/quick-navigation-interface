@@ -8,9 +8,9 @@ import { __, sprintf }                   from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { MainViewContext }  from './controller';
-import { ActiveUrlPreview } from '../active-url-preview';
-import { SearchResults }    from '../search-results/';
+import { MainViewContext }                     from './controller';
+import { ActiveUrlPreview }                    from '../active-url-preview';
+import { SearchResults }                       from '../search-results/';
 import { CantFetchWarning, FetchErrorWarning } from '../warnings';
 import './style.scss';
 
@@ -18,11 +18,9 @@ import './style.scss';
 /**
  * Render the view for the main interface.
  *
- * @param {Array} props
- *
  * @return {Element}
  */
-export function MainView( props ) {
+export function MainView() {
 	const {
 		activeResultIndex, handleModalClose, interfaceOpen, loading, results,
 	} = useContext( MainViewContext );

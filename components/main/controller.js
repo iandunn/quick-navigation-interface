@@ -118,7 +118,7 @@ export class MainController extends Component {
 	 * See `print_customizer_preview_scripts()` for the corresponding sender.
 	 */
 	proxyPreviewerKeyboardEvents() {
-		const iframe = document.getElementById( 'customize-preview' ).getElementsByTagName( 'iframe' )[0];
+		const iframe = document.getElementById( 'customize-preview' ).getElementsByTagName( 'iframe' )[ 0 ];
 
 		const messenger = new wp.customize.Messenger( {
 			channel      : 'quick-navigation-interface',
