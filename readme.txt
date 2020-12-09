@@ -4,7 +4,7 @@ Donate link:       https://www.debian.org/donations
 Tags:              keyboard,navigation,shortcuts,wp-admin
 Requires at least: 5.2
 Requires PHP:      5.6
-Tested up to:      5.3
+Tested up to:      5.6
 Stable tag:        1.0.1
 License:           GPLv2
 
